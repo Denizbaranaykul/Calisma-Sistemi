@@ -57,6 +57,8 @@ a{color:var(--accent)}
 .gq{font:600 17px/1.5 Georgia,serif;margin:8px 0 12px}
 .raw{font:15px/1.7 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:8px;padding:8px 12px;margin:8px 0;word-spacing:2px}
 .gin{flex:1;min-width:160px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.mf{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:4px}.mf label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)}.mf .gin{min-width:0}
+.gin.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--bg))}.gin.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--bg))}
 .pr table{border-collapse:collapse;font-size:14px;margin:8px 0}.pr th,.pr td{border:1px solid var(--line);padding:4px 10px;text-align:center}
 .sol{background:var(--soft);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:15px}
 </style>
@@ -236,6 +238,8 @@ function drawQ(){
 const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)), pick=a=>a[R(0,a.length-1)];
 const fmt=x=>String(Math.round(x*1000)/1000).replace('.',','), N=x=>x.toLocaleString('tr-TR');
 const sum=a=>a.reduce((s,x)=>s+x,0);
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=R(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const mcq=o=>{const s=shuf(o.map((t,i)=>[t,i]));return{opts:s.map(x=>x[0]),a:s.findIndex(x=>x[1]===0)}}; // doğru şık o[0]
 const T={
   ins(t,v){if(!t)return{v,l:null,r:null};if(v<t.v)t.l=T.ins(t.l,v);else t.r=T.ins(t.r,v);return t},
   pre(t){return t?[t.v,...T.pre(t.l),...T.pre(t.r)]:[]},
@@ -305,22 +309,57 @@ const GEN={
     const s=[`pay = ${cnt[v]} / ${n} = ${fmt(a)}`,`kümülatif frekans = ${cnt.slice(0,v+1).join(' + ')} = ${kum} → ${kum} / ${n} × 100 = %${fmt(a)}`,`${cnt[v]} / ${n} × 100 = %${fmt(a)}`][k];
     return{q:`${n} öğrencinin alttan aldığı ders sayısı:<div class="raw">${d.join(', ')}</div>${q}`,type:'num',a,sol:s+ft}}},
   central:{label:'Ortalama · medyan · mod',f(){let d,mode;do{d=[...Array(R(7,12))].map(()=>R(1,15));const c={};d.forEach(x=>c[x]=(c[x]||0)+1);const mx=Math.max(...Object.values(c)),m=Object.keys(c).filter(k=>c[k]===mx);mode=m.length===1&&mx>1?+m[0]:null}while(mode==null);
-    const s=[...d].sort((a,b)=>a-b),n=d.length,med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2,mean=sum(d)/n,k=R(0,2);
-    return{q:`Veri: <div class="raw">${d.join(', ')}</div>Bu verinin <b>${['aritmetik ortalaması','medyanı','modu'][k]}</b> kaçtır?`,type:'num',a:[mean,med,mode][k],sol:`Sıralı: ${s.join(', ')} (N = ${n}).<br>Ortalama = ${sum(d)} / ${n} = ${fmt(mean)} · Medyan = ${fmt(med)}${n%2?'':' (ortadaki iki değerin ortalaması)'} · Mod = ${mode}`}}},
-  weighted:{label:'Ağırlıklı ortalama',f(){const w=pick([30,40,50]),v=R(20,100),f=R(20,100),a=v*w/100+f*(100-w)/100;
-    return{q:`Vize %${w}, final %${100-w} ağırlıklı. Vizeden <b>${v}</b>, finalden <b>${f}</b> alan öğrencinin ağırlıklı ortalaması kaçtır?`,type:'num',a,sol:`${v} × ${fmt(w/100)} + ${f} × ${fmt(1-w/100)} = ${fmt(v*w/100)} + ${fmt(f*(100-w)/100)} = ${fmt(a)} (basit ortalama ${fmt((v+f)/2)} olurdu)`}}},
+    const s=[...d].sort((a,b)=>a-b),n=d.length,med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2,mean=sum(d)/n;
+    return{q:`Veri: <div class="raw">${d.join(', ')}</div>Bu verinin <b>aritmetik ortalamasını, medyanını ve modunu</b> bul.`,type:'multi',fields:[['Ortalama',mean],['Medyan',med],['Mod',mode]],sol:`Sıralı: ${s.join(', ')} (N = ${n}).<br>Ortalama = ${sum(d)} / ${n} = ${fmt(mean)} · Medyan konumu = (N + 1) / 2 = ${fmt((n+1)/2)} → Medyan = ${fmt(med)}${n%2?'':' (ortadaki iki değerin ortalaması)'} · Mod = ${mode} (en sık tekrar eden)`}}},
+  weighted:{label:'Ağırlıklı ortalama',f(){const k=R(0,4),wm=(x,w)=>sum(x.map((v,i)=>v*w[i]))/sum(w),
+      ws=(x,w)=>`x̄ = Σ(w·x) / Σw = (${x.map((v,i)=>`${N(v)} × ${N(w[i])}`).join(' + ')}) / (${w.map(N).join(' + ')}) = ${fmt(sum(x.map((v,i)=>v*w[i])))} / ${N(sum(w))} = <b>${fmt(wm(x,w))}</b>`;
+    if(k===0){const w=pick([30,40,50]),v=R(20,100),f=R(20,100),a=v*w/100+f*(100-w)/100;
+      return{q:`Vize %${w}, final %${100-w} ağırlıklı. Vizeden <b>${v}</b>, finalden <b>${f}</b> alan öğrencinin ağırlıklı ortalaması kaçtır?`,type:'num',a,sol:`${v} × ${fmt(w/100)} + ${f} × ${fmt(1-w/100)} = ${fmt(v*w/100)} + ${fmt(f*(100-w)/100)} = ${fmt(a)}<br>Ağırlıkların toplamı ${fmt(w/100)} + ${fmt(1-w/100)} = 1 olduğu için ayrıca bölmeye gerek yok. (Basit ortalama ${fmt((v+f)/2)} olurdu.)`}}
+    if(k===1){const ds=shuf(['Matematik','İstatistik','Muhasebe','İktisat','Hukuk','Pazarlama','İşletme']).slice(0,R(3,5)),w=ds.map(()=>pick([2,3,4,5,6])),x=ds.map(()=>pick([1,1.5,2,2.5,3,3.5,4]));
+      return{q:`Bir öğrencinin dönem dersleri:`+tbl(['Ders','Kredi','Not (4\'lük)'],ds.map((d,i)=>[d,w[i],N(x[i])]))+`Kredi ağırlıklı <b>not ortalaması</b> kaçtır?`,type:'num',a:wm(x,w),sol:ws(x,w)+`<br>Ağırlıkların (kredilerin) toplamı ${sum(w)}, 1 değil → çarpımlar toplamı Σw = ${sum(w)} ile bölünür. Basit ortalama ${fmt(sum(x)/x.length)} olurdu.`}}
+    if(k===2){const g=['A','B','C'].slice(0,R(2,3)),w=g.map(()=>R(15,45)),x=g.map(()=>R(45,85));
+      return{q:`${g.map((s,i)=>`<b>${s}</b> şubesi: ${w[i]} öğrenci, ortalama <b>${x[i]}</b>`).join('<br>')}<br>Şubeler birleştirilirse <b>tüm öğrencilerin ortalaması</b> kaçtır?`,type:'num',a:wm(x,w),sol:ws(x,w)+`<br>Ağırlık = öğrenci sayısı (Σw = ${sum(w)}). Şube ortalamalarının basit ortalaması (${fmt(sum(x)/g.length)}) yanlış olur, çünkü şubeler eşit büyüklükte değil.`}}
+    if(k===3){const x=[...Array(R(3,4))].map(()=>R(4,24)*5),w=x.map(()=>R(5,40));
+      return{q:`Bir mağaza aynı ürünü farklı fiyatlardan sattı:`+tbl(['Fiyat (TL)','Satılan adet'],x.map((v,i)=>[v,w[i]]))+`<b>Adet ağırlıklı ortalama satış fiyatı</b> kaçtır?`,type:'num',a:wm(x,w),sol:ws(x,w)+`<br>Ağırlık = satış adedi (Σw = ${sum(w)} adet). Fiyatların basit ortalaması ${fmt(sum(x)/x.length)} olurdu.`}}
+    const nm=['1. kısa sınav','2. kısa sınav','Ödev','Vize','Final'],w=pick([[1,1,1,2,3],[1,1,2,3,5],[1,1,1,3,4],[2,2,1,4,6]]),x=nm.map(()=>R(30,100));
+    return{q:`Bir derste notlar katsayılarla hesaplanıyor:`+tbl(['Değerlendirme','Katsayı','Not'],nm.map((s,i)=>[s,w[i],x[i]]))+`Öğrencinin <b>ağırlıklı ortalaması</b> kaçtır?`,type:'num',a:wm(x,w),sol:ws(x,w)+`<br>Katsayıların toplamı ${sum(w)}, 1 değil → Σw'ye bölünür.`}}},
   spread:{label:'Ranj · OMS · varyans · s.sapma',f(){let d,n;do{n=R(4,6);d=[...Array(n)].map(()=>R(1,20))}while(sum(d)%n);
-    const mu=sum(d)/n,dv=d.map(x=>x-mu),ss=sum(dv.map(x=>x*x)),k=R(0,3),a=[Math.max(...d)-Math.min(...d),sum(dv.map(Math.abs))/n,ss/n,Math.sqrt(ss/n)][k];
-    return{q:`Veri (ana kütle): <div class="raw">${d.join(', ')}</div><b>${['Ranjı','Ortalama mutlak sapması (OMS)','Varyansı','Standart sapması'][k]}</b> kaçtır?`,type:'num',a,
+    const mu=sum(d)/n,dv=d.map(x=>x-mu),ss=sum(dv.map(x=>x*x));
+    return{q:`Veri (ana kütle): <div class="raw">${d.join(', ')}</div><b>Ranj, ortalama mutlak sapma (OMS), varyans ve standart sapmayı</b> bul.`,type:'multi',fields:[['Ranj',Math.max(...d)-Math.min(...d)],['OMS',sum(dv.map(Math.abs))/n],['Varyans (σ²)',ss/n],['Standart sapma (σ)',Math.sqrt(ss/n)]],
       sol:`μ = ${sum(d)} / ${n} = ${fmt(mu)}`+tbl(['X','d = X − μ','|d|','d²'],d.map((x,i)=>[x,fmt(dv[i]),fmt(Math.abs(dv[i])),fmt(dv[i]**2)]).concat([['Σ','0',fmt(sum(dv.map(Math.abs))),fmt(ss)]]))+`Ranj = ${Math.max(...d)} − ${Math.min(...d)} = ${Math.max(...d)-Math.min(...d)} · OMS = ${fmt(sum(dv.map(Math.abs)))} / ${n} = ${fmt(sum(dv.map(Math.abs))/n)} · Varyans = ${fmt(ss)} / ${n} = ${fmt(ss/n)} · σ = √${fmt(ss/n)} = ${fmt(Math.sqrt(ss/n))}`}}},
-  zscore:{label:'z skoru',f(){const mu=R(40,70),sd=R(5,15);
-    if(Math.random()<.6){const x=R(mu-2*sd,mu+2*sd),z=(x-mu)/sd;return{q:`Ortalama <b>${mu}</b>, standart sapma <b>${sd}</b>. <b>${x}</b> alan öğrencinin <b>z skoru</b> kaçtır?`,type:'num',a:z,sol:`z = (X − μ) / σ = (${x} − ${mu}) / ${sd} = ${fmt(z)} → ${z>0?'ortalamanın üstünde':z<0?'ortalamanın altında':'tam ortalamada'}.`}}
-    const z=pick([-2,-1.5,-1,-.5,.5,1,1.5,2,2.5]),x=mu+z*sd;return{q:`Ortalama <b>${mu}</b>, standart sapma <b>${sd}</b>. z skoru <b>${fmt(z)}</b> olan öğrencinin <b>ham puanı</b> kaçtır?`,type:'num',a:x,sol:`X = μ + z·σ = ${mu} + (${fmt(z)}) × ${sd} = ${fmt(x)}`}}},
-  empirical:{label:'Normal dağılım görgül kural',f(){const mu=R(10,14)*5,sd=pick([5,8,10,12,15]),n=pick([200,400,1000,2000,4000]);
-    const [z1,z2,p]=pick([[-1,1,68],[0,1,34],[-2,2,95],[1,2,13.5],[-2,-1,13.5],[0,2,47.5],[-3,3,99.7],[1,9,16],[-9,-1,16],[2,9,2.5],[-1,2,81.5]]);
-    const lo=mu+z1*sd,hi=mu+z2*sd,desc=z1===-9?`${hi} ve altında`:z2===9?`${lo} ve üstünde`:`${lo} ile ${hi} arasında`,c=Math.random()<.5,a=c?n*p/100:p,zs=z=>z===-9?'−∞':z===9?'+∞':(z>0?'+':'')+z;
-    return{q:`Notlar normal dağılıyor: μ = <b>${mu}</b>, σ = <b>${sd}</b>${c?`, N = <b>${N(n)}</b>`:''}. <b>${desc}</b> not alanların ${c?'<b>sayısı</b>':'<b>yüzdesi</b>'} yaklaşık kaçtır?`,type:'num',a,
-      sol:`z aralığı: ${zs(z1)} ile ${zs(z2)}. ±1σ ≈ %68 (yarısı %34), ±2σ ≈ %95 (yarısı %47,5), ±3σ ≈ %99,7, ortalamanın her iki yanı %50 → %${fmt(p)}${c?` → ${N(n)} × ${fmt(p/100)} = ${fmt(a)}`:''}`}}}
+  zscore:{label:'z skoru',f(){const mu=R(40,70),sd=R(5,15),k=R(0,6),Z=()=>pick([-2,-1.5,-1,-.5,.5,1,1.5,2,2.5]);
+    if(k===0){const x=R(mu-2*sd,mu+2*sd),z=(x-mu)/sd;return{q:`Ortalama <b>${mu}</b>, standart sapma <b>${sd}</b>. <b>${x}</b> alan öğrencinin <b>z skoru</b> kaçtır?`,type:'num',a:z,sol:`z = (X − μ) / σ = (${x} − ${mu}) / ${sd} = ${fmt(z)} → ${z>0?'ortalamanın üstünde':z<0?'ortalamanın altında':'tam ortalamada'}.`}}
+    if(k===1){const z=Z(),x=mu+z*sd;return{q:`Ortalama <b>${mu}</b>, standart sapma <b>${sd}</b>. z skoru <b>${fmt(z)}</b> olan öğrencinin <b>ham puanı</b> kaçtır?`,type:'num',a:x,sol:`X = μ + z·σ = ${mu} + (${fmt(z)}) × ${sd} = ${fmt(x)}`}}
+    if(k===2){const z=Z(),x=mu+z*sd;return{q:`Bir sınavın ortalaması <b>${mu}</b>. <b>${fmt(x)}</b> alan öğrencinin z skoru <b>${fmt(z)}</b>. Sınavın <b>standart sapması</b> kaçtır?`,type:'num',a:sd,sol:`z = (X − μ) / σ → σ = (X − μ) / z = (${fmt(x)} − ${mu}) / ${fmt(z)} = ${fmt(x-mu)} / ${fmt(z)} = ${sd}`}}
+    if(k===3){const z=Z(),x=mu+z*sd;return{q:`Standart sapması <b>${sd}</b> olan bir sınavda <b>${fmt(x)}</b> alan öğrencinin z skoru <b>${fmt(z)}</b>. Sınavın <b>ortalaması</b> kaçtır?`,type:'num',a:mu,sol:`μ = X − z·σ = ${fmt(x)} − (${fmt(z)}) × ${sd} = ${fmt(x)} − (${fmt(z*sd)}) = ${mu}`}}
+    if(k===4){const z=Z(),x=mu+z*sd,m2=R(10,20)*5,s2=pick([5,8,10,12,15,20]),a=m2+z*s2;
+      return{q:`Ali A sınavından <b>${fmt(x)}</b> aldı (μ = ${mu}, σ = ${sd}). B sınavında (μ = <b>${m2}</b>, σ = <b>${s2}</b>) <b>aynı göreli başarıyı</b> göstermesi için kaç puan alması gerekir?`,type:'num',a,sol:`Aynı göreli başarı = aynı z skoru. z = (${fmt(x)} − ${mu}) / ${sd} = ${fmt(z)} → X_B = μ_B + z·σ_B = ${m2} + (${fmt(z)}) × ${s2} = ${fmt(a)}`}}
+    if(k===5){const P=[-1,-.5,0,.5,1,1.5,2],ma=R(10,14)*5,mb=R(10,14)*5,sa=2*R(3,7),sb=2*R(3,7);let za,zb;do{za=pick(P);zb=pick(P)}while(za===zb);const xa=ma+za*sa,xb=mb+zb*sb;
+      return{q:`Ayşe matematikten <b>${xa}</b> (sınıf μ = ${ma}, σ = ${sa}), Türkçeden <b>${xb}</b> (sınıf μ = ${mb}, σ = ${sb}) aldı. <b>Sınıfına göre</b> hangi derste daha başarılıdır?`,type:'mc',opts:['Matematik','Türkçe','İkisinde eşit'],a:za>zb?0:1,
+        sol:`z_mat = (${xa} − ${ma}) / ${sa} = ${fmt(za)} · z_tür = (${xb} − ${mb}) / ${sb} = ${fmt(zb)} → z'si büyük olan derste göreli olarak daha başarılıdır. Ham puanlar farklı ölçeklerde olduğu için doğrudan karşılaştırılmaz.`}}
+    const [q,o,s]=pick([
+      ['Bir veri setindeki tüm değerler z skoruna dönüştürülürse yeni dağılımın ortalaması ve standart sapması ne olur?',['Ortalama 0, standart sapma 1','Ortalama 1, standart sapma 0','Ortalama ve standart sapma değişmez','Ortalama 50, standart sapma 10'],'z skorlarının ortalaması her zaman 0, standart sapması her zaman 1\'dir.'],
+      ['Sağa çarpık bir dağılımdaki değerler z skorlarına dönüştürülürse dağılımın şekli ne olur?',['Sağa çarpık kalır','Normal dağılıma dönüşür','Sola çarpık olur','Simetrik olur'],'z dönüşümü yalnızca kaydırır ve ölçekler; dağılımın şeklini değiştirmez.'],
+      ['z = −1,5 ne anlatır?',['Değer ortalamanın 1,5 standart sapma altındadır','Değer ortalamadan 1,5 puan düşüktür','Değer en düşük %15\'lik dilimdedir','Değer ortalamanın 1,5 standart sapma üstündedir'],'z, ortalamadan kaç standart sapma uzakta olunduğunu gösterir; eksi işareti ortalamanın altında demektir.'],
+      ['z skorunun birimi nedir?',['Birimsizdir','Ham puanla aynı birimdedir','Yüzdedir','Ham puan biriminin karesidir'],'(X − μ) / σ işleminde pay ile payda aynı birimde olduğu için birim sadeleşir. Bu sayede farklı ölçekler karşılaştırılabilir.'],
+      ['Ham puanı ortalamaya eşit olan bir kişinin z skoru kaçtır?',['0','1','−1','Ortalamaya eşittir'],'X = μ ise X − μ = 0, yani z = 0.'],
+      ['İki öğrencinin z skorları +2 ve −2\'dir. Hangisi doğrudur?',['Ortalamaya eşit uzaklıktadırlar, biri üstünde biri altında','İkisi de ortalamanın üstündedir','Puanlarının toplamı sıfırdır','İkisi de aynı puanı almıştır'],'|z| uzaklığı, işaret yönü gösterir.']]);
+    return{q,type:'mc',...mcq(o),sol:s}}},
+  empirical:{label:'Normal dağılım görgül kural',f(){const mu=R(10,14)*5,sd=pick([5,8,10,12,15]),n=pick([200,400,1000,2000,4000]),k=R(0,4),
+      KUR='±1σ ≈ %68 (yarısı %34), ±2σ ≈ %95 (yarısı %47,5), ±3σ ≈ %99,7 (yarısı %49,85), ortalamanın her iki yanı %50',ORTA=[[1,68],[2,95],[3,99.7]];
+    if(k===0){const [z1,z2,p]=pick([[-1,1,68],[0,1,34],[-2,2,95],[1,2,13.5],[-2,-1,13.5],[0,2,47.5],[-3,3,99.7],[1,9,16],[-9,-1,16],[2,9,2.5],[-9,-2,2.5],[-1,2,81.5],[-2,1,81.5],[2,3,2.35],[-3,-2,2.35],[-9,1,84],[-1,9,84],[-9,2,97.5],[0,3,49.85]]);
+      const lo=mu+z1*sd,hi=mu+z2*sd,desc=z1===-9?`${hi} ve altında`:z2===9?`${lo} ve üstünde`:`${lo} ile ${hi} arasında`,c=Math.random()<.5,a=c?n*p/100:p,zs=z=>z===-9?'−∞':z===9?'+∞':(z>0?'+':'')+z;
+      return{q:`Notlar normal dağılıyor: μ = <b>${mu}</b>, σ = <b>${sd}</b>${c?`, N = <b>${N(n)}</b>`:''}. <b>${desc}</b> not alanların ${c?'<b>sayısı</b>':'<b>yüzdesi</b>'} yaklaşık kaçtır?`,type:'num',a,
+        sol:`z aralığı: ${zs(z1)} ile ${zs(z2)}. ${KUR} → %${fmt(p)}${c?` → ${N(n)} × ${fmt(p/100)} = ${fmt(a)}`:''}`}}
+    if(k===1){const [z,p]=pick(ORTA);
+      return{q:`Notlar normal dağılıyor: μ = <b>${mu}</b>, σ = <b>${sd}</b>. Öğrencilerin <b>ortadaki %${fmt(p)}</b>'lik kısmı hangi iki not arasındadır?`,type:'multi',fields:[['Alt sınır',mu-z*sd],['Üst sınır',mu+z*sd]],sol:`Ortadaki %${fmt(p)} → μ ± ${z}σ = ${mu} ± ${z} × ${sd} → ${mu-z*sd} ile ${mu+z*sd}`}}
+    if(k===2){const [z,p]=pick(ORTA),lo=mu-z*sd,hi=mu+z*sd;
+      return{q:`Normal dağılan bir sınavda öğrencilerin ortadaki <b>%${fmt(p)}</b>'lik kısmı <b>${lo}</b> ile <b>${hi}</b> arasında not aldı. Sınavın <b>ortalaması ve standart sapması</b> kaçtır?`,type:'multi',fields:[['Ortalama (μ)',mu],['Standart sapma (σ)',sd]],sol:`Dağılım simetrik → μ = (${lo} + ${hi}) / 2 = ${mu}. %${fmt(p)} = μ ± ${z}σ → aralığın genişliği ${hi-lo} = ${2*z}σ → σ = ${hi-lo} / ${2*z} = ${sd}`}}
+    if(k===3){const [z,p]=pick([[1,32],[2,5],[3,.3]]),c=Math.random()<.5,a=c?n*p/100:p;
+      return{q:`Notlar normal dağılıyor: μ = <b>${mu}</b>, σ = <b>${sd}</b>${c?`, N = <b>${N(n)}</b>`:''}. <b>${mu-z*sd} altında veya ${mu+z*sd} üstünde</b> not alanların ${c?'<b>sayısı</b>':'<b>yüzdesi</b>'} yaklaşık kaçtır?`,type:'num',a,
+        sol:`Bu notlar μ ± ${z}σ aralığının dışında. İçerisi %${fmt(100-p)} → dışarısı %100 − %${fmt(100-p)} = %${fmt(p)} (her kuyrukta %${fmt(p/2)})${c?` → ${N(n)} × ${fmt(p/100)} = ${fmt(a)}`:''}`}}
+    const [z,p,how]=pick([[-2,2.5,'%50 − %47,5'],[-1,16,'%50 − %34'],[0,50,'tam ortalama → %50'],[1,84,'%50 + %34'],[2,97.5,'%50 + %47,5'],[3,99.85,'%50 + %49,85']]),x=mu+z*sd;
+    return{q:`Notlar normal dağılıyor: μ = <b>${mu}</b>, σ = <b>${sd}</b>. <b>${x}</b> alan bir öğrenci, öğrencilerin yaklaşık <b>yüzde kaçından</b> daha yüksek not almıştır?`,type:'num',a:p,sol:`z = (${x} − ${mu}) / ${sd} = ${z}. z = ${z} noktasının solundaki (altındaki) alan: ${how} = %${fmt(p)}`}}}
 };
 let gq=null,gsel=store.get('pz_gsel','all');
 if(gsel!=='all'&&!GENS.includes(gsel))gsel='all';
@@ -337,28 +376,36 @@ function parseNum(s){s=String(s).trim().replace(/[%\s]/g,'').replace('−','-');
 function drawGen(){
   const q=gq,b=$('#gbox');
   const inp=q.type==='mc'?`<div>${q.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>`
+    :q.type==='multi'?`<div class="mf">${q.fields.map(([l],i)=>`<label>${esc(l)}<input class="gin" data-f="${i}" autocomplete="off" inputmode="decimal" placeholder="Sayı"></label>`).join('')}</div><div class="row" style="margin-top:10px"><button class="btn" id="gchk">Kontrol et</button></div>`
     :`<div class="row"><input id="gin" class="gin" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" placeholder="${q.type==='num'?'Sayı (ör. 2,5)':'Cevabın (ör. A, B, C)'}"><button class="btn" id="gchk">Kontrol et</button></div>`;
   b.innerHTML=`<div class="card pr"><div class="tag">${GEN[q.g].label}</div><div class="gq">${q.q}</div>${inp}<div id="gfb"></div>
   <div class="row" style="margin-top:12px"><button class="btn alt" id="gshow">Çözümü göster</button><button class="btn alt" id="gnext">Yeni soru →</button></div></div>`;
   b.querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>checkGen(+x.dataset.i));
-  const gin=$('#gin');
+  const gin=$('#gin'),mi=[...b.querySelectorAll('[data-f]')];
+  if(mi.length){const vals=()=>mi.map(x=>x.value);$('#gchk').onclick=()=>checkGen(vals());
+    mi.forEach((x,i)=>x.onkeydown=e=>{if(e.key!=='Enter')return;e.preventDefault();if(gq.done)return nextGen();const empty=mi.find(y=>!y.value.trim());empty?empty.focus():checkGen(vals())});mi[0].focus()}
   if(gin){$('#gchk').onclick=()=>checkGen(gin.value);gin.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();gq.done?nextGen():checkGen(gin.value)}};gin.focus()}
   $('#gshow').onclick=()=>{gq.done=true;showSol(null)};$('#gnext').onclick=nextGen;
 }
 function nextGen(){newGen();renderGen()}
 function checkGen(v){
   if(gq.done)return;
-  if(gq.type!=='mc'&&String(v).trim()==='')return;
+  const numOk=(s,a)=>Math.abs(parseNum(s)-a)<=Math.max(.0015,Math.abs(a)*1e-4);
+  if(gq.type==='multi'){const mi=[...$('#gbox').querySelectorAll('[data-f]')],e=mi.find(x=>!x.value.trim());if(e)return e.focus()}
+  else if(gq.type!=='mc'&&String(v).trim()==='')return;
   gq.done=true;
-  const ok=gq.type==='mc'?v===gq.a:gq.type==='num'?Math.abs(parseNum(v)-gq.a)<=Math.max(.0015,Math.abs(gq.a)*1e-4):norm(v)===norm(gq.a);
+  let ok;
+  if(gq.type==='multi'){const r=gq.fields.map(([,a],i)=>numOk(v[i],a));ok=r.every(Boolean);gq.right=r.filter(Boolean).length;
+    $('#gbox').querySelectorAll('[data-f]').forEach((x,i)=>{x.disabled=true;x.classList.add(r[i]?'right':'wrong')})}
+  else ok=gq.type==='mc'?v===gq.a:gq.type==='num'?numOk(v,gq.a):norm(v)===norm(gq.a);
   const st=store.get('pz_gen',{}),s=st[gq.g]||[0,0];s[1]++;if(ok)s[0]++;st[gq.g]=s;store.set('pz_gen',st);
   const log=store.get('pz_log',{}),d=new Date().toISOString().slice(0,10);log[d]=(log[d]||0)+1;store.set('pz_log',log);
   if(gq.type==='mc')$('#gbox').querySelectorAll('[data-i]').forEach((x,i)=>{x.disabled=true;if(i===gq.a)x.classList.add('right');else if(i===v)x.classList.add('wrong')});
   showSol(ok);
 }
 function showSol(ok){
-  const ans=gq.type==='mc'?gq.opts[gq.a]:gq.type==='num'?fmt(gq.a):gq.show;
-  $('#gfb').innerHTML=`${ok==null?'':`<p style="margin:12px 0 0"><b style="color:var(${ok?'--ok':'--bad'})">${ok?'Doğru':'Yanlış'}</b>${ok?'':` — doğru cevap: <b>${esc(String(ans))}</b>`}</p>`}<div class="sol">${ok==null?`Cevap: <b>${esc(String(ans))}</b><br>`:''}${gq.sol}</div>`;
+  const multi=gq.type==='multi',ans=gq.type==='mc'?gq.opts[gq.a]:gq.type==='num'?fmt(gq.a):multi?gq.fields.map(([l,a])=>`${l} = ${fmt(a)}`).join(' · '):gq.show;
+  $('#gfb').innerHTML=`${ok==null?'':`<p style="margin:12px 0 0"><b style="color:var(${ok?'--ok':'--bad'})">${ok?'Doğru':multi?`Yanlış (${gq.right}/${gq.fields.length} doğru)`:'Yanlış'}</b>${ok?'':` — doğru cevap${multi?'lar':''}: <b>${esc(String(ans))}</b>`}</p>`}<div class="sol">${ok==null?`Cevap: <b>${esc(String(ans))}</b><br>`:''}${gq.sol}</div>`;
   $('#gshow').hidden=true;$('#gnext').classList.remove('alt');$('#gnext').focus();
 }
 
