@@ -229,3 +229,80 @@ Unsurun **olasılık** derecesi · işletmeye **etki** derecesi · **önem** der
 - **İşbirliği yaklaşımı:** pazarlık, sözleşme, içeriden ilişki, ortak girişim, stratejik ortaklık, birleşme ve satın alma, meslek birlikleri, resmi makamlarla ilişki.
 - **Stratejik esneklik:** iki yaklaşımı **terazi** gibi dengelemek. Yalnız korunma → hantallık, yüksek maliyet, inovasyonu kaçırma; yalnız işbirliği → bağımsızlık kaybı, aşırı bağımlılık.
 - *Apple:* M çipleri ve iOS'ta **korunma** ("kale"), üretimde TSMC ve Foxconn ile **işbirliği** ("köprü").
+
+
+# Konu 7 — Ders kaydı: İşletme içi çevre analizi (varlık, yetenek, temel ve dinamik yetenek)
+*Kaynak: ders kaydı (vize öncesi son hafta). Hoca: sınavda konu slaytının **30. sayfasına kadar** sorumlusunuz.*
+
+## Sınav için hatırlatmalar (hocanın tekrarı)
+- Stratejik yönetim: **sürdürülebilir rekabet üstünlüğü** ve **ortalamanın üzerinde getiri** için bilgi toplama → analiz → seçim/karar → uygulama süreci. Önce **stratejik bilinç** (vizyon) gerekir, sonra **stratejistler** seçilir (yönetici ve uzman stratejistler; **yöneticiler ekipte olmazsa olmaz**).
+- **Çevresel analiz = dış çevre + iç çevre analizi.**
+- **Uzak çevre = genel çevre** (aynı anlam; sınavda ikisi de çıkar). Faaliyetleri doğrudan etkilemez ama uzun dönemde varlığı etkiler; şirketi **proaktif** yapar. 8 unsur; özel işletme için en kritiği **ekonomik** çevre. Demografik ve sosyokültürel çevre farkını bil.
+- **Yakın çevre = sektör çevresi = iş çevresi** (üçü aynı; sınavda üç şekilde de çıkar). Aktörler: **tedarikçiler, müşteriler, rakipler**. Ana pazarda tedarikçiler **yoktur**. Porter rekabet analizine ana pazarda olmayan iki unsur ekler: **olası rakipler** (giriş engelleri ve misillemeye dikkat) ve **ikame ürünler** (benzer ürün değil, **aynı ihtiyacı** gideren alternatif). Ayrıca **esas rakip analizi** (varsayımlar, yetenekler, mevcut stratejiler).
+- Kariyer notu: stratejik bilinci olmayan şirkette ilk yıllarda beceri kazan, ama yeni iş bulmadan ayrılma.
+
+## İşletme analizi (iç çevre analizi)
+- **İşletme içi çevre analizi = işletme analizi** (aynı anlam). Metafor: şimdiye kadar canlının yaşadığı ortamı inceledik; şimdi **organlarını, kaslarını** inceliyoruz.
+- Amaç: işletmenin **mevcut durumunu rakiplerine göre** analiz etmek → dış çevreden gelen **fırsat ve tehditler** karşısında rakiplere göre **güçlü ve zayıf yönleri** ortaya çıkarmak (ileride durum belirleme matrisleri / SWOT).
+- **İşletme analizinin 5 alanı** (isim olarak bil; 4 ve 5'in detayından sorumlu değilsin):
+  1. Varlık ve yeteneklerin belirlenmesi
+  2. Bunların **temel yetenek** olup olmadığının belirlenmesi (değerli, nadir, ikame/taklit edilemez ya da zor)
+  3. Rakiplere göre durumun belirlenmesi → **üstünlükler ve zayıflıklar**
+  4. Temel işlevlerin ve finansal işlevlerin analizi (vizeden sonra)
+  5. **Kritik başarı faktörlerinin** analizi
+
+## Varlıklar
+- İşletmenin ürün/hizmet üretirken **sahip olduğu ve kullandığı tüm unsurlar** (üretilen ürün ve hizmetler dahil).
+- **Maddi varlıklar:** fiziksel, gözle görülebilen; **parayla elde edilebilen** unsurlar — makine, teçhizat, bina, ürünler. **Dikkat: iş gücünün SAYISI maddi varlıktır** (500 çalışan, 250 beyaz yaka + 250 mavi yaka).
+- **Maddi olmayan varlıklar:** görünmeyen, **yalnızca parayla elde edilemeyen**, taklidi zor ve **işletmeyi ayırt eden** unsurlar — yıllar içinde oluşan **itibar**, güvenilirlik, marka, patent, bilgi birikimi.
+
+## Yetenekler
+- **Yetenek = varlıkları amaca uygun, koordineli kullanabilme becerisi**; şirketin **insan kaynağının kapasitesine** bağlıdır.
+- *Hocanın deneyimi:* aynı şirketin Denizli, Adana ve Çorlu fabrikaları — aynı ürün, aynı hat, benzer işçi sayısı, aynı patent — ama Adana bir türlü aynı verimi yakalayamıyor. Farkı yaratan **yetenek** (doğru insan kaynağı, motivasyon).
+- Yetenek örnekleri: pazarlamada iyi bir **pazarlama araştırma sistemi**, dijital kanalları iyi kullanma; üretimde **yüksek kapasite kullanımı**, kaliteli üretim; **Ar-Ge**'de kendi Ar-Ge'sini yapıp dışarıya Ar-Ge hizmeti satabilme (yan gelir); finansta kriz dönemlerinde iyi **nakit akışı yönetimi**; İK'da doğru zamanda doğru yere doğru kişi.
+
+## Temel yetenekler
+- Herkesin elde edebileceği sıradan varlık ve yetenekler rekabet üstünlüğü için **yeterli değil** → **temel yetenekler**.
+- Ölçütler: **sektörde değerli** (müşterisi var; inovasyon ticarileşince inovasyondur), **nadir**, **ikame edilemez / taklit edilemez — ya da bunun zor olması** (bugünün teknolojisinde "hiç taklit edilemez" pek mümkün değil).
+- Örnekler: **IKEA** (erişilebilir maliyet + tasarım), **Coca-Cola** (rakiplerin kopyalayamadığı tat), **Apple** (görünen: telefon, bilgisayar, saat; gerçek temel yetenek: **kullanıcı deneyimini merkeze alan donanım–yazılım entegrasyonu ve estetik tasarım**; cihazlar arası kusursuz geçiş, yıllarca süren kapalı ekosistem kopyalanamıyor), **Zara** (tasarımdan mağazaya **~15 günlük** çevik tedarik zinciri; üretimin çoğunu yakın coğrafyada tutup mağaza müdürlerinden gelen anlık veriyle yönlendiriyor).
+- Temel yetenekler belirlenirken **doğru şirketlerle kıyaslama (benchmark)** yapılmalı; ortalamanın üzerinde kazananlara bakılmalı.
+- Temel yetenekler **güncellenmeli**: *Samsung* 1938'de balık, erişte, gıda şirketi olarak kuruldu; bugün teknoloji devi. Güncellenmezse → **yetenek tuzağı / temel yetenek kibri** ("ben bir numarayım, bana ölüm yok") → çok kârlıyken birkaç yılda yok olma. Gerektiğinde **stratejik pivot**.
+
+## Dinamik yetenekler
+- Kopyalama ve ikame artık çok hızlı; temel yeteneği korumak yetmez → **dinamik yetenek**: değişen ve **gelecekte değişecek** çevreyi görerek yeni yetenekler ekleyebilme, temel yeteneği dönüştürebilme, gerektiğinde yön değiştirebilme (**çeviklik**; evrim kuramı: en güçlü değil, uyum sağlayan ayakta kalır).
+- Dinamik yetenek yalnızca bugün neyi iyi yaptığını değil, **gelecekte hangi iş modeli, hangi pazar, hangi teknoloji** sorusunu yanıtlar.
+- **Nokia (başarısızlık):** sağlam, uzun pil ömürlü donanım ve dev tedarik zinciri yönetiminde dünyanın en iyisiydi; dokunmatik/yazılım odaklı rakiplerle (günde şarj biten telefonlarla) dalga geçti; tüm kültür donanıma odaklı olduğu için yazılıma geçişte çok geç kaldı → temel yeteneğini sürdürülebilir kılamadı.
+- **Microsoft (başarı):** eski temel yetenek masaüstü işletim sistemi ve kutulu lisans satışı; masaüstü tekelinin biteceğini sezdi, **Satya Nadella** ile bulut stratejisine geçti, Office'i rakip platformlara açtı, kurumsal **yapay zekâ** çözümlerine yöneldi.
+- **BYD:** batarya şirketi olarak kuruldu, bu teknolojiyi elektrikli araçlara taşıdı, **Tesla'yı geçti**; araç girdilerinin yaklaşık **%75'ini** kendi üreten dikey entegre yapı → maliyet ve hız avantajı.
+
+# Konu 8 — Ders kaydı: Değer zinciri analizi (Michael Porter)
+
+## Değer nedir?
+- Her faaliyet ve fonksiyon bir **maliyettir**. İşletme değer yaratan veya değere katkı sunan faaliyetleri tespit eder; değer yaratmayanları **elimine eder ya da iyileştirir**.
+- **Değer = müşterinin ödemeye razı olduğu bedel (gelir) − maliyet** → işletmenin cebine kalan (kâr). *Starbucks:* maliyeti ~5 TL olan kahveyi ~200 TL'ye satarak ~195 TL değer yaratır; değer zinciri analizi bu değerin hangi faaliyetlerde yaratıldığını gösterir.
+- Müşteri neden satın alır? Ya piyasadan **daha uygun fiyatlı** olduğunu bilir, ya da piyasadakinden **farklı** bir şey aldığına inanıp **daha fazla öder**.
+- Ortalama getirinin üstüne çıkmanın iki yolu: **maliyeti düşürmek** (fiyat piyasa ortalamasında) ya da **farklılaşarak** müşterinin ödemeye razı olduğu bedeli artırmak (maliyet aynı kalsa da). Stratejik yönetimde "olduğun yerde saymak" yok; hep değeri artırmaya çalışılır. Odak: ortalamanın üzerinde kazanan işletmeler.
+- Değer anlamlı olması için: **minimum maliyetle** yaratılmalı ve **rakiplerden fazla** olmalı. Faaliyetler bir **zincir** gibi birbirine bağlıdır (domino etkisi).
+- Porter'ı daha önce **5 güç analizinde** (yakın çevre/rekabet analizi) görmüştük — bağlantı kur!
+
+## Değer zinciri analizi
+- İşletmedeki tüm faaliyetlerin **değer yaratma bakımından sistematik olarak incelendiği**, **rakiplerle kıyaslandığı** analitik araç. Hangi faaliyetlerde maliyet düşürülecek, hangilerinde farklılaşılacak, hangileri elimine edilecek ya da dışarıdan alınacak kararlarını destekler.
+
+| Temel (birincil) faaliyetler — fiziksel üretim ve satışla doğrudan ilgili | Destek faaliyetler — temel faaliyetlerin sağlıklı yürümesini sağlar |
+|---|---|
+| 1. **İç (girdi) lojistik:** hammadde ve yardımcı malzemenin **fiziksel** teslim alınması, taşınması, stoklanması | 1. **Tedarik (satın alma):** girdinin **nereden, hangi şartlarla** alınacağı, spesifikasyon, sözleşme, satın alma departmanı (servis, yemek gibi tüm girdiler) |
+| 2. **Operasyon / üretim:** üretim süreçleri, montaj, kontrol | 2. **Teknoloji geliştirme:** Ar-Ge, süreç tasarımı ve iyileştirme, patentler, kullanılan teknolojiler |
+| 3. **Dış (çıktı) lojistik:** depolama, dağıtım kanalları, teslimat | 3. **İnsan kaynakları yönetimi:** gereken zamanda, gereken nitelikte insanın istihdamı, eğitim |
+| 4. **Pazarlama ve satış:** fiyatlandırma, tutundurma, tanıtım, marka yönetimi | 4. **Firma altyapısı:** yönetim (planlama, organizasyon, kontrol), finans, muhasebe, hukuk |
+| 5. **Satış sonrası hizmet:** garanti, bakım-onarım, müşteri eğitimi | |
+
+- **İnce ayrım (sınavda kesin):** cam üretiminde toprağın **nereden alınacağına karar vermek** → **tedarik (destek)**; toprağın fabrikaya **getirilmesi ve stoklanması** → **iç lojistik (temel)**.
+- Maliyet muhasebesi benzetmesi: ürüne doğrudan giren mavi yaka işçilik **direkt**, mühendis/yönetici **endirekt** (destek) sayılır.
+- Analiz adımları: temel ana ve alt faaliyetleri belirle → destek faaliyetleri belirle → maliyetlerini belirle → yarattıkları değeri belirle → kâr marjını artırmak için hangi faaliyette maliyet düşürülecek, hangisinde farklılaşılacak karar ver → elimine edilecekleri belirle → **rakiplerle kıyasla**. (Adımların detayı sınavda sorulmayacak; büyük resmi bil.)
+- *Apple'ın değer zinciri:* iç lojistik — küresel tedarikçilerden milyonlarca parçanın montaj merkezlerine sevki; operasyon — kendi üretim tesisi yok, tasarım ve test süreçlerine odaklanır; dış lojistik — lansman günü tüm dünyada aynı anda rafta olmak için hava kargo ve etkin depo yönetimi; pazarlama — minimalist, deneyim odaklı; satış sonrası — **Genius Bar, AppleCare**, uzun yazılım desteği → teknik desteği premium hizmete dönüştürür; donanım–yazılım bütünlüğü sayesinde müşteri üretim maliyetinin çok üstünde öder.
+
+## Derste çözülen vakalar (sınavda bu tarz 3–4 soru gelecek)
+- **Kronos (İsviçre, 80 yıllık mekanik saat firması):** Cenevre'de dev fabrika, 450 usta saat işçisi, elmas kesim makineleri, saat mekanizması üzerine 120 patent; en önemli gücü yalnızca kendi mühendislerinin bildiği **sürtünmesiz çark** üretimi. Akıllı saatlerle satışlar %60 düşer; eski yönetim "bizim işimiz pil değil, mekanik sanat" diyerek akıllı saate girmeyi reddeder. Yeni CEO mikro-mekanik bilgiyi medikal teknolojiyle birleştirip **pilsiz, vücut ısısıyla çalışan akıllı sağlık saati** üreterek şirketi kurtarır.
+  - Maddi varlıklar: fabrika, 450 usta işçi (sayı), makineler. Maddi olmayan: 80 yılda oluşan **güvenilirlik/itibar**, patentler, sürtünmesiz çark bilgisi. Temel yetenek: **sürtünmesiz çark** (nadir, taklidi zor).
+  - Eski yönetimin hatası: **dış çevre analizini** doğru yapmayıp temel yeteneği dönüştürmemek (**yetenek tuzağı**). Yeni CEO: temel yeteneği dönüştürdü → **dinamik yetenek**.
+- **Yerel kahve zinciri:** 1) Kolombiya'daki çiftçilerden aracısız çekirdek almak için uzman satın alma ekibi → **tedarik (destek)**; 2) çekirdeklerin ana depoya getirilmesi ve şubelere günlük sevkiyatı için soğuk zincir lojistiği → **lojistik (temel)**; 3) baristalara 6 aylık demleme ve iletişim eğitimi → **insan kaynakları (destek)**; 4) damak tadına göre kahve öneren yapay zekâ uygulaması → **teknoloji geliştirme (destek)**; 5) şubelerdeki espresso makinelerinin aylık bakım-onarımı için teknik ekip → kayıtta sınıflama net duyulmuyor (makineler şirketin kendi şubelerinde olduğu için operasyonu destekleyen bakım; hocaya teyit et). Odak: kalite ve deneyimle **farklılaşma** (son soru kayıtta tam duyulmuyor).

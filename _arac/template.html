@@ -60,6 +60,10 @@ a{color:var(--accent)}
 .mf{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:4px}.mf label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)}.mf .gin{min-width:0}
 .gin.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--bg))}.gin.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--bg))}
 .pr table{border-collapse:collapse;font-size:14px;margin:8px 0}.pr th,.pr td{border:1px solid var(--line);padding:4px 10px;text-align:center}
+.avl .nd{cursor:pointer}.avl .nd.sel circle{fill:var(--accent)}.avl .nd.sel text{fill:var(--accent-ink)}
+.avl .nd.bad circle{stroke:var(--bad);stroke-width:3.5}.avl .bf{font-size:11px;fill:var(--mute);text-anchor:start}.avl .nd.bad .bf{fill:var(--bad);font-weight:700}
+.avl.anim line{animation:avfade .4s ease .35s both}@keyframes avfade{from{opacity:0}}
+.seqc{display:inline-block;min-width:30px;text-align:center;padding:2px 8px;border-radius:6px;margin:2px;background:var(--soft);font-weight:600}.seqc.done{opacity:.4;text-decoration:line-through}.seqc.next{background:var(--accent);color:var(--accent-ink)}
 .sol{background:var(--soft);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:15px}
 </style>
 </head>
@@ -259,9 +263,67 @@ const exprT=(n,leaf,ops)=>{if(n===1)return{v:leaf()};const k=R(1,n-1),l=exprT(k,
 const inf=t=>{if(t.v!=null)return String(t.v);let a=inf(t.l),b=inf(t.r);if(t.l.op&&PR[t.l.op]<PR[t.op])a=`(${a})`;if(t.r.op&&PR[t.r.op]<=PR[t.op])b=`(${b})`;return `${a} ${t.op} ${b}`};
 const pst=t=>t.v!=null?[t.v]:[...pst(t.l),...pst(t.r),t.op], prf=t=>t.v!=null?[t.v]:[t.op,...prf(t.l),...prf(t.r)];
 const ev=t=>t.v!=null?t.v:({'+':(a,b)=>a+b,'-':(a,b)=>a-b,'*':(a,b)=>a*b})[t.op](ev(t.l),ev(t.r));
+const AVL={
+  bf:n=>T.h(n.l)-T.h(n.r),
+  ser:t=>t?`(${t.v} ${AVL.ser(t.l)} ${AVL.ser(t.r)})`:'-',
+  rotR(n){const l=n.l;n.l=l.r;l.r=n;return l},
+  rotL(n){const r=n.r;n.r=r.l;r.l=n;return r},
+  bad:t=>t?T.nodes(t).filter(x=>Math.abs(AVL.bf(x.n))>1).sort((a,b)=>b.d-a.d):[],
+  find:(t,v,p=null,s=null)=>!t?null:t.v===v?{n:t,p,s}:AVL.find(v<t.v?t.l:t.r,v,t,v<t.v?'l':'r'),
+  // standart AVL ekleme: her dengesizlikte gereken en az döndürmeyi ve durumu kaydeder
+  ins(t,v,ev){if(!t)return{v,l:null,r:null};if(v<t.v)t.l=AVL.ins(t.l,v,ev);else t.r=AVL.ins(t.r,v,ev);const b=AVL.bf(t);
+    if(b>1){if(AVL.bf(t.l)>=0){ev.push({v,z:t.v,y:t.l.v,c:'LL',r:1});return AVL.rotR(t)}ev.push({v,z:t.v,y:t.l.v,x:t.l.r.v,c:'LR',r:2});t.l=AVL.rotL(t.l);return AVL.rotR(t)}
+    if(b<-1){if(AVL.bf(t.r)<=0){ev.push({v,z:t.v,y:t.r.v,c:'RR',r:1});return AVL.rotL(t)}ev.push({v,z:t.v,y:t.r.v,x:t.r.l.v,c:'RL',r:2});t.r=AVL.rotR(t.r);return AVL.rotL(t)}
+    return t},
+  ad:{LL:'Sol-sol (LL)',RR:'Sağ-sağ (RR)',LR:'Sol-sağ (LR)',RL:'Sağ-sol (RL)'},
+  step:e=>({LL:`${e.y} düğümünü sağa döndür (${e.y} yukarı, ${e.z} sağ-aşağı)`,RR:`${e.y} düğümünü sola döndür (${e.y} yukarı, ${e.z} sol-aşağı)`,LR:`önce ${e.x} düğümünü sola döndür (${e.y} düğümünün yerine çıkar), sonra ${e.x} düğümünü sağa döndür (${e.z} düğümünün yerine çıkar)`,RL:`önce ${e.x} düğümünü sağa döndür (${e.y} düğümünün yerine çıkar), sonra ${e.x} düğümünü sola döndür (${e.z} düğümünün yerine çıkar)`})[e.c],
+  svg(t,sel,bad,bf){let i=0;const pos=new Map();(function w(n,d){if(!n)return;w(n.l,d+1);pos.set(n,[i++*50+30,d*62+30]);w(n.r,d+1)})(t,0);
+    let e='',c='';pos.forEach(([x,y],n)=>{[n.l,n.r].forEach(k=>{if(k){const[a,b]=pos.get(k);e+=`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}"/>`}});const b=AVL.bf(n);
+      c+=`<g class="nd${n.v===sel?' sel':''}${bad.includes(n.v)?' bad':''}" data-v="${n.v}"><circle cx="${x}" cy="${y}" r="18"/><text x="${x}" y="${y+5}">${n.v}</text>${bf?`<text class="bf" x="${x+20}" y="${y-15}">${b>0?'+'+b:b<0?'−'+(-b):'0'}</text>`:''}</g>`});
+    return `<svg class="tree avl" viewBox="0 0 ${i*50+30} ${T.h(t)*62+8}" style="max-width:${i*50+30}px">${e}${c}</svg>`}
+};
 const tbl=(head,rows)=>`<table><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table>`;
 
 const GEN={
+  avl:{label:'AVL döndürme (etkileşimli)',f(){const two=Math.random()<.6;let seq,ev,t,k=0;
+    do{seq=shuf([...Array(19)].map((_,i)=>(i+1)*5)).slice(0,R(6,8));t=null;ev=[];seq.forEach(x=>t=AVL.ins(t,x,ev))}while((ev.length<2||ev.length>4||(two&&!ev.some(e=>e.r===2)))&&++k<2000);
+    const need=sum(ev.map(e=>e.r));
+    return{type:'avl',seq,ans:AVL.ser(t),tree:null,i:0,sel:null,hist:[],bfOn:false,
+      q:`Boş bir AVL ağacına sırasıyla <b>${seq.join(', ')}</b> ekle. Gerektiğinde bir düğüme dokunup <b>sağa / sola döndür</b>. Hepsini ekleyince <b>Kontrol et</b>: son ağacın doğru AVL ağacı olup olmadığına bakılır.`,
+      show:'aşağıdaki ağaç',
+      sol:`BF = h(sol) − h(sağ). Dengesizlik, eklenen düğüme en yakın |BF| = 2 olan düğümde düzeltilir:<br>`+ev.map(e=>`<b>${e.v}</b> eklenince <b>${e.z}</b> düğümünde BF = ${e.c[0]==='L'?'+2':'−2'} → ${AVL.ad[e.c]}: ${AVL.step(e)}`).join('<br>')+`<br>Doğru sonuç ağacı:`+T.svg(t)}}},
+  ppc:{label:'Ücretli arama (PPC)',f(){const k=R(0,4);
+    if(k===0){const c=pick([2,3,4,5,8,10,12,15]),n=R(5,60)*100,b=c*n;return{q:`Bir anahtar kelimeye <b>${N(b)} TL</b> bütçe ayırdın; tıklama başı maliyet (TBM) <b>${c} TL</b>. Bütçe bitene kadar en fazla kaç <b>tıklama</b> alırsın?`,type:'num',a:n,sol:`Ücretli aramada yalnızca tıklamada ödenir: ${N(b)} / ${c} = ${N(n)} tıklama. Gösterim (görüntülenme) ücretsizdir; bütçe bitince reklam durur.`}}
+    if(k===1){const g=R(20,200)*100,t=Math.round(g*R(5,80)/1000),a=t/g*100;return{q:`Reklamın <b>${N(g)}</b> kez gösterildi ve <b>${N(t)}</b> kez tıklandı. <b>Tıklama oranı (TO / CTR)</b> yüzde kaçtır?`,type:'num',a,sol:`TO = tıklama / gösterim × 100 = ${N(t)} / ${N(g)} × 100 = %${fmt(a)}`}}
+    if(k===2){const c1=pick([20,25,40,50]),c2=pick([5,8,10]),b=R(5,50)*200,a=b/c2-b/c1;return{q:`<b>${N(b)} TL</b> bütçen var. Genel kelime "elbise"nin TBM'si <b>${c1} TL</b>, uzun kuyruklu "Denizli'de beyaz elbise"nin TBM'si <b>${c2} TL</b>. Uzun kelimeyi seçersen kaç <b>fazla tıklama</b> alırsın?`,type:'num',a,sol:`${N(b)} / ${c2} = ${N(b/c2)} tıklama; ${N(b)} / ${c1} = ${N(b/c1)} tıklama → fark ${N(a)}. Kelime uzadıkça fiyat düşer ama görüntülenme de azalır; trafik daha hedefli olur.`}}
+    const [q,o,s]=pick([
+      ['Az ama tam hedefli trafik istiyorsun; yalnızca anahtar kelimeni birebir yazanlar reklamını görsün. Hangi eşleşme tipi?',['Tam eşleşme','Cümle eşleşmesi','Geniş eşleşme','Negatif anahtar kelime'],'Tam eşleşme en katı tiptir: az kişi görür ama para boşa gitmez.'],
+      ['"beyaz elbise" kelimesine ek kelimeler eklenmiş aramalarda da ("ipek beyaz elbise", "çiçekli beyaz elbise") görünmek istiyorsun. Hangi eşleşme tipi?',['Cümle eşleşmesi','Tam eşleşme','Geniş eşleşme','Negatif anahtar kelime'],'Cümle eşleşmesi kelime öbeğini içeren aramaları da kapsar: trafik artar, alaka biraz azalır.'],
+      ['Sektöre yeni giren bir giyim markası, bütçesi de bol; elbiseyle ilgili her aramada tanınmak istiyor. Hangi eşleşme tipi?',['Geniş eşleşme','Tam eşleşme','Cümle eşleşmesi','Negatif anahtar kelime'],'Geniş eşleşme yakın her aramada gösterir (kırmızı elbise, beyaz etek…): trafik çok, verim düşük; bilinirlik ve yeni müşteri için seçilir.'],
+      ['"Beyaz elbise dolabı" arayanların giyim reklamını görüp parayı boşa harcatmasını önlemek için ne yapılır?',['"dolap" negatif anahtar kelime yapılır','Geniş eşleşmeye geçilir','TBM artırılır','Landing page ana sayfa yapılır'],'Negatif anahtar kelime, reklamın alakasız aramalarda çıkmasını engeller.'],
+      ['Koşu şortu kampanyasına tıklayanlar koşu tişörtü alıyor; iki kampanya birbirinin bütçesini yiyor ve hangisinin işe yaradığı ölçülemiyor. Bu durumun adı nedir?',['Yamyamlık etkisi','Jenerikleşme','Kalite puanı','Geniş eşleşme'],'Çözüm: kampanyalar arasına negatif anahtar kelimelerle "set" çekmek.'],
+      ['Aşağıdakilerden hangisi Google\'ın kalite puanını belirleyen unsurlardan biri DEĞİLDİR?',['Şirketin çalışan sayısı','Anahtar kelime ile reklam metninin uyumu','Reklam ile açılış (landing) sayfasının uyumu','Daha önce sorunsuz reklam vermiş olmak'],'Kalite puanı: anahtar kelime + reklam + landing page uyumu (ve reklam geçmişi). Yüksek kalite puanı daha düşük teklifle kazanmayı sağlar.'],
+      ['Google iki reklam veren arasında kimin reklamını göstereceğine neye göre karar verir?',['Teklif (açık artırma) ve kalite puanı','Yalnızca en yüksek teklif','Yalnızca şirket büyüklüğü','Kura'],'3 TL veren, kalite puanı yüksekse 4 TL verene karşı kazanabilir.'],
+      ['"Selpak", "jilet" gibi marka adlarının ürün türünün adı hâline gelmesine ne denir?',['Jenerikleşme','Yamyamlık','Negatif eşleşme','Programatik'],'Jenerik kelimelerde rekabet ve TBM yüksektir; markası jenerikleşen şirket marka değerini koruyamaz.'],
+      ['Reklama tıklayan kullanıcı hangi sayfaya yönlendirilmelidir?',['Anahtar kelimeyle ilgili özel hazırlanmış açılış (landing) sayfasına','Her zaman ana sayfaya','Şirketin "Hakkımızda" sayfasına','Rakibin sayfasına'],'Landing page özel, alakalı, kopya içeriksiz olmalı; kıtlık teklifleri ve sosyal kanıtla kullanıcıyı tutmalı.']]);
+    return{q,type:'mc',...mcq(o),sol:s}}},
+  degerzinciri:{label:'Değer zinciri sınıflama',f(){const K=['İç (girdi) lojistik','Operasyon (üretim)','Dış (çıktı) lojistik','Pazarlama ve satış','Satış sonrası hizmet','Tedarik (satın alma)','Teknoloji geliştirme','İnsan kaynakları yönetimi','Firma altyapısı'];
+    const [s,a]=pick([['Hammaddenin tırlarla fabrikaya taşınması ve depolanması',0],['Kahve çekirdeklerinin ana depoya getirilmesi ve stoklanması',0],['Parçaların montaj hattında birleştirilmesi',1],['Ürünlerin üretim hattında kalite kontrolden geçirilmesi',1],['Hazır ürünlerin bayilere dağıtımı ve teslimatı',2],['Yeni ürünün lansman günü tüm mağaza raflarında olması için hava kargo',2],['Fiyatlandırma ve reklam kampanyaları',3],['Satış ekibinin müşteri ziyaretleri',3],['Garanti ve tamir hizmeti',4],['Müşteriye ürün kullanım eğitimi',4],['Genius Bar / teknik destek hizmeti',4],['Hammaddenin hangi tedarikçiden alınacağına karar verilmesi',5],['Satın alma departmanının tedarikçilerle sözleşme yapması',5],['Kahve çekirdeklerini çiftçiden aracısız almak için uzman satın alma ekibi',5],['Ar-Ge departmanının süreç iyileştirmesi',6],['Müşteriye tadına göre kahve öneren yapay zekâ uygulaması geliştirilmesi',6],['Patent başvuruları ve ürün tasarımı',6],['Baristalara 6 aylık eğitim programı',7],['Personel seçimi, işe alım ve performans değerlendirme',7],['Muhasebe ve finans yönetimi',8],['Genel müdürlüğün planlama ve kontrol faaliyetleri',8],['Hukuk ve kalite yönetim sistemi',8]]);
+    const o=[K[a],...shuf(K.filter((_,i)=>i!==a)).slice(0,3)];
+    return{q:`Porter'ın değer zinciri modeline göre: <b>${s}</b> hangi faaliyettir?`,type:'mc',...mcq(o),sol:`<b>${K[a]}</b> — ${a<5?'temel (birincil) faaliyet: ürünün fiziksel üretimi, satışı ve sonrasıyla doğrudan ilgili.':'destek faaliyet: temel faaliyetlerin sağlıklı yürümesini sağlar.'}<br>Temel: iç lojistik, operasyon, dış lojistik, pazarlama-satış, satış sonrası hizmet. Destek: tedarik, teknoloji geliştirme, insan kaynakları, firma altyapısı. Not: girdinin fiziksel taşınması iç lojistik; nereden/nasıl alınacağı kararı tedariktir.`}}},
+  varlik:{label:'Varlık · yetenek · temel yetenek',f(){
+    if(Math.random()<.6){const [s,a]=pick([['Fabrika binası ve arsası',0],['Makine ve teçhizat',0],['İşletmede 500 çalışan bulunması (çalışan sayısı)',0],['Stoktaki ürünler',0],['Kasadaki nakit',0],['Marka itibarı',1],['Müşterilerin 80 yılda oluşan güveni',1],['Patentler ve teknolojik sırlar',1],['Kurum kültürü',1],['Yalnızca şirket mühendislerinin bildiği üretim bilgisi (know-how)',1]]);
+      return{q:`İşletme analizinde <b>${s}</b> nasıl sınıflandırılır?`,type:'mc',opts:['Maddi varlık','Maddi olmayan varlık'],a,sol:'Maddi varlık: fiziksel olarak görülebilen, parayla elde edilebilen unsurlar (çalışan SAYISI da maddi). Maddi olmayan: görünmeyen, yalnızca parayla elde edilemeyen, işletmeyi ayırt eden unsurlar (itibar, güven, patent, kültür).'}}
+    const [q,o,s]=pick([
+      ['Aynı şirketin aynı makine, patent ve çalışan sayısına sahip üç fabrikasından biri sürekli daha verimliyse farkı ne yaratır?',['Yetenekler (varlıkları kullanabilme becerisi, insan kaynağı)','Maddi varlıklar','Ürün çeşitliliği','Genel çevre'],'Yetenek, varlıkları amaca uygun kullanabilme becerisidir ve insan kaynağının kapasitesine bağlıdır.'],
+      ['Aşağıdakilerden hangisi bir yeteneğin TEMEL yetenek sayılması için aranan özelliklerden biri DEĞİLDİR?',['Parayla kolayca satın alınabilmesi','Sektörde değerli olması (müşterisi olması)','Nadir olması','Taklit / ikame edilmesinin zor olması'],'Temel yetenek: değerli, nadir, taklit veya ikame edilmesi zor.'],
+      ['Zara\'nın tasarımdan mağazaya ~15 günlük çevik tedarik zinciri neye örnektir?',['Temel yetenek','Maddi varlık','Taktik','Genel çevre unsuru'],'Rakiplerin kopyalayamadığı, hızlı moda pazarında farklılaştıran yetenek.'],
+      ['Nokia\'nın donanımdaki başarısına güvenip yazılım dönüşümünü kaçırması hangi kavramla açıklanır?',['Yetenek tuzağı (temel yetenek kibri)','Dinamik yetenek','Yamyamlık','Stratejik esneklik'],'Temel yetenek güncellenmezse kısa sürede çöküş gelebilir.'],
+      ['Microsoft\'un masaüstü lisans gelirinden bulut ve yapay zekâya kayması neye örnektir?',['Dinamik yetenek','Yetenek tuzağı','Maddi varlık','Sosyal kaytarma'],'Dinamik yetenek: değişen çevreye göre yeni yetenekler geliştirip temel yeteneği dönüştürebilmek.'],
+      ['BYD\'nin batarya üreticisiyken bu teknolojiyi elektrikli araçlara taşıyıp lider olması neye örnektir?',['Temel yeteneğin dinamik olarak dönüştürülmesi','Yetenek tuzağı','Reaktif yaklaşım','Tam rekabet'],'Batarya yetkinliği + yüksek dikey entegrasyon (~%75) → maliyet ve hız avantajı.'],
+      ['Apple\'ın temel yeteneği olarak derste ne gösterildi?',['Kullanıcı deneyimini merkeze alan donanım–yazılım entegrasyonu ve estetik tasarım','Kendi fabrikalarında üretim yapması','En ucuz telefonu üretmesi','Bayi ağının genişliği'],'Görünen ürün telefon/bilgisayar; gerçek temel yetenek entegrasyon ve tasarım.'],
+      ['Temel yetenekler belirlenirken kıyaslama (benchmark) kime göre yapılmalıdır?',['Doğru (ortalamanın üzerinde kazanan) rakiplere','Sektördeki en zayıf firmaya','Başka sektörlerdeki rastgele firmalara','Kıyaslama gerekmez'],'Yanlış şirketle kıyaslarsak temel yeteneklerimizi yanlış belirleriz.']]);
+    return{q,type:'mc',...mcq(o),sol:s}}},
   traversal:{label:'Ağaç dolaşma',f(){const t=T.rand(R(6,9)),[nm,fn]=pick([['preorder (kök–sol–sağ)',T.pre],['inorder (sol–kök–sağ)',T.ino],['postorder (sol–sağ–kök)',T.post],['level order (seviye seviye)',T.lvl]]),a=fn(t);
     return{q:`Aşağıdaki ikili ağacın <b>${nm}</b> dolaşma sırasını yaz.`+T.svg(t),type:'txt',a:a.join(''),show:a.join(', '),sol:`Sıra: <b>${a.join(', ')}</b>`}}},
   bst:{label:'İkili arama ağacı',f(){const v=shuffle([...Array(70)].map((_,i)=>i+5)).slice(0,R(7,9));let t=null;v.forEach(x=>t=T.ins(t,x));
@@ -289,7 +351,15 @@ const GEN={
     if(!ds.length){const x=R(1,30);ds.push(x);ops.push(`${S?'push':'enqueue'}(${x})`)}
     const k=last!=null?R(0,2):R(0,1),q=[S?'Tepede (top) hangi eleman vardır?':'Önde (front) hangi eleman vardır?','Yapıda kaç eleman kalmıştır?',`Son ${S?'pop':'dequeue'} işlemi hangi elemanı çıkarmıştır?`][k];
     return{q:`Boş bir ${S?'yığına (stack)':'kuyruğa (queue)'} sırasıyla şu işlemler uygulanıyor:<div class="raw">${ops.join(', ')}</div>${q}`,type:'num',a:[S?ds[ds.length-1]:ds[0],ds.length,last][k],sol:`Son durum (${S?'alttan tepeye':'önden arkaya'}): [${ds.join(', ')}]. ${S?'LIFO: son giren ilk çıkar.':'FIFO: ilk giren ilk çıkar.'}`}}},
-  kpi:{label:'E-ticaret göstergeleri',f(){const k=R(0,3);
+  esinif:{label:'Faaliyet sınıflandırma',f(){
+    const [s,a]=pick([["Çalışanın internetten izin talep etmesi",0],["ERP sisteminde stok izleme",0],["Çalışanların çevrim içi eğitim alması",0],["Müşteri şikâyetinin CRM sistemine kaydedilmesi",0],["Faturaların PDF olarak saklanması",0],["Müşterinin sitede yalnızca ürün incelemesi (sipariş yok)",0],["Mağazada oluşturulan siparişin mobil bankacılıkla ödenmesi",0],["Ürünlerin yalnızca tanıtıldığı, sipariş verilemeyen şirket sitesi",0],
+      ["Tedarikçiden elektronik hammadde siparişi",1],["Bayinin üretici portalından ürün alması",1],["C2C pazarında iki tüketicinin kullanılmış ürün alışverişi",1],["Bir işletmenin kamu kurumuna elektronik ihale ile ürün satması (B2G)",1],
+      ["Tüketicinin internetten kitap satın alması",2],["Tüketicinin uygulamadan yemek siparişi",2],["Dijital yayın aboneliğinin tüketiciye satılması",2],["Tüketicinin internetten uçak bileti alması",2],["İnternetten sipariş verilip kapıda nakit ödenen market alışverişi",2]]);
+    const o=['Yalnızca e-işletmecilik (e-ticaret değil)','E-ticaret ama e-perakendecilik değil','E-perakendecilik (dolayısıyla e-ticaret ve e-işletmecilik)'];
+    return{q:`<b>${s}</b> nasıl sınıflandırılır?`,type:'mc',opts:o,a,sol:`Hızlı ölçüt: 1) dijital faaliyet → e-işletmecilik; 2) satış/satın alma siparişi elektronik kanalda oluşuyor mu? → e-ticaret; 3) satıcı işletme, alıcı nihai tüketici mi? → e-perakendecilik. Ödeme ve teslimat yöntemi sınıflandırmayı tek başına belirlemez.`}}},
+  kpi:{label:'E-ticaret göstergeleri',f(){const k=R(0,5);
+    if(k===4){const s=R(20,200)*10,a=R(1,20),i=Math.round(s*a/100);return{q:`Bir ayda <b>${N(s)}</b> sipariş satıldı, bunların <b>${N(i)}</b> tanesi iade edildi. <b>İade oranı</b> yüzde kaçtır?`,type:'num',a:i/s*100,sol:`İade oranı = iade edilen / satılan × 100 = ${N(i)} / ${N(s)} × 100 = %${fmt(i/s*100)}`}}
+    if(k===5){const t=R(20,200)*10,z=Math.round(t*R(70,99)/100);return{q:`<b>${N(t)}</b> sipariş teslim edildi; bunların <b>${N(z)}</b> tanesi söz verilen zamanda ulaştı. <b>Zamanında teslimat oranı</b> yüzde kaçtır?`,type:'num',a:z/t*100,sol:`Zamanında teslimat = söz verilen zamanda teslim / toplam teslim × 100 = ${N(z)} / ${N(t)} × 100 = %${fmt(z/t*100)}`}}
     if(k===0){const v=R(20,200)*1000,s=Math.round(v*R(5,40)/1000),a=s/v*100;return{q:`Bir e-ticaret sitesi ayda <b>${N(v)}</b> ziyaret ve <b>${N(s)}</b> sipariş alıyor. <b>Dönüşüm oranı</b> yüzde kaçtır?`,type:'num',a,sol:`Dönüşüm = sipariş / ziyaret × 100 = ${N(s)} / ${N(v)} × 100 = %${fmt(a)}`}}
     if(k===1){const o=R(5,50)*100,a=R(15,120)*10;return{q:`Aylık gelir <b>${N(o*a)} TL</b>, sipariş sayısı <b>${N(o)}</b>. <b>Ortalama sipariş değeri (AOV)</b> kaç TL'dir?`,type:'num',a,sol:`AOV = gelir / sipariş = ${N(o*a)} / ${N(o)} = ${N(a)} TL`}}
     if(k===2){const m=R(5,40)*100,a=R(5,60)*10;return{q:`Pazarlamaya <b>${N(m*a)} TL</b> harcanarak <b>${N(m)}</b> yeni müşteri kazanıldı. <b>Müşteri edinme maliyeti (CAC)</b> kaç TL'dir?`,type:'num',a,sol:`CAC = pazarlama harcaması / yeni müşteri = ${N(m*a)} / ${N(m)} = ${N(a)} TL`}}
@@ -373,8 +443,45 @@ function renderGen(){
 function newGen(){const g=gsel==='all'?pick(GENS):gsel;gq={g,...GEN[g].f(),done:false}}
 const norm=s=>String(s).toUpperCase().replace(/[^A-Z0-9+\-*/]/g,'');
 function parseNum(s){s=String(s).trim().replace(/[%\s]/g,'').replace('−','-');if(/^-?\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');return parseFloat(s.replace(',','.'))}
+function drawAvl(){
+  const q=gq,box=$('#avlbox');if(!box)return;
+  const old={};if(q.anim)box.querySelectorAll('[data-v]').forEach(g=>{const c=g.querySelector('circle');old[g.dataset.v]=[+c.getAttribute('cx'),+c.getAttribute('cy')]});
+  const all=q.i>=q.seq.length,bad=q.bfOn?AVL.bad(q.tree).map(x=>x.n.v):[];
+  const msg=q.msg||(!q.tree?'Ağaç boş — ilk elemanı ekle.':!all?'Sıradaki elemanı ekleyebilir ya da bir düğümü döndürebilirsin.':'Tüm elemanlar eklendi. Ağacın doğru olduğunu düşünüyorsan kontrol et.');q.msg='';
+  box.innerHTML=`<div style="margin-bottom:8px">${q.seq.map((v,i)=>`<span class="seqc${i<q.i?' done':i===q.i?' next':''}">${v}</span>`).join('')}</div>
+  <div class="mute">${msg}</div>
+  ${q.tree?AVL.svg(q.tree,q.sel,bad,q.bfOn):'<div class="raw" style="text-align:center">∅</div>'}
+  <div class="row"><button class="btn" id="avIns" ${q.done||all?'disabled':''}>${all?'Hepsi eklendi':`Ekle: ${q.seq[q.i]}`}</button>
+  <button class="btn alt" id="avR" ${q.done||q.sel==null?'disabled':''}>↻ Sağa döndür</button>
+  <button class="btn alt" id="avL" ${q.done||q.sel==null?'disabled':''}>↺ Sola döndür</button>
+  <button class="btn alt" id="avU" ${q.done||!q.hist.length?'disabled':''}>Geri al</button>
+  <button class="btn" id="avC" ${q.done||!all?'disabled':''}>Kontrol et</button>
+  <label class="mute" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="avB" ${q.bfOn?'checked':''}> Denge faktörlerini göster</label></div>
+  <p class="mute" style="margin:8px 0 0">Bir düğüme dokun, sonra sağa ya da sola döndür: döndürülen düğüm yukarı çıkar, ebeveyni aşağı iner. Döndürme sayısı önemli değil; yalnızca son ağaca bakılır.</p>
+  <details class="mute" style="margin-top:6px"><summary>Kural hatırlatma</summary>BF = h(sol) − h(sağ). Eklenen düğüme en yakın |BF| = 2 olan düğüm (z) düzeltilir.<br>
+  <b>LL</b> (z: +2, sol çocuk y: +1) → y'yi sağa döndür · <b>RR</b> (z: −2, sağ çocuk y: −1) → y'yi sola döndür<br>
+  <b>LR</b> (z: +2, y: −1) → y'nin sağ çocuğu x'i önce sola, sonra sağa döndür · <b>RL</b> (z: −2, y: +1) → y'nin sol çocuğu x'i önce sağa, sonra sola döndür</details>`;
+  if(q.anim){q.anim=false;const svg=box.querySelector('svg');svg&&svg.classList.add('anim');
+    box.querySelectorAll('[data-v]').forEach(g=>{const o=old[g.dataset.v];if(!o)return;const c=g.querySelector('circle'),dx=o[0]-c.getAttribute('cx'),dy=o[1]-c.getAttribute('cy');
+      g.style.transform=`translate(${dx}px,${dy}px)`;g.getBoundingClientRect();g.style.transition='transform .5s ease';requestAnimationFrame(()=>g.style.transform='')})}
+  box.querySelectorAll('[data-v]').forEach(el=>el.onclick=()=>{if(q.done)return;q.sel=+el.dataset.v;drawAvl()});
+  const rot=d=>{const f=AVL.find(q.tree,q.sel);
+    if(!f.p||f.s!==(d==='R'?'l':'r')){q.msg=`<b>${q.sel}</b> ${d==='R'?'sağa':'sola'} döndürülemez.`;return drawAvl()}
+    const g=AVL.find(q.tree,f.p.v);q.hist.push([JSON.stringify(q.tree),q.i]);const nn=d==='R'?AVL.rotR(g.n):AVL.rotL(g.n);if(g.p)g.p[g.s]=nn;else q.tree=nn;q.anim=true;drawAvl()};
+  $('#avR').onclick=()=>rot('R');$('#avL').onclick=()=>rot('L');
+  $('#avIns').onclick=()=>{q.hist.push([JSON.stringify(q.tree),q.i]);q.tree=T.ins(q.tree,q.seq[q.i++]);q.sel=null;drawAvl()};
+  $('#avU').onclick=()=>{const [t,i]=q.hist.pop();q.tree=JSON.parse(t);q.i=i;q.sel=null;drawAvl()};
+  $('#avB').onchange=e=>{q.bfOn=e.target.checked;drawAvl()};
+  $('#avC').onclick=()=>{q.done=true;const ok=AVL.ser(q.tree)===q.ans;
+    const st=store.get('pz_gen',{}),s=st[q.g]||[0,0];s[1]++;if(ok)s[0]++;st[q.g]=s;store.set('pz_gen',st);
+    const log=store.get('pz_log',{}),d=new Date().toISOString().slice(0,10);log[d]=(log[d]||0)+1;store.set('pz_log',log);
+    showSol(ok);if(!ok){const b=AVL.bad(q.tree).length;$('#gfb').insertAdjacentHTML('afterbegin',`<p class="mute" style="margin:12px 0 0">Senin ağacın ${b?'dengeli değil':'dengeli ama doğru AVL ağacından farklı (bir döndürme yanlış yerde ya da ekleme sırasıyla uyumsuz)'}.</p>`)}drawAvl()};
+}
 function drawGen(){
   const q=gq,b=$('#gbox');
+  if(q.type==='avl'){b.innerHTML=`<div class="card pr"><div class="tag">${GEN[q.g].label}</div><div class="gq">${q.q}</div><div id="avlbox"></div><div id="gfb"></div>
+    <div class="row" style="margin-top:12px"><button class="btn alt" id="gshow">Çözümü göster</button><button class="btn alt" id="gnext">Yeni soru →</button></div></div>`;
+    drawAvl();$('#gshow').onclick=()=>{gq.done=true;showSol(null);drawAvl()};$('#gnext').onclick=nextGen;return}
   const inp=q.type==='mc'?`<div>${q.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>`
     :q.type==='multi'?`<div class="mf">${q.fields.map(([l],i)=>`<label>${esc(l)}<input class="gin" data-f="${i}" autocomplete="off" inputmode="decimal" placeholder="Sayı"></label>`).join('')}</div><div class="row" style="margin-top:10px"><button class="btn" id="gchk">Kontrol et</button></div>`
     :`<div class="row"><input id="gin" class="gin" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" placeholder="${q.type==='num'?'Sayı (ör. 2,5)':'Cevabın (ör. A, B, C)'}"><button class="btn" id="gchk">Kontrol et</button></div>`;

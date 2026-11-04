@@ -69,3 +69,54 @@
 ## Uygulama mesajı
 - Yönetici olunca çeşitli kişiliklerle çalışacaksın (narsist, makyavelist, içe/dışa dönük...). Bunları analiz edip işe yerleştirmek ve davranışı uyarlamak liderliğin parçasıdır.
 - Kavram ezberlemek yerine nedenini ve davranışa yansımasını anla.
+
+
+# Ders 3 — Gruplarda uyum, statü, grup büyüklüğü, dayanışma ve grup düşüncesi
+*Kaynak: 4 Kasım ders kaydı. Bir önceki hafta işlenen **normlar** konusunun kaydı yok; bu ders oradan devam ediyor.*
+
+## Uyum (gruba uyma davranışı)
+- İstemesek de çoğunluğun kararına katılırız: arkadaşlar pizza/İskender isterken sen zeytinyağlı istesen bile çoğunluğa uyarsın.
+- Özellikle **içinde bulunmaktan hoşnut olduğumuz, kalmak istediğimiz** gruplarda (ve **referans gruplarında**) uyum davranışı güçlüdür. Örgütte de çalışma arkadaşlarına, yöneticilere, takımlara isteyerek ya da istemeyerek uyum gösterirsin. Hoşlandığın birine yakın olmak için bir gruba uyum da bir örnektir.
+- **Asch'in çubuk eşleştirme deneyi:** gizli işbirlikçiler önce doğru, sonra bilerek **yanlış** cevap veriyor; denek, yanlış olduğunu bildiği halde çoğunluğa uyup yanlış cevap veriyor. Deneğe doğru cevap veren **bir partner** verildiğinde uyum azalıyor.
+- Uyumun biçimleri: çoğunluğa katılmak ya da en azından **sessiz kalmak**.
+- *Hocanın kızı (9. sınıf):* soruları bildiği halde "her şeyi bilen kişi" olarak görülmemek için her soruda parmak kaldırmıyor → gruba uyum, **çıkıntı görünmeme**.
+
+## Statü
+- **Statü:** başkalarının bize verdiği sosyal konum, **saygınlık/prestij**. Kişi kendi statüsünü belirlemez; **diğerleri belirler**.
+- Statüyü belirleyenler: gruba **katkı** (grubun problemlerini çözmek), **başarı, yetenek, beceri**, farkındalık/bakış açısı, **diğerleri üzerindeki güç** (sözü geçen, ailesi güçlü), kişisel özellikler.
+- **Statü ve normlar:** statülü bireyler normlardan sapsalar da **tolere edilir/bağışlanır**; hatta normları **kendileri belirler** ya da yeni norm oluştururlar ve cezalandırılmazlar. *Futbolcunun gol sonrası formayı çıkarması:* sarı kartı göze alır, çünkü statüsü sonuçtan korur.
+- Yüksek statülülerin grup davranışını etkileme potansiyeli yüksektir — **her zaman gruba yararlı değildir.** Çekingen ama yetkin biri susarken, statülü birinin söylediği (doğru olmasa bile) hemen kabul edilebilir.
+- **Statü eşitsizliği:** terfi eden kişi eğitim, kıdem gibi hakkaniyetli ölçütlere sahipse eşitsizlik **kabul edilebilir**; "birilerinin yakını" diye sizden sonra gelen biri üstünüze geçtiyse kabul edilemez (eşitlik kuramına ileride değinilecek).
+- *Ebrar Karakurt örneği:* başarılı bir milli sporcu olmasaydı cinsel yönelimini bu kadar rahat ifade edip aynı desteği görebilir miydi? Statü, norm dışı davranışın kabulünü etkiler.
+
+## Grup büyüklüğü
+| | Küçük grup | Büyük grup |
+|---|---|---|
+| Hız | Hızlı karar, hızlı hareket (3 kişi yemeğe hemen gider) | Yavaş, ortak noktaya varmak uzun sürer |
+| Fikir | Az bakış açısı | Çok ses, farklı altyapı ve bakış açısı → **yaratıcılık ve yenilik** gerektiren problemlerde daha etkili |
+| Sorun | — | Anlaşmazlık olasılığı yüksek, **sosyal kaytarma** artar |
+- Üretkenlik yapılacak işe bağlıdır.
+
+## Sosyal kaytarma
+- Grup içinde bireyin, tek başına çalıştığından **daha az çaba** göstermesi; başkalarının emeğinden yararlanmak (halatı çekiyormuş gibi yapıp güç uygulamamak, taşınmada eli boş dolaşmak, grup ödevlerinde katkı vermemek).
+- **Grup büyüdükçe kaytarma artar**: iki kişide kaytaran belli olur, 10–15 kişide gizlenir.
+- Sorumluluk sahibi, vicdanlı, mükemmeliyetçi kişiler işi üstlenir; kişilik özellikleri belirleyicidir.
+
+## Dayanışma (grup uyumu, "cohesiveness")
+- Üyelerin birbirinden güç alması, birbirini beslemesi; performansı, üretkenliği ve motivasyonu yükseltir.
+- **Dayanışmayı artırmanın yolları:**
+  1. **Grubu küçültmek** (20 kişilik uzun masada uçtakiler etkileşemez; işi küçük gruplara böl)
+  2. **Grup hedefleri üzerinde uzlaşma** (herkes aynı hedef etrafında birleşirse)
+  3. **Birlikte zaman geçirmek** (tanışma, sosyal bağ, güven)
+  4. **Diğer gruplarla rekabeti teşvik etmek** (MasterChef takımları: sevmesen de birlikte hareket edersin)
+  5. **Grup ödülü vermek** (bireysel ödül kişisel çıkarı öne çıkarır)
+  6. **Grubu dışarıdan izole etmek** (iç bağlar güçlenir)
+
+## Grup düşüncesi (groupthink)
+- Gruba uyum baskısıyla üyelerin **aykırı fikirlerini söylememesi**, kendi düşüncesinden **feragat etmesi**. **Oybirliği normu** alternatifleri ortadan kaldırır; sessiz kalmak öğrenilir.
+- *Örnekler:* sınıfın çoğunluğu test isterken yazılı isteyen tek kişi susar; ders bitmek üzereyken soru soran öğrenciye "zamanımızı çalıyorsun" tepkisi → bir dahaki sefere sormaz.
+
+## Sosyal öğrenme ve topluluk psikolojisi
+- **Bekleme odası (gizli kamera) deneyi:** zil çaldığında herkes ayağa kalkıyor; denek nedenini bilmeden kısa sürede o da kalkmaya başlıyor; yeni gelenlere de "öğretiyor" → **sosyal öğrenme** (içselleştirilmiş sürü davranışı). Beyin uyumun rahatlığını tercih eder; uyum sosyalleşmeyi sağlar ama kötü davranışları ve geçmiş hataları tekrarlamaya da yol açabilir. Ordudaki eğitim (saç kesimi, üniforma, uygun adım) bireyselliği bırakıp takım olmayı öğretir.
+- **Topluluk psikolojisi:** normalde ölçülü biri, kalabalıkla birlikte (maç sonrası kavga, isyan, dükkân yağmalama) kendini olduğundan farklı bir pozisyonda görür ve **abartılı** davranır. İlkel (primatlarda da görülen), mantıklı tarafı olmayan bir davranıştır.
+- Sonraki konu: **bireysel karar mı, grup kararı mı?** ("konuya bağlı" — derste oyunla test edilecek).

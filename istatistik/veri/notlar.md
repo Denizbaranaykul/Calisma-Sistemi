@@ -170,7 +170,7 @@
 - **Ortalamaları eşit üç sınıf (MA = MB = MC = 50):** A: 0,0,0,100,100,100 (kutuplaşma); B: 47…53 (az değişkenlik); C: hepsi 50 (homojen). Ortalama aynı, dağılım çok farklı → **değişkenliğe** de bakmak gerekir.
 
 # Konu 6 — Değişkenlik: ranj, OMS, kareler toplamı, varyans, standart sapma
-*Kaynak: 2025 5.–6. hafta notları (bu yıl henüz işlenmediyse önden çalışma).*
+*Kaynak: 2025 5.–6. hafta notları + 4 Kasım 2026 ders kaydı (bu yıl işlendi).*
 
 ## Ranj
 - **Ranj = max − min** (B sınıfı: 53 − 47 = 6). İki şekilde söylenir: "skorlar 60 ile 80 arasında" ya da "ranj 20".
@@ -190,6 +190,23 @@
 - **σ sıfıra yaklaştıkça** skorlar ortada yığılır (herkes benzer). σ = 20 olan sınıf σ = 5 olan sınıftan daha heterojendir.
 - **Maksimum standart sapma:** ortalama 50, N = 6, skorlar 0–100 → üçü 0, üçü 100 (kutuplaşma) → her sapma ±50, SS = 15000, varyans 2500, **σ = 50**.
 - Çoğu veri setinde skorların büyük bölümü **μ ± σ** arasındadır (μ = 52, σ = 20 → 32 ile 72 arası).
+
+## Ders kaydından (4 Kasım dersi): neden kare, neden karekök?
+- **Mutlak değerin sorunu:** matematiksel istatistikçilere göre mutlak değer fonksiyonunda **köşe** oluşur, köşede **türev alınamaz** → ileri analizlerde işe yaramaz. Çözüm: sapmaların mutlak değeri yerine **karesini** almak (eksiler yine artı olur, ama sayılar da büyür — bu bazen avantaj sayılır).
+- **Kareler toplamı (SS, "sum of squares")** = Σ dᵢ². Gözlem sayısının etkisini içerdiği için farklı büyüklükteki sınıfları kıyaslamada tek başına uygun değil → N'e bölünür → **varyans** (Var(x), σ²). Varyans en önemli değişkenlik göstergelerinden biridir; çıkarımsal istatistikte arka planda hep o kullanılır.
+- *B sınıfı örneği (47, 48, 49, 51, 52, 53; μ = 50):* sapmalar −3, −2, −1, +1, +2, +3 → kareler 9, 4, 1, 1, 4, 9 → **SS = 28**, **varyans = 28/6 = 4,667**; OMS = 12/6 = **2**.
+- **Birim sorunu:** sapma skoru orijinal birimdedir (maaş sapması +12.000 TL = ortalamadan 12.000 TL fazla). Karesi alınınca birim de kare olur (TL², cm²) → anlamsız. Varyansın **bir bütün olarak** karekökü alınınca birim geri gelir → **standart sapma (σ, küçük sigma)**. (Büyük sigma Σ toplama işaretidir, karıştırma.)
+- **SS, varyans ve σ "üç ayrı istatistik değil, bir istatistiğin üç versiyonu"dur.** Betimlemede en kolay yorumlanan σ'dır; bölme ve karekök bazı matematiksel özellikleri kaybettirdiği için bilgisayar arka planda varyans/SS ile çalışır.
+- **Semboller:** ana kütle → Yunan harfi (μ, σ); örneklem → Latin harfi (x̄, s). Örneklemde varyans **N−1**'e bölünür (gelecek dönemin konusu). SPSS gibi paket programlar ve istatistik fonksiyonlu hesap makineleri genelde **örneklem formülüyle** çalışır; Excel'de ikisi ayrı (VAR.P / VAR.S).
+- **Sınav:** akıllı olmayan hesap makinesi kullanılabilir ama **işlemler gösterilmek zorunda**.
+- **Değer aralığı:** σ ve varyans **en az 0** (herkes aynı puanı alırsa ranj, OMS, σ hepsi 0), **üst sınırı yok** (veriye göre). "σ şundan büyükse değişkenlik çoktur" diye evrensel bir eşik yoktur; ölçülen şeye göre değişir. 0–100 notlarda μ = 50 iken en büyük σ = 50 (yarısı 0, yarısı 100).
+- Değişkenlik istatistikleri: ranj, OMS, kareler toplamı, varyans, standart sapma (+ ileride **çeyrekler arası açıklık**). Diğer adları: **saçılma, yayılma (spread)**.
+
+### Değişkenliğe neden bakarız? (3 rol)
+1. **Ortalamanın temsil gücünü gösterir.** σ küçükse ortalama sınıfı iyi temsil eder (herkes ortalamaya yakın); σ büyüdükçe ortalamaya güvenme. D sınıfında (yarısı 0, yarısı 100) ortalama 50 ama 50'ye yakın alan bir kişi bile yok → bu yüzden raporlarda **ortalama verilirse yanında mutlaka standart sapma** verilmeli.
+2. **Bilimsel merakın merkezidir.** Bilim, gözlenen **değişkenliğin nedenlerini** açıklamaya çalışır (neden bazı öğrenciler 53, bazıları 47 alıyor?). Değişkenlik yoksa (herkes aynıysa) bilimsel soru da yoktur — "evrenin sabiti" olur. Makine öğrenmesi ve veri analizinin merkezi de budur. Önce merak etmeye değer bir değişkenlik var mı diye bakılır.
+3. **Pratik karar verdirir; bazen amaç düşük değişkenliktir.** *Deterjan paketleme makinesi:* A ve B makineleri ortalama 500 g dolduruyor; A'nın σ = 2 g, B'nin σ = 20 g. B bazı paketlere 520 g (şirket zarar eder), bazılarına 480 g (müşteri kazıklanır, ceza riski) koyar → **σ'sı düşük A makinesi** tercih edilir. (Havayolunun kahvaltıdan iki zeytini kaldırarak milyonlar kazanması: küçük farklar ölçekle büyür.)
+- *Düşünme ödevi:* Ortalamaları aynı A, B, C, D, E sınıflarından çocuğunu hangisine yazdırırdın? (Gelecek ders açıklanacak.)
 
 # Konu 7 — Dağılımın şekli, normal dağılım ve z skoru
 *Kaynak: 2025 6.–7. hafta notları (önden çalışma).*

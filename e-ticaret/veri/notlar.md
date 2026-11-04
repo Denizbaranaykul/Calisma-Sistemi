@@ -207,7 +207,7 @@
 ---
 
 # Hafta 5 — Elektronik perakendecilik
-*(Bölüm 3–6; 6. bölümün içeriği fotoğraflanmamış.)*
+*(Bölüm 3–19; 6–19. bölümler 31 Ekim'de gelen fotoğraflardan.)*
 
 ## Tanım ve kapsam (Bölüm 3)
 - **E-perakendecilik: nihai tüketiciye yönelik satışın dijital kanallar üzerinden yürütülmesi.**
@@ -230,4 +230,248 @@
 - **Erişim olanağı tek başına başarı sağlamaz:** pazara erişim (coğrafi olarak geniş pazar) + **yerel uyum** (dil, ürün bilgisi, ödeme yöntemleri, müşteri desteği) + **yerine getirme** (teslimat kapasitesi ve marka güvenilirliği vaadi gerçek deneyime dönüştürür).
 
 ## İş modelleri (Bölüm 6)
-- E-perakendeciler **kanal yapısı, aracılık rolü, müşteri ilişkisi ve gelir mantığı** bakımından farklı modeller kullanır. *(İçerik slaytları fotoğraflanmamış.)*
+- E-perakendeciler **kanal yapısı, aracılık rolü, müşteri ilişkisi ve gelir mantığı** bakımından farklı modeller kullanır.
+- **Mağaza yapısına göre:**
+  - **Pure-play (yalnız çevrim içi):** fiziksel mağaza olmadan site veya mobil uygulama üzerinden satış; merkezi stok ve geniş erişim avantajı.
+  - **Fiziksel ve dijital:** mağazalar deneyimleme, teslim, iade, yerel dağıtım ve müşteri hizmetleri noktası olarak kullanılır.
+  - **Pazar yeri:** bağımsız satıcılar ortak platformda buluşur; platform trafik, ödeme, değerlendirme ve bazen lojistik sağlar.
+- **Müşteri ilişkisine göre:**
+  - **Doğrudan tüketiciye (DTC):** üretici aracı kullanmadan kendi elektronik kanalından satar; veriye ve marka deneyimine daha fazla hâkim olur.
+  - **Abonelik:** düzenli teslimat veya dijital erişim karşılığında dönemsel ödeme; sürekli değer üretmek gerekir.
+  - **Sosyal ve mobil:** ürün keşfi, değerlendirme ve satın alma sosyal medya veya mobil cihazda yürür; arayüz küçük ekrana uyarlanır.
+
+| Model | Temel üstünlük | Başlıca yönetim sorunu |
+|---|---|---|
+| Pure-play | Düşük fiziksel mağaza bağımlılığı | Güven ve teslimat maliyeti |
+| Fiziksel ve dijital | Mağazanın teslim ve hizmet noktası olması | Stok, fiyat ve sipariş bütünleşmesi |
+| Pazar yeri | Hazır trafik ve işlem altyapısı | Komisyon ve platform bağımlılığı |
+| DTC | Müşteri verisi ve marka deneyimi üzerinde kontrol | Lojistik, iade ve bireysel hizmet yükü |
+| Abonelik | Tekrarlanan gelir | Müşteri kaybını önleyecek sürekli değer |
+| Sosyal ve mobil | Keşif ile satın alma arasındaki kısa yol | Platform kuralları ve küçük ekran tasarımı |
+
+## Değer önerisi (Bölüm 7)
+- **Değer önerisi:** müşterinin neden belirli bir elektronik mağazayı seçmesi gerektiğini açıklayan **yararlar bütünü**.
+- **İşlemsel yararlar:** düşük/rekabetçi fiyat, kolay ürün ve fiyat karşılaştırması, hızlı ve öngörülebilir teslimat, kolay iade ve güçlü müşteri hizmetleri. **Seçim ve deneyim:** geniş ürün çeşidi, nadir ürünlere erişim, güvenilir ve ayrıntılı bilgi, kişiselleştirilmiş öneriler.
+- **Ürün çeşitliliği ve bilgi yükü:** *tüketici refahı* tarafı — daha fazla seçenek, niş ürünler, çeşitlilikten doğan değer yalnız fiyat avantajını aşabilir; *karar güçlüğü* tarafı — yetersiz sınıflandırma, zayıf arama ve filtreleme, çok sayıda alternatifin oluşturduğu **bilgi yükü**.
+
+## Elektronik perakendecilik süreci (Bölüm 8)
+- Müşteri kazanımından satış sonrası ilişkiye kadar her aşama **tek bir deneyim zincirinin** parçasıdır.
+- **Yolculuğun ilk yarısı:** 1 Kazanım (reklam, arama, doğrudan ziyaret) → 2 Keşif (arama, kategori, filtre) → 3 Değerlendirme (fiyat, özellik, yorum, teslimat) → 4 Sepet → 5 Ödeme (adres, teslimat, ödeme bilgisi).
+- **Siparişten müşteri ilişkisine:** 1 Onay (stok ve ödemenin doğrulanması) → 2 Karşılama (bulma, hazırlama, paketleme) → 3 Teslimat → 4 Satış sonrası (destek, değişim, iade, geri ödeme) → 5 İlişki (memnuniyet, sadakat, tavsiye).
+- **Bir aşamadaki hata bütün deneyimi etkiler:** iyi tasarlanmış mağaza, yanlış gönderilen ya da geç teslim edilen siparişin etkisini tek başına ortadan kaldıramaz → arayüz, stok doğruluğu, sipariş karşılama, teslimat ve sorun çözümü **birlikte** yönetilmelidir.
+
+## Elektronik mağazanın tasarımı (Bölüm 9)
+- Ana sayfa, arama, ürün sayfası, sepet ve ödeme akışı müşterinin ürünü bulmasını ve işlemi **güvenle** tamamlamasını desteklemelidir.
+- **Ana sayfa:** işletmenin kimliğini açıkça göstermeli, temel kategorileri görünür kılmalı, değer önerisini anlaşılır sunmalı; **hareketli görsel ve kampanya kalabalığından kaçınmalı**. **Arama ve filtre:** aranan ürüne hızla ulaştırmalı, filtreler kategoriye uygun olmalı (giyimde beden-renk, elektronikte kapasite ve teknik özellik).
+- **Ürün sayfasındaki zorunlu bilgi alanları:** ürün adı, fiyat ve stok durumu; gerçekçi görseller ve teknik özellikler; ölçü/beden/malzeme/kapasite; teslimat tarihi ve maliyeti; iade koşulları ve garanti; müşteri değerlendirmeleri ve satıcının kimliği.
+- **Sepet ve ödeme sayfası — terki artıran unsurlar:** beklenmeyen teslimat bedeli, **zorunlu üyelik**, uzun ve karmaşık formlar, teknik hata veya yavaşlık. **Onay öncesi şeffaflık:** sipariş toplamı, teslimat seçeneği ve tarihi, ödeme yöntemi, iade koşulları.
+
+## Faydacı ve hazcı alışveriş değeri (Bölüm 10)
+- Elektronik alışveriş hem işlemi kolay tamamlama hem de keşif ve keyif arayışıyla şekillenir.
+
+| Faydacı değer | Hazcı değer |
+|---|---|
+| İhtiyacı kolay karşılama | Yeni ürün keşfi |
+| Fiyat karşılaştırma | Alışverişten keyif alma |
+| Zaman kazanma | Görsel ortamda gezinme |
+| İşlemi hatasız tamamlama | İlham alma ve deneyim |
+- **İşlev ve deneyim dengesi:** *hız ve kolaylık* (arama, filtre, ödeme akışı hedefe kısa sürede ulaştırır), *keşif* (içerik, görsel sunum, öneriler yeni ürünleri fark ettirir), *ölçülü çekicilik* (deneyim ilgi çekici olmalı ama işlemi zorlaştıran görsel kalabalık oluşturmamalı).
+
+## Elektronik hizmet kalitesi (Bölüm 11)
+- Kalite değerlendirmesi **internet sitesiyle başlar, teslimat ve sorun çözümüyle tamamlanır**.
+- **eTailQ modelinin dört boyutu:** 1) **internet sitesi tasarımı** (görünüm, kullanılabilirlik, arama ve gezinme kolaylığı), 2) **siparişin yerine getirilmesi** (doğru ürünün belirtilen koşullarda ve zamanında teslimi), 3) **gizlilik ve güvenlik** (ödeme bilgileri ve kişisel verilerin korunması), 4) **müşteri hizmetleri** (sorulara yanıt ve sorunların etkili çözümü).
+- **E-S-QUAL (normal hizmet):** etkinlik, sistem kullanılabilirliği, siparişin yerine getirilmesi, gizlilik. **E-RecS-QUAL (sorun sonrası hizmet):** yanıt verebilirlik, telafi, müşterinin işletmeyle iletişim kurabilmesi.
+- **Hizmet telafisi kalite değerlendirmesini değiştirir:** sorun öncesi (iyi çalışan site, doğru bilgi, zamanında sipariş) → sorun anı (hata bildirimi, yanıt hızı, iletişim kolaylığı) → telafi (adil çözüm, açık süreç, uygun geri ödeme). Müşteri sorun yaşadığında sunulan hizmet de e-perakende kalitesinin parçasıdır.
+
+## Güven ve algılanan risk (Bölüm 12)
+- Müşteri ürünü, satıcıyı ve ödeme sürecini **fiziksel olarak gözlemleyemediği** için güven satın alma kararında kritiktir.
+- **Algılanan risk kaynakları:** *ürün ve satıcı* (ürünün açıklamaya uymaması, sahte ürün, satıcı kimliği belirsizliği), *ödeme ve veri* (ödeme bilgilerinin kötüye kullanımı, kişisel verilerin izinsiz işlenmesi), *teslimat ve iade* (siparişin ulaşmaması, gecikme, iade ve geri ödeme sorunları).
+- **Güveni destekleyen uygulamalar:** *şeffaflık* (satıcı kimliği ve iletişim bilgileri, gerçekçi ürün bilgisi, açık teslimat ve iade koşulları, doğrulanmış müşteri yorumları); *güvenli ve adil işleyiş* (güvenli ödeme, siparişin izlenebilmesi, ulaşılabilir müşteri hizmetleri, şikâyetlere hızlı ve adil çözüm).
+
+## Kişiselleştirme ve veri kullanımı (Bölüm 13)
+- E-perakendeciler davranışsal ve işlemsel verileri öneri, tahmin ve müşteri ilişkisi amacıyla kullanabilir.
+- **Üretilen veri:** ziyaret edilen sayfalar, arama ifadeleri ve ürün görüntülemeleri, sepet hareketleri, geçmiş siparişler ve kampanya tepkileri. **Kullanım alanları:** ürün önerisi ve kişiselleştirilmiş ana sayfa, hedefli kampanya, stok ve talep tahmini, müşteri kaybı tahmini.
+- **Kişiselleştirme–mahremiyet dengesi:** *müşteri faydası* (ilgili ürünleri daha hızlı bulma), *mahremiyet riski* (aşırı ayrıntılı öneriler sürekli izlenme duygusu yaratabilir), *yönetim ilkesi* (veri belirli amaçla ve gerektiği kadar toplanmalı, güvenli saklanmalı, hukuka ve etik ilkelere uygun kullanılmalı).
+
+## Sipariş karşılama — e-fulfillment (Bölüm 14)
+- **E-fulfillment:** siparişin verilmesinden ürünün teslimine ve gerektiğinde iadesine kadar uzanan operasyonel faaliyetler bütünü.
+- **Sipariş karşılama zinciri:** 1 Doğrulama (sipariş ve ödeme) → 2 Stok (ürün bulunabilirliği) → 3 Toplama (depoda ürünü bulma) → 4 Paketleme (hazırlama, etiketleme) → 5 Taşıyıcı (kargoya aktarım) → 6 Teslim (izleme ve teslimat). Gerektiğinde iade süreci aynı zincire geri bağlanır.
+- **Sipariş karşılama kararları:** *kapasite ve ağ* (dağıtım ağı, depo konumu ve kapasitesi, teslimat planlaması, taşıyıcı seçimi); *stok ve hizmet sözü* (stok doğruluğu, siparişe ürün ayırma, hazırlama süresi, **teslimat sözünün lojistik kapasiteyle uyumu**).
+
+## Son kilometre teslimatı (Bölüm 15)
+- Dağıtım merkezinden müşteriye uzanan son aşama; **maliyetin ve müşteri deneyiminin en görünür** bölümlerinden biri.
+- **Teslimat seçenekleri:** *adrese teslim* (standart eve teslim, belirli saat aralığında, aynı gün); *alternatif teslim* (mağazadan teslim, teslimat dolabı, belirlenmiş teslim noktası).
+- **Başlıca sorunlar:** *adres ve zaman* (müşterinin adreste bulunmaması, dar teslimat aralığı talepleri rotayı zorlaştırır); *operasyon* (trafik, dağınık teslimat noktaları, kapasite kullanımı maliyeti artırır); *hizmet hatası* (hasarlı veya yanlış teslimat taşıyıcı kaynaklı olsa bile **perakendecinin hizmeti** olarak değerlendirilir).
+
+## İade ve tersine lojistik (Bölüm 16)
+- **Tersine lojistik** müşteriden depoya doğru ilerler; kontrol, yeniden satış, tasfiye ve geri ödeme kararlarını içerir.
+- Süreç: 1 Talep (iade bildirimi) → 2 Toplama (ürünün müşteriden alınması) → 3 Taşıma (depoya dönüş) → 4 Kontrol (durum ve uygunluk) → 5 Karar (yeniden satış veya tasfiye) → 6 Geri ödeme (müşteri hesabının kapatılması).
+- **Kolay iade politikasının iki yönü:** *müşteri değeri* (ilk siparişte algılanan riski azaltır, satın alma kararını kolaylaştırır, güven ve tekrar satın almayı destekler); *işletme maliyeti* (taşıma ve paketleme, iş gücü ve kontrol, ürün değer kaybı, kontrolsüz kullanım veya kötüye kullanım riski).
+
+## Çok kanallı ve bütünleşik (omnichannel) perakendecilik (Bölüm 17)
+- **Çok kanallı yapı** birden fazla satış kanalını kullanır; **omnichannel** bu kanallardaki stok, fiyat, müşteri ve sipariş bilgisini **bütünleştirir**.
+
+| Çok kanallı | Bütünleşik (omnichannel) |
+|---|---|
+| Mağaza, site ve mobil uygulama birlikte bulunur | Stok ve fiyat bilgisi kanallar arasında bağlanır |
+| Kanallar ayrı süreçlerle yönetilebilir | Müşteri hesabı ve sipariş geçmişi ortaklaşır |
+| Müşteri her kanalda farklı bilgiyle karşılaşabilir | Yolculuk kanal değiştirerek kesintisiz ilerler |
+- **Bütünleşik müşteri yolculuğu:** araştırma (web, uygulama, mağaza) → değerlendirme (yorum, deneme, karşılaştırma) → satın alma (fiziksel veya elektronik) → teslim (kargo, mağaza, teslim noktası) → iade ve destek (kanallar arası ortak hizmet). Kanallar **rakip iki işletme gibi değil, aynı deneyimin parçaları** olarak yönetilir.
+- **Uygulamalar:** internetten alıp mağazadan teslim alma; internetten alınanı mağazaya iade; mağazada olmayan ürünü internetten sipariş; mobil uygulamada mağaza stokunu görme; tüm kanallarda ortak müşteri hesabı; ortak sadakat puanı ve kampanya sistemi.
+
+## Performans göstergeleri (Bölüm 18)
+- Dönüşüm, sepet, sipariş değeri, iade ve teslimat göstergeleri **birlikte** değerlendirilmelidir.
+- **Dönüşüm oranı** = (sipariş sayısı / **tekil ziyaretçi** sayısı) × 100 · **Ortalama sipariş değeri** = toplam satış geliri / sipariş sayısı · **Sepeti terk oranı** = (siparişe dönüşmeyen sepet / toplam oluşturulan sepet) × 100.
+- **İade oranı** = (iade edilen ürün veya sipariş / satılan ürün veya sipariş) × 100 · **Zamanında teslimat oranı** = (söz verilen zamanda teslim edilen sipariş / toplam teslim edilen sipariş) × 100. Ayrıca müşteri edinme maliyeti, tekrar satın alma, müşteri yaşam boyu değeri, stokta bulunmama, şikâyet ve hazırlama süresi izlenebilir.
+- **Tek bir gösterge yeterli değildir:** agresif indirim dönüşümü yükseltebilir ama kârlılığı düşürebilir; kolay iade satışı destekler ama tersine lojistik maliyetini artırır; satış, maliyet, hizmet kalitesi ve müşteri ilişkisi birlikte yorumlanmalıdır.
+
+## Üstünlükler ve sınırlılıklar (Bölüm 19)
+| Üstünlükler | Sınırlılıklar |
+|---|---|
+| Zaman ve mekân esnekliği | Ürünü fiziksel olarak inceleyememe |
+| Geniş pazar erişimi ve ürün çeşitliliği | Teslimat bekleme süresi, kargo ve iade maliyeti |
+| Kolay fiyat ve ürün karşılaştırması | Güvenlik ve mahremiyet kaygısı |
+| Ayrıntılı müşteri verisi ve kişiselleştirme | Yoğun fiyat ve görünürlük rekabeti |
+| Hızlı kampanya değişikliği ve otomasyon | Teknolojiye ve platformlara bağımlılık |
+| Ölçeklenebilir süreçler | Sistem kesintisi, siber saldırı ve dijital erişim eşitsizliği |
+- **Gelecek:** *teknoloji* (yapay zekâ, mobil, artırılmış gerçeklik, otomasyon yeni karar ve deneyim biçimleri yaratır), *veri* (büyük veri talep, müşteri ve operasyon kararlarında daha ayrıntılı analiz sağlar), *bütünleşme* (rekabet teknolojiyi, müşteri deneyimini, kanal yönetimini ve kârlılığı birlikte ele almayı gerektirir).
+- **Bölüm 3–19 ana çıkarımlar:** e-perakendecilik dijital satışla birlikte stok, ödeme, lojistik ve satış sonrası sistemleri kapsar; iş modeli seçimi kanal yapısını, maliyeti, müşteri verisi üzerindeki kontrolü ve bağımlılıkları değiştirir; değer önerisi fiyatın yanında çeşitlilik, bilgi, teslimat, iade ve müşteri hizmetlerine dayanır; hizmet kalitesi site tasarımından siparişin yerine getirilmesine ve hizmet telafisine kadar uzanır; güven, veri kullanımı, son kilometre ve tersine lojistik deneyimi doğrudan etkiler; bütünleşik perakendecilik kanalları ortak stok, sipariş ve müşteri bilgisiyle bağlar; performans göstergeleri birlikte değerlendirilmelidir.
+
+---
+
+# Hafta 6 — E-işletmecilik, e-ticaret ve e-perakendeciliğin karşılaştırılması
+*(Bölüm 3–17; 2 Kasım dersinin slayt fotoğrafları.)*
+
+## Kavramsal giriş (Bölüm 3)
+- Aynı dijital kanal müşteri işlemlerini ve işletmenin arka plan süreçlerini birlikte yürütebilir.
+- **Aynı kanal, farklı faaliyetler:** *müşteri işlemleri* (ürün inceleme, sipariş, ödeme, teslimat takibi, iade talebi = e-perakendeciliğin **görünen yüzü**), *ticari işlem* (elektronik sipariş oluştuğunda faaliyet **e-ticaret** kapsamına girer), *arka plan süreçleri* (stok, depo, muhasebe, kargo aktarımı, analiz = **e-işletmeciliğin** daha geniş faaliyet alanı).
+- **Kavramları ayıran ölçüt:** temel farklılık **kullanılan teknoloji değil, teknolojinin desteklediği işletme faaliyetidir.** Bir internet sitesi aynı anda e-perakendecilik arayüzü, e-ticaret kanalı ve e-işletmecilik sisteminin parçası olabilir.
+
+## Elektronik işletmecilik (Bölüm 4)
+- **E-işletmecilik:** işletmenin **değer zincirindeki faaliyetleri** dijital teknolojilerle yürütmesi veya desteklemesi. Kapsamı **satış işlemlerinden daha geniştir**: iç süreçler, tedarikçi ilişkileri, müşteri hizmetleri, insan kaynakları, bilgi yönetimi ve karar sistemleri.
+- **Temel sorusu:** işletme faaliyetleri dijital teknolojilerle nasıl daha **bütünleşik ve verimli** yürütülebilir? Doğrudan satış işlemi bulunmayan bir faaliyet de elektronik ortamda yürütüldüğü için e-işletmecilik kapsamına girebilir.
+- **İşletme içi elektronik faaliyetler:** *çalışan ve kaynak yönetimi* (e-İK yönetimi, çevrim içi çalışan eğitimi, kurumsal kaynak planlaması, e-muhasebe ve finans); *süreç ve bilgi yönetimi* (dijital belge ve iş akışı, üretim planlama ve stok kontrolü, iş zekâsı ve raporlama, intranet ve uzaktan çalışma).
+- **İşletme dışı elektronik faaliyetler:** *tedarik ve iş ortakları* (elektronik tedarik ve bilgi paylaşımı, bayi ve dağıtıcı portalları, lojistik kuruluşlarıyla veri paylaşımı, ortak bilgi sistemleri); *müşteri, finans ve kamu* (elektronik müşteri ilişkileri, çevrim içi satış sonrası destek, banka ve ödeme entegrasyonu, kamu kurumlarına elektronik bildirim).
+
+| Sistem | Temel işlev |
+|---|---|
+| **ERP** | Finans, stok, üretim, satın alma ve diğer kaynakları bütünleştirir |
+| **CRM** | Müşteri bilgilerini ve müşteri ilişkilerini yönetir |
+| **SCM** | Tedarik zinciri faaliyetlerini planlar ve koordine eder |
+| **HRIS / e-HRM** | Çalışan bilgilerini ve İK süreçlerini yönetir |
+| **BI ve analitik** | Verileri raporlar ve karar desteği sağlar |
+| **Intranet** | İşletme içi bilgi ve iletişimi destekler |
+| **Extranet** | Tedarikçi, bayi ve iş ortaklarıyla güvenli bilgi paylaşır |
+| **Belge yönetimi** | Belgeleri elektronik oluşturur, onaylar ve saklar |
+
+## Elektronik ticaret (Bölüm 5)
+- **E-ticaret:** ürün veya hizmetle ilgili satış ve satın alma **siparişlerinin bilgisayar ağları üzerinden oluşturulmasına** odaklanır.
+- **Belirleyici unsur: siparişin bilgisayar ağı üzerinden oluşturulması.** OECD yaklaşımı sipariş alma/verme amacıyla tasarlanmış elektronik yöntemleri esas alır; **ödeme ve teslimat yöntemi sınıflandırmayı tek başına belirlemez.**
+- **Sipariş yöntemi ile ödeme yöntemi:** *e-ticarettir* — internetten sipariş + kapıda nakit ödeme; internetten sipariş + mağazada ödeme; elektronik sipariş + fiziksel teslimat. *Tek başına yeterli değil* — sipariş fiziksel mağazada oluşur, ödeme mobil bankacılıkla yapılır (**elektronik ödeme sipariş kanalını değiştirmez**).
+- **Sipariş, ödeme, teslimat:** sipariş **temel ölçüttür** (elektronik kanalda oluşur); ödeme elektronik, nakit veya mağazada olabilir; teslimat fiziksel veya dijital olabilir — ikisi de işlemin e-ticaret niteliğini ortadan kaldırmaz.
+- **Taraflar:** B2B (işletmeden işletmeye), B2C (işletmeden tüketiciye), C2C (tüketiciden tüketiciye), C2B (tüketicinin işletmeye ürün, hizmet veya değer sunması), B2G (işletme–kamu kurumu ticari işlemi), G2B/G2C (kamunun işletme veya bireylere elektronik hizmet sunması).
+- **E-ticaret yalnız tüketici alışverişi değildir:** bir üreticinin elektronik tedarik portalından **hammadde sipariş etmesi de e-ticarettir**. Zwass (1996) e-ticareti ticari bilgi paylaşımı, iş ilişkileri ve işlemlerin telekomünikasyon ağları üzerinden yürütülmesi olarak geniş ele alır.
+
+## Elektronik perakendecilik (Bölüm 6)
+- **E-perakendecilik:** ürün ve hizmetlerin dijital kanallar üzerinden **nihai tüketicilere** satılması; e-ticaretin **B2C alanındaki daha dar faaliyet biçimi**. Odak: nihai tüketiciye satış, alışveriş deneyimi, siparişin karşılanması ve satış sonrası ilişki.
+- **Müşteri yolculuğu:** 1 Mağaza (tasarım ve ürün sunumu) → 2 Keşif (arama, karşılaştırma) → 3 Sipariş (sepet, ödeme) → 4 Teslimat (sipariş karşılama) → 5 İlişki (iade, hizmet, sadakat).
+- **eTailQ:** internet sitesi tasarımı (bilgiye erişim, kullanılabilirlik), siparişin yerine getirilmesi (doğru ürün, zamanında teslimat), güvenlik ve gizlilik (ödeme ve kişisel veri), müşteri hizmetleri (sorun çözme, iade, iletişim).
+
+## Üç kavram arasındaki kapsam ilişkisi (Bölüm 7)
+- **Hiyerarşi:** e-işletmecilik ⊃ e-ticaret ⊃ e-perakendecilik (e-perakendecilik e-ticaretin, e-ticaret e-işletmeciliğin içinde).
+- **Daima doğru:** her e-perakendecilik faaliyeti e-ticarettir; her e-ticaret faaliyeti e-işletmeciliğin parçasıdır. **Daima doğru değil:** her e-işletmecilik faaliyeti e-ticaret değildir; her e-ticaret işlemi e-perakendecilik değildir.
+- **Literatürde sınırlar her zaman aynı çizilmez:** bazı çalışmalar e-ticareti sipariş ve alım satımla sınırlar, bazıları işlem destek süreçlerini de kapsar. **Bu derste:** e-işletmecilik = bütün dijital süreçler; e-ticaret = elektronik siparişe dayalı ticari işlemler; e-perakendecilik = nihai tüketiciye elektronik satış.
+
+## Temel karşılaştırma (Bölüm 8)
+| Boyut | E-işletmecilik | E-ticaret | E-perakendecilik |
+|---|---|---|---|
+| Kapsam | En geniş | Daha dar | En dar |
+| Temel amaç | Süreçleri dijital yürütmek ve bütünleştirmek | Elektronik ortamda ticari işlem | Nihai tüketiciye elektronik satış |
+| İşlem zorunluluğu | Hayır | Evet | Evet |
+| Temel taraflar | Çalışan, yönetici, tedarikçi, müşteri, ortak ve kamu | İşletme, tüketici ve kamu | Perakendeci ve nihai tüketici |
+| İşletme içi faaliyet | Kapsar | Temel odak değildir | Temel odak değildir |
+| İşletmeler arası faaliyet | Kapsar | B2B biçiminde kapsar | Temel alanı değildir |
+| Nihai tüketiciye satış | Kapsayabilir | B2C biçiminde kapsar | Temel faaliyetidir |
+| Temel sistemler | ERP, CRM, SCM, HRIS, analitik, intranet | Sipariş, ödeme, pazar ve tedarik sistemleri | Elektronik mağaza, sepet, teslimat ve iade |
+| Temel çıktı | Verimlilik, bütünleşme ve karar kalitesi | Başarılı ticari işlem | Satış, müşteri deneyimi ve sadakat |
+| Başlıca risk | Sistem bütünleşmesi ve örgütsel değişim | İşlem, ödeme ve taraf güvenliği | Ürün, teslimat, iade ve tüketici güveni |
+
+## İşlem bulunup bulunmamasına göre karşılaştırma (Bölüm 9)
+- Sınıflandırmada ilk soru: **elektronik ortamda satış veya satın alma siparişi oluşturuluyor mu?**
+- **Hayır →** e-işletmecilik olabilir, e-ticaret değildir. **Evet →** e-ticaret; siparişi **nihai tüketici** veriyorsa (ve satıcı bir işletme/perakendeciyse) e-perakendecilik.
+- *Sipariş yok:* çevrim içi izin talebi, ERP'de stok izleme, CRM'e şikâyet kaydı, çevrim içi çalışan eğitimi. *Sipariş var:* elektronik hammadde siparişi, bayi portalından ürün alımı, mobil uygulamadan yemek siparişi, C2C pazarında kullanılmış ürün alımı.
+- Siparişi nihai tüketici veriyorsa ve satıcı işletme/perakendeciyse → e-perakendecilik: internetten kitap, market ürünü, uçak bileti, konaklama hizmeti veya dijital yayın aboneliği.
+
+## Ön yüz ve arka yüz faaliyetleri (Bölüm 10)
+- Müşterinin gördüğü elektronik temas noktaları **ön yüzü**, işletme içinde çalışan sistemler **arka yüzü** oluşturur.
+- **Ön yüz:** site ve mobil uygulama; ürün sayfaları, arama ve filtreleme; sepet ve ödeme ekranı; sipariş izleme, canlı destek ve müşteri hesabı. **Arka yüz:** ERP, stok ve depo yönetimi; muhasebe ve satın alma; tedarikçi ve kargo entegrasyonu; İK ve veri analizi; iade ve geri ödeme yönetimi.
+- **Ön yüz vaatleri ve arka yüz kapasitesi:** müşterinin gördüğü (ürün bulunabilirliği, teslimat tarihi, fiyat ve kampanya, iade seçeneği) ↔ işletmenin yerine getirdiği (doğru stok verisi, depo ve kargo koordinasyonu, muhasebe ve fiyat kuralları, CRM ve geri ödeme süreci).
+- **Arka yüz bütünleşmesi değer yaratır:** 624 perakende işletmesini kapsayan araştırmada ön ve arka yüz yetenekleri e-işletmecilik değeriyle ilişkili; **Zhu ve Kraemer (2005)** arka yüz bütünleşmesinin işletmeler arasında daha güçlü bir farklılaştırıcı olabildiğini göstermiştir.
+
+## Değer zinciri açısından karşılaştırma (Bölüm 11)
+- Aynı değer zinciri faaliyeti üç kavramda farklı rol oynayabilir.
+
+| Faaliyet | E-işletmecilik | E-ticaret | E-perakendecilik |
+|---|---|---|---|
+| Elektronik tedarik | Kapsar | Sipariş varsa kapsar | Genellikle arka plan faaliyeti |
+| Üretim planlama | Kapsar | — | — |
+| Stok yönetimi | Kapsar | İşlemi destekler | Ürün bulunabilirliğini destekler |
+| Elektronik satış | Kapsar | Kapsar | Nihai tüketiciye ise kapsar |
+| Dijital pazarlama | Kapsar | İşlemi destekler | Müşteri kazanımında kullanılır |
+| Elektronik ödeme | Kapsar | İşlemi tamamlayabilir | Ödeme deneyiminin parçasıdır |
+| Teslimat yönetimi | Kapsar | İşlem sonrası süreç | Temel müşteri deneyimi unsurudur |
+| Müşteri ilişkileri | Kapsar | İşlem öncesi ve sonrası destek | Sadakat ve tekrar satın alma için kritik |
+| İnsan kaynakları | Kapsar | — | — |
+| Yönetim raporlaması | Kapsar | Ticari veriyi analiz eder | Perakende performansını analiz eder |
+
+## Değer yaratma biçimlerinin karşılaştırılması (Bölüm 12)
+- E-işletmecilikte değer tek bir satış anından değil **bütün faaliyet sisteminden** doğar.
+- **Dört değer kaynağı:** **etkinlik** (maliyet ve işlem süresinin azaltılması — siparişlerin otomatik işlenmesi, elektronik belge, eş zamanlı stok güncelleme, arama maliyetinin azalması), **tamamlayıcılıklar** (birlikte sunulan ürün, hizmet ve kanalların ek değeri — e-mağaza + fiziksel mağaza, ürün satışı + kurulum hizmeti, mobil uygulama + sadakat programı), **sistemde tutma** (müşteri ve iş ortağının aynı sistemle çalışmayı sürdürmesi — kişiselleştirilmiş hesap, sadakat programı ve kayıtlı tercihler, tedarikçi entegrasyonu, abonelik), **yenilik** (yeni işlem, hizmet veya iş modeli — elektronik pazar yerleri, dijital ürünler ve talep üzerine üretim, platform modelleri, yapay zekâ destekli alışveriş asistanları).
+- **İş modeli bir faaliyet sistemidir:** değer kaynakları satış anının ötesinde faaliyetlerin nasıl bağlandığını açıklar. **Zott, Amit ve Massa (2011):** iş modeli, işletmenin nasıl değer yarattığını ve bu değeri nasıl elde ettiğini açıklayan bütünsel bir faaliyet sistemi.
+
+## Gelir ve performans açısından karşılaştırma (Bölüm 13)
+- Her kavram farklı göstergeler gerektirir; doğrudan gelir yaratmayan süreçler de işletme değeri üretebilir.
+- **E-işletmecilik performansı:** süreç ve işlem maliyetleri, sipariş işleme ve karar verme süresi, stok doğruluğu ve üretim süresi, çalışan verimliliği ve veri kalitesi, sistemler arası entegrasyon, tedarikçi performansı.
+- **E-ticaret performansı:** elektronik işlem sayısı ve satış geliri, başarılı ödeme oranı, işlem maliyeti ve sipariş doğruluğu, B2B sipariş süresi, elektronik kanal kullanım oranı, işlem başına kâr.
+- **E-perakendecilik performansı:** dönüşüm ve sepeti terk oranı, ortalama sipariş değeri, müşteri edinme maliyeti, tekrar satın alma ve iade oranı, zamanında teslimat, müşteri memnuniyeti ve yaşam boyu değeri.
+- **Gelir ile işletme değeri aynı değildir:** *doğrudan gelir yaratmayabilir* ama değerlidir (e-İK sistemi, idari süre ve maliyet azalması, veri kalitesi ve karar hızı); *yüksek satış yeterli olmayabilir* (yanlış stok bilgisi, verimsiz teslimat, yüksek iade maliyeti).
+
+## Yönetim sorumluluğu açısından karşılaştırma (Bölüm 14)
+| Yönetim alanı | E-işletmecilik | E-ticaret | E-perakendecilik |
+|---|---|---|---|
+| Stratejik yönetim | Dijital strateji ve iş modeli | Elektronik kanal ve işlem stratejisi | Perakende ve müşteri deneyimi stratejisi |
+| Bilgi teknolojileri | Sistem mimarisi ve entegrasyon | Sipariş, ödeme ve platform altyapısı | Mağaza, uygulama ve kişiselleştirme |
+| Pazarlama | Veri ve müşteri yönetimi | Elektronik pazar ve kanal yönetimi | Ürün, fiyat, kampanya ve sadakat |
+| Operasyon | İş süreçlerinin dijitalleştirilmesi | Siparişin işlenmesi | Stok, paketleme, teslimat ve iade |
+| Finans | Elektronik muhasebe ve kontrol | Ödeme ve işlem gelirleri | Satış geliri, marj ve müşteri kârlılığı |
+| İnsan kaynakları | Dijital yetkinlik ve e-HRM | Elektronik işlem yetkinlikleri | Müşteri hizmetleri ve kanal yetkinlikleri |
+
+## Hukuki ve etik açıdan karşılaştırma (Bölüm 15)
+- Ortak ilkeler aynı olsa da etkilenen taraflar ve hukuki sorumluluklar faaliyetin türüne göre değişir.
+- **E-işletmecilik:** çalışan ve tedarikçi verileri, erişim yetkileri, ticari sırların güvenliği, otomatik kararların etik kullanımı. **E-ticaret:** elektronik sözleşme, ödeme güvenliği, kimlik doğrulama, vergilendirme, elektronik kayıtlar ve sınır ötesi işlemler. **E-perakendecilik:** tüketicinin bilgilendirilmesi, **mesafeli satış**, iade ve **cayma hakları**, fiyat ve ürün bilgisinin doğruluğu.
+- **Üç alanın ortak ilkeleri:** güvenlik, veri koruması, şeffaflık ve hesap verebilirlik (yükümlülüklerin kapsamı çalışan, tedarikçi, ticari taraf veya nihai tüketiciye göre değişebilir).
+
+## Dijitalleşme ile elektronik ticaret aynı şey değildir (Bölüm 16)
+- Dijital araç kullanımı e-işletmecilik yaratabilir, ancak **elektronik sipariş yoksa e-ticaret oluşmaz**.
+- *Dijitalleşme / e-işletmecilik:* faturaların PDF olarak saklanması, çalışanların e-posta kullanması, üretim raporlarının elektronik hazırlanması, müşteri bilgilerinin CRM'e kaydedilmesi. *E-ticaret için:* elektronik sipariş mekanizması gerekir; sipariş satış veya satın alma oluşturur; ödeme yöntemi tek başına yeterli değildir.
+- **Tanıtım sitesi ile elektronik mağaza farkı:** müşteri sipariş oluşturamıyorsa site **satış kanalı değil, dijital iletişim kanalıdır**. Ürünlerin internette görünmesi e-perakendecilik için yeterli değildir; elektronik mağaza sipariş oluşturma mekanizmasını ve onu destekleyen süreçleri gerektirir.
+
+## Faaliyetleri sınıflandırma örnekleri (Bölüm 17)
+- Sınıflandırma, faaliyetin **elektronik sipariş içerip içermediği** ve siparişin **nihai tüketiciye yönelik** olup olmadığıyla yapılır.
+
+| Faaliyet | E-işletmecilik | E-ticaret | E-perakendecilik |
+|---|---|---|---|
+| Çalışanın internetten izin talep etmesi | Evet | — | — |
+| ERP sisteminde stok izleme | Evet | — | — |
+| Tedarikçiden elektronik hammadde siparişi | Evet | Evet | — |
+| Bayinin üretici portalından ürün alması | Evet | Evet | — |
+| Mağaza siparişinin mobil bankacılıkla ödenmesi | Evet | Genellikle — | — |
+| Çalışanların çevrim içi eğitim alması | Evet | — | — |
+| Tüketicinin internetten kitap satın alması | Evet | Evet | Evet |
+| Tüketicinin uygulamadan yemek siparişi | Evet | Evet | Evet |
+| Müşterinin sitede yalnızca ürün incelemesi | Evet | Sipariş yoksa — | — |
+| C2C pazarında iki tüketicinin işlem yapması | Evet | Evet | Perakendeci yoksa — |
+| İnternetten alınan ürünün mağazaya iadesi | Evet | İşlem sonrası destek | Evet |
+| Dijital yayın aboneliğinin tüketiciye satılması | Evet | Evet | Evet |
+
+- **Hızlı sınıflandırma ölçütü:** 1) **Dijital faaliyet** — işletmenin bir faaliyeti dijital sistemle yürütülüyorsa e-işletmecilik kapsamı değerlendirilir; 2) **Elektronik sipariş** — satış veya satın alma siparişi elektronik kanalda oluşuyorsa e-ticaret vardır; 3) **Nihai tüketici** — işletme nihai tüketiciye elektronik satış yapıyorsa e-perakendecilik vardır.

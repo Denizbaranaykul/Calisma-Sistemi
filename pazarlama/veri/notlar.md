@@ -124,3 +124,86 @@ Teknoloji hızla ilerliyor: şirket yeni teknolojiye **hemen mi geçmeli, beklem
   5. Bağlantı yemi (hesaplayıcı, dönüştürücü, problem çözen araç)
   6. Kaynak sayfaları (Wikipedia; moderasyon ve doğruluk kontrolü var)
   7. Bağlantı reddetme (**Google Search Console**; spam/negatif SEO linklerini "benimle ilgisi yok" diye bildir)
+
+
+# Ders 4 — Ücretli Arama (PPC / Arama Motoru Reklamcılığı)
+
+## Mantık
+- Google'ın para kazanma yöntemi: reklam veren bir **anahtar kelimeye** reklam verir, arama sonuçlarının tepesinde **"Sponsorlu"** olarak çıkar ("reklam" kelimesi itici olduğu için yumuşatılmış). İngilizcesi **pay per click (PPC)**, Türkçesi **ücretli arama**.
+- Hangi coğrafyaya reklam verilecekse o coğrafyanın kullandığı arama motoru seçilir (Google, Yandex, Bing…).
+- SEO'da anahtar kelimeyi sayfa içeriği belirler; PPC'de **hangi kelimeye reklam vereceğine sen karar verirsin**.
+- **Geleneksel reklamdan farkı:** billboard (haftası 40.000 TL), TV (izlenme saatine göre) **sabit ücretlidir**; kaç kişinin gördüğü fark etmez. PPC'de her anahtar kelimeye bütçe ayrılır ve **yalnızca tıklanınca** para kesilir. Örn. TBM 3 TL, bütçe 3.000 TL → **1.000 tıklama**; tıklamayan kişi için ücret yok; bütçe bitince reklam durur. Rekabetli kelimelerde TBM 15 TL'ye çıkabilir.
+- Avantajlar: bütçe sınır koymaz (küçük şirket de reklam verebilir), verimli, **geri dönüş ölçülebilir** (kim, nereden tıkladı, aldı mı, kelime işe yaradı mı?).
+
+## Kimin reklamı gösterilir? Açık artırma + kalite puanı
+- Aynı kelimeye binlerce reklam veren yarışır. Google iki şeye bakar: **1) açık artırmayı (teklifi) kim kazandı, 2) kalite puanı.**
+- Yüksek kalite puanı **daha düşük teklifle kazanmayı** sağlar (sen 3 TL, rakip 4 TL verse bile kalite puanın yüksekse sen kazanabilirsin).
+- **Kalite puanı = anahtar kelime + reklam metni + reklam (açılış) sayfası uyumu.** "Araba" kelimesine motosiklet reklamı, kedi kelimesine köpek reklamı → uyumsuz → puan düşer. Açılış sayfası şirketi anlatıyorsa (otomobil listesi yerine) alaka azalır.
+- Ek olarak: Google'dan **uzun süredir sorunsuz reklam alan** reklamverenin kalite puanı biraz yükselir.
+
+## Anahtar kelime seçimi
+- Rekabet edilecek alanı doğru seçmek gerekir (çok paran olsa bile Apple/Android'le telefon pazarında yarışmak risklidir); PPC'de yarış alanı **anahtar kelimelerdir**.
+- Kelimeler uzatılabilir: ucuz otomobil, Denizli otomobil, lüks otomobil, ipek kumaştan beyaz elbise… Lokasyon önemlidir.
+- **Uzun kuyruk (long-tail):** kelime uzadıkça **TBM düşer** ama **görüntülenme de azalır**. Örn. "elbise" 37 TL (günde ~10.000 görüntülenme), "beyaz elbise" ~4.000, "Denizli'de beyaz elbise" 14 TL (~300). Aynı bütçeyle uzun kelimeden çok daha fazla ve **daha hedefli** tıklama alınır (Denizli'de arayan dükkâna gelebilir). Strateji: tek genel kelime yerine çok sayıda hedefli uzun kelimeye ayrı bütçe.
+
+## Negatif anahtar kelime ve yamyamlık etkisi
+- **Negatif anahtar kelime:** bizim kelimemize benzeyip başka şey arayanlar reklamımızı görmesin diye işaretlenen kelime. *"Beyaz elbise dolabı"* arayan dolap ister; giyim reklamına tıklarsa para boşa gider → "dolap" negatif yapılır.
+- **Yamyamlık (cannibalization) etkisi:** iki kampanya birbirinin bütçesini yer. *Adidas X koşu şortu (600 $) ve X koşu tişörtü (100 $):* şort reklamı çok tıklanmış ama şort satmamış; tişört reklamı az tıklanmış ama tişört satışı patlamış → tişört arayanlar şort reklamından girip tişört almış. Yanlış sonuçlar çıkarılır ("şort satmıyor", "tişört reklamına gerek yok"). **Çözüm:** şort kampanyasına "tişört"ü, tişört kampanyasına "şort"u negatif yaparak araya **set çekmek** → ölçülebilir kampanya.
+
+## Jenerik, marka ve rakip anahtar kelimeler
+- **Jenerik:** genel kabul görmüş, ürün türünün adı hâline gelmiş marka/kelime. *Selpak* (kâğıt mendil yerine; markette "Selpak ver" deyince başka marka veriliyor → **marka değeri korunamıyor**), jilet, Cif, Aygaz, Sana. Elma, portakal, İstanbul gibi genel kelimelerde rekabet çok yüksektir; "portakal" yazınca meyve çıkıyor, Portakal Bahçem altta kalıyor → üste çıkmak için PPC vermek zorunda. "Pamukkale" yazınca otobüs firması ve üniversite çıkıyor.
+- **Marka kelimesi:** kendi markana reklam vermek (Adidas "Adidas"a). Marka çok güçlüyse gerekmeyebilir (Adidas aramasında reklam yok, SEO yeterli).
+- **Rakip kelimesi:** Nike'ın "Adidas" aramasına reklam vermesi **yasal**, ama karşılıklı bir savaş başlatır ve bütçeleri eritir; dikkatli girilmeli.
+- Küresel jenerik ve büyük pazar kelimelerinde TBM çok yüksek (kumar/bahis kelimelerinde tıklama başı ~40 $). Uzun ve hedefli kelimeler ("güvenli online bahis") daha ucuzdur.
+
+## Eşleşme tipleri
+| Tip | Kimler görür? | Trafik | Alaka |
+|---|---|---|---|
+| **Tam eşleşme** | Yalnızca kelimeyi birebir yazanlar ("beyaz elbise"; "ipek beyaz elbise" yazan görmez) | En az | En yüksek — "az olsun öz olsun" |
+| **Cümle eşleşmesi** | Kelime öbeğini içeren aramalar ("ipek beyaz elbise", "çiçekli beyaz elbise") | Orta | Orta |
+| **Geniş eşleşme** | Yakın her arama (kırmızı elbise, beyaz etek, beyaz şapka…) | En çok | Düşük — tıklayan çoğu almaz |
+- Geniş eşleşme neden seçilir? Sektöre yeni girdin, bütçen var, **tanınmak / yeni müşteri** kazanmak istiyorsun. Tam hedef için tam eşleşme.
+- Google ayrıca reklamın **hangi gün ve saatlerde** çıkacağını seçtirir; çerezlerle hedefleme yapılır.
+
+## Açılış (landing) sayfası
+- Tıklamadan sonra kullanıcının indiği sayfa ("uçağın piste inmesi" benzetmesi). Reklamın ilk görüldüğü yer arama sonucu, asıl etkileşim landing page'de başlar.
+- Doğrusu: **anahtar kelimeyle ilgili, özel hazırlanmış** sayfa (şort reklamına tıklayan şort sayfasına gitmeli). Büyük firmalar çoğu zaman ana sayfaya yönlendirir — bu **yanlıştır**; küçük şirketler bunu önemsemek zorunda.
+- İyi landing page: **kopya içerik olmamalı** (Google cezalandırır); dikkat çeken indirimler, kampanyalar, yan ürünler; kullanıcıyı sitede tutacak teklifler (**"son 3 ürün", "stokta 2 tane kaldı"** gibi kıtlık mesajları); **sosyal kanıt** ("arkadaşların bunu aldı", "5 yıldız"). Para ödendi, kullanıcı çıkmasın.
+- Hocanın özeti — önemli olanlar: **kalite puanı, açık artırma sistemi, anahtar kelime seçimi, negatif anahtar kelimenin amacı.**
+
+# Ders 5 — Görsel (Display) Reklamcılık ve Programatik Reklam
+*Not: hoca "haftaya sınav" dedi.*
+
+## Görsel reklam nedir?
+- **Göze hitap eden** reklam: gazetedeki kutu ilan, TV reklamı, billboard ("ABC Hastanesi'ne yeni hekim"), otobüs durağı panosu, asansör ilanı. Radyo (işitsel) değildir.
+- İnternetle ölmedi, **şekil değiştirdi**: web sitelerine gömüldü, uygulamalara, oyunlara, sosyal medyaya girdi; sosyal medyanın en çok para kazandığı yöntemlerden biri oldu.
+- Dijitalde **korunan 3 özelliği:** 1) **kitlesel** olması, 2) **görsel/grafiksel** olması, 3) **standart boyutlar** (billboardlarda 2,5 × 3,5 m gibi; TV'de 4:3, 16:9). İnternette **banner** reklamların standart **piksel** boyutları vardır; uymazsan reklam taşar, sayfa kayar (SEO'daki kullanıcı deneyimi sorunları).
+
+## Pop-up dönemi
+- İlk dönemde reklamlar öne çıkmak için **baskıcı** yöntemlere başvurdu: kapatsan da tekrar çıkan, bazen virüsle bilgisayara yerleşen **pop-up** reklamlar → insanların reklama bakışı bozuldu, **reklama önyargı** oluştu.
+- **Ana akım** markalar itibarını korumak için pop-up'tan uzak durur. İmaj kaybı olmayan firmalar (yetişkin içerik, **yasa dışı bahis** siteleri: biri kapanınca diğeri açılır, marka değeri zaten yok) pop-up'ı kullanmaya devam eder.
+
+## Reklam sunucuları (ad server)
+- 90'larda az sayıda bilinen site vardı (Yahoo, Mynet, gazete siteleri) — TV kanalları gibi; kime reklam verileceği belliydi. Siteler **kulaktan kulağa (word of mouth)** öğreniliyordu.
+- **Kırılma: arama motorları.** Kullanıcılar bilinmeyen siteleri de bulmaya başladı, trafik dağıldı; büyük sitelerin tekeli bitti. Reklamverenin soruları: **hangi siteye vermeli, kaç kişiye ulaşılır?** Site sahibinin "20.000 kişi geldi" demesine güvenmek zorundaydın.
+- **Ad server (reklam sunucusu):** 3. parti ya da sitenin kendi hizmeti olabilir. 1) Siteye gelenleri **bağımsız ve şeffaf** ölçer (TV'deki rating cihazı manipülasyonunun aksine) → **denetim ve anlaşmazlık uzlaşması**. 2) **Hazır reklam formatları kütüphanesi** (banner boyutları, metin, görsel) → **iş akışını basitleştirir**.
+
+## Programatik reklamcılık ve gerçek zamanlı teklif (RTB)
+- Bugünkü **tam otomatik** sistem: reklam vermek isteyen ile reklam alanı satmak isteyen bir platformda otomatik eşleşir; birbirlerini görmezler. Tüm süreç **bir saniyeden kısa** sürer — sayfa açılmadan biter.
+- **Unsurlar:**
+  1. **Kullanıcı** (bilgisayar/telefon/tablet) bir web sayfasına girer; sayfada reklam yerleri vardır.
+  2. **Arz tarafı platformu (SSP):** site sahibinin reklam yerini ilan eder; boyut, sayfa, konum bilgisini ve kullanıcının **çerezlerini, geçmiş davranışlarını** toplayıp **profil** çıkarır, "bu kullanıcıyı isteyen var mı?" diye pazara sunar.
+  3. **Talep tarafı platformları (DSP):** her biri bir reklamvereni temsil eder; profili değerlendirir.
+  4. **Veri yönetim platformu (DMP):** reklamverenin geçmiş verisi — bu kişiyi tanıyor muyuz, bizden ne aldı?
+  5. **Reklamveren** (firma, dükkân, kişi).
+- *Örnek:* krampon reklamcısı "yaşı geçmiş, kız çocuğu var" diyerek 0,2 $ teklif eder; daha önce Ford almış olduğu için **Ford** 0,5 $; kızı olduğu için **Barbie** 0,8 $ → en yüksek teklif kazanır, kullanıcı Barbie reklamını görür. Diğer reklam yerlerini Ford ve (Netflix'i olmadığı için) Netflix kazanabilir.
+- Sonuç: aynı sayfaya giren iki kişi **farklı reklamlar** görür. **Çerezlerin** en çok işe yaradığı yer burasıdır → **hiper hedefleme**; reklam kitleselliğini kaybetmeye başlar.
+- Ek hedefleme: belirli siteler/makaleler seçilebilir veya hariç tutulabilir (**savaş, siyasi haberlerin yanında görünmeme** — marka güvenliği), **lokasyon**, **saat dilimi** (örn. 20.00–23.00).
+- Platform örnekleri: **Amazon DSP**, Yahoo, **Display & Video 360** (talep tarafı); **Google Ad Manager, AdSense** (arz tarafı; hem satıp hem alınabilir).
+
+## Görsel reklam formatları
+1. **Banner (görüntülü reklam):** belli piksel boyutlarında sabit/hareketli görsel ve yazı; internet reklamcılığının temeli. *Million Dollar Homepage:* bir öğrencinin 1 milyon piksellik sayfası, piksel başı 1 $ → ~1 milyon $ kazanç; bugün çoğu link bozuk.
+2. **Zengin medya (rich media):** görüntüye ek **ses, video, veri sunma** ("son 3 ürün" bilgisini stoktan çekip gösterir) ve **veri toplama** (kaydırma, mini oyun/**oyunlaştırma** — hedef vurma, gemi batırma), fare üstüne gelince değişen reklamlar. Banner'lar geride kaldı.
+3. **Yayın içi reklamlar:** TV ölmedi; YouTube, Twitch, Netflix gibi platformlara geçti. Yayının **başında, ortasında, sonunda** çıkar. Twitch genelde herkese benzer reklam gösterir (programatik az); YouTube çerezlerle hedefler. TV kanallarının online sürümlerindeki reklamlar TV'dekinden ayrıdır (ayrı ücret). Ürün yerleştirme de bir türdür.
+- **Atlanabilir video reklam (YouTube, 2012) ve "gerçek görüş" (TrueView):** ilk birkaç saniyeden sonra **"Reklamı atla"** düğmesi.
+  - **Faydaları:** 1) reklamı yalnızca **ilgilenenler izler**; 2) **süre sınırı kalkar** (atlanmayan 1,5 saatlik reklam bile oynayabilir); 3) **fiyatlandırma faydası:** reklamveren yalnızca atlanmadan izlenen reklam için öder. YouTube'u, tüketiciyi (bıktırmaz) ve reklamvereni korur. Atlarsan yayıncı da kazanmaz.
