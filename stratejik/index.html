@@ -64,13 +64,16 @@ a{color:var(--accent)}
 .avl .nd.bad circle{stroke:var(--bad);stroke-width:3.5}.avl .bf{font-size:11px;fill:var(--mute);text-anchor:start}.avl .nd.bad .bf{fill:var(--bad);font-weight:700}
 .avl.anim line{animation:avfade .4s ease .35s both}@keyframes avfade{from{opacity:0}}
 .seqc{display:inline-block;min-width:30px;text-align:center;padding:2px 8px;border-radius:6px;margin:2px;background:var(--soft);font-weight:600}.seqc.done{opacity:.4;text-decoration:line-through}.seqc.next{background:var(--accent);color:var(--accent-ink)}
+.seqc.ok{opacity:1;text-decoration:none;background:color-mix(in srgb,var(--ok) 22%,var(--soft))}.seqc.no{opacity:1;text-decoration:none;background:color-mix(in srgb,var(--bad) 22%,var(--soft))}
+.avlog{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:14px}.avs{border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:13px;background:var(--card)}.avs.ok{border-color:var(--ok)}.avs.no{border-color:var(--bad)}.avs svg{margin:4px auto 0;max-width:none}.avar{color:var(--mute)}
+.avmsg{border-left:4px solid var(--line);padding:6px 12px;margin:8px 0;background:var(--soft);border-radius:0 8px 8px 0}.avmsg.ok{border-color:var(--ok)}.avmsg.no{border-color:var(--bad)}
 .sol{background:var(--soft);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:15px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <p class="sub"><a href="../index.html">← Tüm dersler</a></p>
+  <p class="sub" id="back"><a href="../index.html">← Tüm dersler</a></p>
   <h1 id="ttl"></h1>
   <p class="sub" id="sub"></p>
 </header>
@@ -101,6 +104,7 @@ const PLAN = (()=>{
   return p;
 })();
 const $ = (s,r=document)=>r.querySelector(s);
+setTimeout(()=>{if(window.claude){const b=$('#back');if(b)b.hidden=true}},0);
 const K=k=>COURSE.id+':'+k;
 const store = {
   get(k,d){try{const v=localStorage.getItem(K(k));return v?JSON.parse(v):d}catch(e){return d}},
@@ -200,18 +204,18 @@ let qz=null;
 function renderQuizHome(){
   const wrong=store.get('pz_wrong',[]),best=store.get('pz_best',{});
   $('#p-quiz').innerHTML=`<div class="card"><b>Test oluştur</b><div class="row" style="margin:12px 0" id="qd">`+[0,...NS].map(f=>`<button class="chip" aria-pressed="${(qz&&qz.f||0)===f}" data-f="${f}">${f?U+' '+f:'Karışık'}</button>`).join('')+`</div>
-  <div class="row"><button class="btn" id="go10">10 soru</button><button class="btn alt" id="go20">20 soru</button><button class="btn alt" id="goall">Hepsi</button><button class="btn alt" id="gow" ${wrong.length?'':'disabled'}>Yanlışlarım (${wrong.length})</button></div>
+  <div class="row"><button class="btn" id="go10">10 soru</button><button class="btn alt" id="go20">20 soru</button>${COURSE.quizSplit?'<button class="btn alt" id="goall1">Hepsi 1</button><button class="btn alt" id="goall2">Hepsi 2</button>':'<button class="btn alt" id="goall">Hepsi</button>'}<button class="btn alt" id="gow" ${wrong.length?'':'disabled'}>Yanlışlarım (${wrong.length})</button></div>
   <p class="mute" style="margin:12px 0 0">Şıklar her seferinde karışır. Yanlış yaptıkların "Yanlışlarım"a eklenir, doğru yapınca çıkar.</p></div>
   <div class="card mute">En iyi skorlar: ${[0,...NS].map(f=>`${f?U+' '+f:'Karışık'}:${best[f]!=null?best[f]+'%':'—'}`).join(' · ')}</div>`;
   let f=0;
   $('#qd').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{f=+b.dataset.f;$('#qd').querySelectorAll('[data-f]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   const start=n=>startQuiz(f,n);
-  $('#go10').onclick=()=>start(10);$('#go20').onclick=()=>start(20);$('#goall').onclick=()=>start(999);
+  $('#go10').onclick=()=>start(10);$('#go20').onclick=()=>start(20);if(COURSE.quizSplit){$('#goall1').onclick=()=>startQuiz(f,999,false,1);$('#goall2').onclick=()=>startQuiz(f,999,false,2)}else $('#goall').onclick=()=>start(999);
   $('#gow').onclick=()=>startQuiz(0,999,true);
 }
-function startQuiz(f,n,wrongOnly){
+function startQuiz(f,n,wrongOnly,part){
   const W=store.get('pz_wrong',[]);
-  let pool=QUIZ.map((q,i)=>({...q,id:i})).filter(q=>wrongOnly?W.includes(q.id):(!f||q.d===f));
+  let pool=QUIZ.map((q,i)=>({...q,id:i})).filter(q=>wrongOnly?W.includes(q.id):(!f||q.d===f)&&(!part||(part===1)===(q.id<COURSE.quizSplit)));
   pool=shuffle(pool).slice(0,n);
   qz={f,items:pool.map(q=>{const idx=shuffle(q.o.map((_,i)=>i));return {...q,order:idx,ans:idx.indexOf(q.a)}}),i:0,score:0,done:false,wrongOnly};
   drawQ();
@@ -258,9 +262,9 @@ const T={
     let e='',c='';pos.forEach(([x,y],n)=>{[n.l,n.r].forEach(k=>{if(k){const[a,b]=pos.get(k);e+=`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}"/>`}});c+=`<circle cx="${x}" cy="${y}" r="17"/><text x="${x}" y="${y+5}">${n.v}</text>`});
     return `<svg class="tree" viewBox="0 0 ${i*44+8} ${T.h(t)*56}" style="max-width:${i*44+8}px">${e}${c}</svg>`}
 };
-const PR={'+':1,'-':1,'*':2,'/':2};
+const PR={'+':1,'-':1,'*':2,'/':2,'^':3};
 const exprT=(n,leaf,ops)=>{if(n===1)return{v:leaf()};const k=R(1,n-1),l=exprT(k,leaf,ops);return{op:pick(ops),l,r:exprT(n-k,leaf,ops)}};
-const inf=t=>{if(t.v!=null)return String(t.v);let a=inf(t.l),b=inf(t.r);if(t.l.op&&PR[t.l.op]<PR[t.op])a=`(${a})`;if(t.r.op&&PR[t.r.op]<=PR[t.op])b=`(${b})`;return `${a} ${t.op} ${b}`};
+const inf=t=>{if(t.v!=null)return String(t.v);let a=inf(t.l),b=inf(t.r);const ra=t.op==='^';if(t.l.op&&(ra?PR[t.l.op]<=PR[t.op]:PR[t.l.op]<PR[t.op]))a=`(${a})`;if(t.r.op&&(ra?PR[t.r.op]<PR[t.op]:PR[t.r.op]<=PR[t.op]))b=`(${b})`;return `${a} ${t.op} ${b}`};
 const pst=t=>t.v!=null?[t.v]:[...pst(t.l),...pst(t.r),t.op], prf=t=>t.v!=null?[t.v]:[t.op,...prf(t.l),...prf(t.r)];
 const ev=t=>t.v!=null?t.v:({'+':(a,b)=>a+b,'-':(a,b)=>a-b,'*':(a,b)=>a*b})[t.op](ev(t.l),ev(t.r));
 const AVL={
@@ -270,28 +274,37 @@ const AVL={
   rotL(n){const r=n.r;n.r=r.l;r.l=n;return r},
   bad:t=>t?T.nodes(t).filter(x=>Math.abs(AVL.bf(x.n))>1).sort((a,b)=>b.d-a.d):[],
   find:(t,v,p=null,s=null)=>!t?null:t.v===v?{n:t,p,s}:AVL.find(v<t.v?t.l:t.r,v,t,v<t.v?'l':'r'),
-  // standart AVL ekleme: her dengesizlikte gereken en az döndürmeyi ve durumu kaydeder
-  ins(t,v,ev){if(!t)return{v,l:null,r:null};if(v<t.v)t.l=AVL.ins(t.l,v,ev);else t.r=AVL.ins(t.r,v,ev);const b=AVL.bf(t);
-    if(b>1){if(AVL.bf(t.l)>=0){ev.push({v,z:t.v,y:t.l.v,c:'LL',r:1});return AVL.rotR(t)}ev.push({v,z:t.v,y:t.l.v,x:t.l.r.v,c:'LR',r:2});t.l=AVL.rotL(t.l);return AVL.rotR(t)}
-    if(b<-1){if(AVL.bf(t.r)<=0){ev.push({v,z:t.v,y:t.r.v,c:'RR',r:1});return AVL.rotL(t)}ev.push({v,z:t.v,y:t.r.v,x:t.r.l.v,c:'RL',r:2});t.r=AVL.rotR(t.r);return AVL.rotL(t)}
-    return t},
+  turn(t,u,d){const f=AVL.find(t,u),g=AVL.find(t,f.p.v),nn=d==='R'?AVL.rotR(g.n):AVL.rotL(g.n);if(g.p)g.p[g.s]=nn;else t=nn;return t},
+  // beklenen adımlar: her ekleme bir adım, her tek döndürme bir adım (çift döndürme = 2 adım)
+  plan(seq){let t=null;const S=[],J=t=>({ser:AVL.ser(t),json:JSON.stringify(t)});
+    seq.forEach(v=>{const path=[];for(let p=t;p;p=v<p.v?p.l:p.r)path.push(`${v} ${v<p.v?'<':'>'} ${p.v} → ${v<p.v?'sol':'sağ'}`);
+      t=T.ins(t,v);const b=AVL.bad(t)[0];let e=null;
+      if(b){const z=b.n;if(AVL.bf(z)>1){const y=z.l;e=AVL.bf(y)>=0?{c:'LL',y:y.v}:{c:'LR',y:y.v,x:y.r.v}}else{const y=z.r;e=AVL.bf(y)<=0?{c:'RR',y:y.v}:{c:'RL',y:y.v,x:y.l.v}}Object.assign(e,{v,z:z.v,r:e.x==null?1:2})}
+      S.push({k:'ins',v,path,e,...J(t)});
+      if(e)(e.r===1?[[e.y,e.c==='LL'?'R':'L']]:[[e.x,e.c==='LR'?'L':'R'],[e.x,e.c==='LR'?'R':'L']]).forEach(([u,d],n)=>{t=AVL.turn(t,u,d);S.push({k:'rot',v,u,d,n:n+1,e,...J(t)})})});
+    return S},
   ad:{LL:'Sol-sol (LL)',RR:'Sağ-sağ (RR)',LR:'Sol-sağ (LR)',RL:'Sağ-sol (RL)'},
-  step:e=>({LL:`${e.y} düğümünü sağa döndür (${e.y} yukarı, ${e.z} sağ-aşağı)`,RR:`${e.y} düğümünü sola döndür (${e.y} yukarı, ${e.z} sol-aşağı)`,LR:`önce ${e.x} düğümünü sola döndür (${e.y} düğümünün yerine çıkar), sonra ${e.x} düğümünü sağa döndür (${e.z} düğümünün yerine çıkar)`,RL:`önce ${e.x} düğümünü sağa döndür (${e.y} düğümünün yerine çıkar), sonra ${e.x} düğümünü sola döndür (${e.z} düğümünün yerine çıkar)`})[e.c],
+  cap:s=>s.k==='ins'?`${s.v} eklendi`:`${s.u} ${s.d==='R'?'sağa':'sola'} döndürüldü`,
+  say(s){const e=s.e,yon=s.d==='R'?'sağa':'sola';
+    if(s.k==='ins')return `<b>${s.v}</b> eklenir: ${s.path.length?s.path.join(', '):'ağaç boş → kök olur'}. `+(e?`Denge bozuldu: <b>${e.z}</b> düğümünde BF = ${e.c[0]==='L'?'+2':'−2'} → ${AVL.ad[e.c]} durumu, ${e.r===2?'çift (2 adım)':'tek'} döndürme gerekir.`:'Tüm düğümlerde |BF| ≤ 1 → döndürme gerekmez.');
+    if(e.r===1)return `${AVL.ad[e.c]}: <b>${s.u}</b> ${yon} döndürülür (${s.u} yukarı çıkar, ${e.z} aşağı iner). Ağaç yeniden dengeli.`;
+    return s.n===1?`${AVL.ad[e.c]}, 1. döndürme: <b>${s.u}</b> ${yon} döndürülür (${e.y} düğümünün yerine çıkar). Şekil artık ${e.c==='LR'?'LL':'RR'} gibi; dengelemek için 2. döndürme gerekir.`
+      :`${AVL.ad[e.c]}, 2. döndürme: <b>${s.u}</b> ${yon} döndürülür (${e.z} düğümünün yerine çıkar). Ağaç yeniden dengeli.`},
   svg(t,sel,bad,bf){let i=0;const pos=new Map();(function w(n,d){if(!n)return;w(n.l,d+1);pos.set(n,[i++*50+30,d*62+30]);w(n.r,d+1)})(t,0);
     let e='',c='';pos.forEach(([x,y],n)=>{[n.l,n.r].forEach(k=>{if(k){const[a,b]=pos.get(k);e+=`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}"/>`}});const b=AVL.bf(n);
       c+=`<g class="nd${n.v===sel?' sel':''}${bad.includes(n.v)?' bad':''}" data-v="${n.v}"><circle cx="${x}" cy="${y}" r="18"/><text x="${x}" y="${y+5}">${n.v}</text>${bf?`<text class="bf" x="${x+20}" y="${y-15}">${b>0?'+'+b:b<0?'−'+(-b):'0'}</text>`:''}</g>`});
-    return `<svg class="tree avl" viewBox="0 0 ${i*50+30} ${T.h(t)*62+8}" style="max-width:${i*50+30}px">${e}${c}</svg>`}
+    return `<svg class="tree avl" viewBox="0 0 ${i*50+30} ${T.h(t)*62+8}" style="max-width:${i*50+30}px;min-width:${i*32}px">${e}${c}</svg>`}
 };
 const tbl=(head,rows)=>`<table><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table>`;
 
 const GEN={
-  avl:{label:'AVL döndürme (etkileşimli)',f(){const two=Math.random()<.6;let seq,ev,t,k=0;
-    do{seq=shuf([...Array(19)].map((_,i)=>(i+1)*5)).slice(0,R(6,8));t=null;ev=[];seq.forEach(x=>t=AVL.ins(t,x,ev))}while((ev.length<2||ev.length>4||(two&&!ev.some(e=>e.r===2)))&&++k<2000);
-    const need=sum(ev.map(e=>e.r));
-    return{type:'avl',seq,ans:AVL.ser(t),tree:null,i:0,sel:null,hist:[],bfOn:false,
-      q:`Boş bir AVL ağacına sırasıyla <b>${seq.join(', ')}</b> ekle. Gerektiğinde bir düğüme dokunup <b>sağa / sola döndür</b>. Hepsini ekleyince <b>Kontrol et</b>: son ağacın doğru AVL ağacı olup olmadığına bakılır.`,
-      show:'aşağıdaki ağaç',
-      sol:`BF = h(sol) − h(sağ). Dengesizlik, eklenen düğüme en yakın |BF| = 2 olan düğümde düzeltilir:<br>`+ev.map(e=>`<b>${e.v}</b> eklenince <b>${e.z}</b> düğümünde BF = ${e.c[0]==='L'?'+2':'−2'} → ${AVL.ad[e.c]}: ${AVL.step(e)}`).join('<br>')+`<br>Doğru sonuç ağacı:`+T.svg(t)}}},
+  avl:{label:'AVL ekleme ve döndürme (adım adım)',f(){const two=Math.random()<.8;let seq,steps,ev,k=0;
+    // hocanın soruları gibi 10–20 sayı, 1–99 arasından rastgele (birbirine yakın yığılmasın)
+    do{seq=shuf([...Array(99)].map((_,i)=>i+1)).slice(0,R(10,20));steps=AVL.plan(seq);ev=steps.filter(s=>s.k==='ins'&&s.e)}while((ev.length<3||(two&&!ev.some(s=>s.e.r===2)))&&++k<2000);
+    return{type:'avl',seq,steps,k:0,tree:null,sel:null,bfOn:false,res:[],att:[],ai:'',
+      q:`Boş bir AVL ağacına sırasıyla <b>${seq.join(', ')}</b> ekle. <b>Her ekleme ve her döndürme ayrı bir adımdır</b> ve yaptığın anda kontrol edilir: eklemek için bir düğüme dokunup sol ya da sağ çocuğu olarak ekle; denge bozulduysa bir düğüme dokunup döndür (çift döndürme iki adımdır). Yanlış adımda ağaç doğru hâline getirilir, oradan devam edersin.`,
+      show:'aşağıdaki adımlar',
+      sol:`BF = h(sol) − h(sağ). Dengesizlik, eklenen düğüme en yakın |BF| = 2 olan düğümde düzeltilir.<ol style="margin:6px 0;padding-left:22px">`+steps.map(s=>`<li>${AVL.say(s)}</li>`).join('')+`</ol>Doğru sonuç ağacı:`+T.svg(JSON.parse(steps[steps.length-1].json))}}},
   ppc:{label:'Ücretli arama (PPC)',f(){const k=R(0,4);
     if(k===0){const c=pick([2,3,4,5,8,10,12,15]),n=R(5,60)*100,b=c*n;return{q:`Bir anahtar kelimeye <b>${N(b)} TL</b> bütçe ayırdın; tıklama başı maliyet (TBM) <b>${c} TL</b>. Bütçe bitene kadar en fazla kaç <b>tıklama</b> alırsın?`,type:'num',a:n,sol:`Ücretli aramada yalnızca tıklamada ödenir: ${N(b)} / ${c} = ${N(n)} tıklama. Gösterim (görüntülenme) ücretsizdir; bütçe bitince reklam durur.`}}
     if(k===1){const g=R(20,200)*100,t=Math.round(g*R(5,80)/1000),a=t/g*100;return{q:`Reklamın <b>${N(g)}</b> kez gösterildi ve <b>${N(t)}</b> kez tıklandı. <b>Tıklama oranı (TO / CTR)</b> yüzde kaçtır?`,type:'num',a,sol:`TO = tıklama / gösterim × 100 = ${N(t)} / ${N(g)} × 100 = %${fmt(a)}`}}
@@ -324,25 +337,26 @@ const GEN={
       ['Apple\'ın temel yeteneği olarak derste ne gösterildi?',['Kullanıcı deneyimini merkeze alan donanım–yazılım entegrasyonu ve estetik tasarım','Kendi fabrikalarında üretim yapması','En ucuz telefonu üretmesi','Bayi ağının genişliği'],'Görünen ürün telefon/bilgisayar; gerçek temel yetenek entegrasyon ve tasarım.'],
       ['Temel yetenekler belirlenirken kıyaslama (benchmark) kime göre yapılmalıdır?',['Doğru (ortalamanın üzerinde kazanan) rakiplere','Sektördeki en zayıf firmaya','Başka sektörlerdeki rastgele firmalara','Kıyaslama gerekmez'],'Yanlış şirketle kıyaslarsak temel yeteneklerimizi yanlış belirleriz.']]);
     return{q,type:'mc',...mcq(o),sol:s}}},
-  traversal:{label:'Ağaç dolaşma',f(){const t=T.rand(R(6,9)),[nm,fn]=pick([['preorder (kök–sol–sağ)',T.pre],['inorder (sol–kök–sağ)',T.ino],['postorder (sol–sağ–kök)',T.post],['level order (seviye seviye)',T.lvl]]),a=fn(t);
-    return{q:`Aşağıdaki ikili ağacın <b>${nm}</b> dolaşma sırasını yaz.`+T.svg(t),type:'txt',a:a.join(''),show:a.join(', '),sol:`Sıra: <b>${a.join(', ')}</b>`}}},
-  bst:{label:'İkili arama ağacı',f(){const v=shuffle([...Array(70)].map((_,i)=>i+5)).slice(0,R(7,9));let t=null;v.forEach(x=>t=T.ins(t,x));
+  traversal:{label:'Ağaç dolaşma',f(){const t=T.rand(R(6,9)),[nm,fn]=pick([['preorder',T.pre],['inorder',T.ino],['postorder',T.post],['level order',T.lvl]]),a=fn(t);
+    return{q:`Aşağıdaki ikili ağacın <b>${nm}</b> dolaşma sırasını yaz.`+T.svg(t),type:'seq',a:a.join(','),show:a.join(', '),sol:`Sıra: <b>${a.join(', ')}</b>`}}},
+  bst:{label:'İkili arama ağacı',f(){const v=shuffle([...Array(70)].map((_,i)=>i+5)).slice(0,R(10,20));let t=null;v.forEach(x=>t=T.ins(t,x));
     const ns=T.nodes(t),k=R(0,4),lead=`Boş bir ikili arama ağacına sırasıyla <b>${v.join(', ')}</b> ekleniyor. `;let q,a,type='num';
-    if(k===0){a=T.pre(t);q='Ağacın <b>preorder</b> dolaşımını yaz.';type='txt'}
-    else if(k===1){a=T.post(t);q='Ağacın <b>postorder</b> dolaşımını yaz.';type='txt'}
+    if(k===0){a=T.pre(t);q='Ağacın <b>preorder</b> dolaşımını yaz.';type='seq'}
+    else if(k===1){a=T.post(t);q='Ağacın <b>postorder</b> dolaşımını yaz.';type='seq'}
     else if(k===2){const c=pick(ns.filter(x=>x.p));a=c.p.v;q=`<b>${c.n.v}</b> düğümünün ebeveyni hangisidir?`}
     else if(k===3){a=ns.filter(x=>!x.n.l&&!x.n.r).length;q='Ağaçta kaç <b>yaprak</b> vardır?'}
-    else{a=Math.max(...ns.map(x=>x.d));q='En derin düğümün <b>derinliği</b> kaçtır? (kök = 0)'}
-    const arr=Array.isArray(a);return{q:lead+q,type,a:arr?a.join(''):a,show:arr?a.join(', '):a,sol:'Kural: küçükse sola, büyük veya eşitse sağa. Oluşan ağaç:'+T.svg(t)+(arr?`Cevap: <b>${a.join(', ')}</b>`:'')}}},
-  treeprops:{label:'Ağaç terimleri',f(){const t=T.rand(R(7,10)),ns=T.nodes(t),c=pick(ns),k=R(0,4);let q,a;
-    if(k===0){a=ns.filter(x=>!x.n.l&&!x.n.r).length;q='Ağaçta kaç <b>yaprak</b> düğüm vardır?'}
-    else if(k===1){a=c.d;q=`<b>${c.n.v}</b> düğümünün <b>derinliği</b> kaçtır? (kökten kenar sayısı, kök = 0)`}
-    else if(k===2){a=c.d+1;q=`<b>${c.n.v}</b> düğümünün <b>seviyesi</b> kaçtır? (kök = 1)`}
-    else if(k===3){a=(c.n.l?1:0)+(c.n.r?1:0);q=`<b>${c.n.v}</b> düğümünün <b>derecesi</b> (çocuk sayısı) kaçtır?`}
-    else{a=ns.filter(x=>x.n.l||x.n.r).length;q='Ağaçta kaç <b>dahili</b> (yaprak olmayan) düğüm vardır?'}
-    return{q:q+T.svg(t),type:'num',a,sol:`Cevap: <b>${a}</b>. Derinlik = kökten kenar sayısı, seviye = derinlik + 1, derece = çocuk sayısı, yaprak = çocuğu olmayan düğüm.`}}},
-  postfix:{label:'Infix → postfix/prefix',f(){let i=0;const t=exprT(R(3,5),()=>'ABCDEFG'[i++],Object.keys(PR)),pre=Math.random()<.4,a=(pre?prf:pst)(t).join('');
-    return{q:`<b>${inf(t)}</b> ifadesinin <b>${pre?'prefix':'postfix'}</b> karşılığını yaz.`,type:'txt',a,show:a,sol:`${pre?'Prefix':'Postfix'}: <b>${a}</b>. En son yapılan işlem (${t.op}) ${pre?'en başa':'en sona'} yazılır; parantez içleri önce kendi ${pre?'prefix':'postfix'} haline getirilir.`}}},
+    else{a=Math.max(...ns.map(x=>x.d));q='En derin düğümün <b>derinliği</b> kaçtır?'}
+    const arr=Array.isArray(a);return{q:lead+q,type,a:arr?a.join(','):a,show:arr?a.join(', '):a,sol:'Kural: küçükse sola, büyük veya eşitse sağa. Oluşan ağaç:'+T.svg(t)+(arr?`Cevap: <b>${a.join(', ')}</b>`:'')}}},
+  treeprops:{label:'Ağaç terimleri',f(){const t=T.rand(R(7,10)),ns=T.nodes(t),H=n=>n?1+Math.max(H(n.l),H(n.r)):-1,
+    c=pick(ns.filter(x=>x.p&&(x.n.l||x.n.r)).length?ns.filter(x=>x.p&&(x.n.l||x.n.r)):ns.filter(x=>x.p)),v=c.n.v,
+    leaf=ns.filter(x=>!x.n.l&&!x.n.r).length,inn=ns.length-leaf,h=H(t),deg=(c.n.l?1:0)+(c.n.r?1:0),ch=H(c.n);
+    return{q:`Aşağıdaki ağaç için istenen tüm değerleri bul. Seçili düğüm: <b>${v}</b>`+T.svg(t),type:'multi',
+      fields:[['Yaprak sayısı',leaf],['Dahili düğüm sayısı',inn],['Ağacın yüksekliği',h],['Seviye sayısı',h+1],[`${v} derinliği`,c.d],[`${v} seviyesi`,c.d+1],[`${v} derecesi`,deg],[`${v} yüksekliği`,ch]],
+      sol:`Yaprak = çocuğu olmayan düğüm → ${leaf} · Dahili = en az bir çocuğu olan → ${inn} (toplam ${ns.length} düğüm) · Ağacın yüksekliği = kökten en uzak yaprağa kenar sayısı → ${h} · Seviye sayısı = yükseklik + 1 → ${h+1}<br><b>${v}</b>: derinlik = kökten ${v}'ye kenar sayısı → ${c.d} · seviye = derinlik + 1 → ${c.d+1} · derece = çocuk sayısı → ${deg} · yükseklik = ${v}'den en uzak yaprağa kenar sayısı → ${ch}`}}},
+  postfix:{label:'Infix → postfix/prefix',f(){let i,t,c=0;const has=t=>t.op&&(t.op==='^'||has(t.l)||has(t.r));
+    // 4–5 işlem; çoğu soruda en az bir ^ olsun
+    do{i=0;t=exprT(R(5,6),()=>'ABCDEFG'[i++],Object.keys(PR))}while(Math.random()<.85&&!has(t)&&++c<200);const pre=Math.random()<.4,a=(pre?prf:pst)(t).join('');
+    return{q:`<b>${inf(t)}</b> ifadesinin <b>${pre?'prefix':'postfix'}</b> karşılığını yaz.`,type:'txt',a,show:a,sol:`${pre?'Prefix':'Postfix'}: <b>${a}</b>. En son yapılan işlem (${t.op}) ${pre?'en başa':'en sona'} yazılır; parantez içleri önce kendi ${pre?'prefix':'postfix'} haline getirilir. Öncelik: ^ &gt; * / &gt; + −; ^ sağdan, diğerleri soldan gruplanır.`}}},
   evalpostfix:{label:'Postfix hesaplama',f(){let t,v;do{t=exprT(R(3,4),()=>R(1,9),['+','-','*']);v=ev(t)}while(Math.abs(v)>150);
     const tk=pst(t),st=[],steps=[];tk.forEach(x=>{if(typeof x==='number')st.push(x);else{const b=st.pop(),a=st.pop(),r=ev({op:x,l:{v:a},r:{v:b}});st.push(r);steps.push(`${a} ${x} ${b} = ${r} → yığın: [${st.join(', ')}]`)}});
     return{q:`<b>${tk.join(' ')}</b> postfix ifadesinin değeri kaçtır?`,type:'num',a:v,sol:'Sayıları yığına at; operatör gelince iki eleman çıkar (ikinci çıkan soldadır), sonucu geri at:<br>'+steps.join('<br>')}}},
@@ -352,10 +366,10 @@ const GEN={
     const k=last!=null?R(0,2):R(0,1),q=[S?'Tepede (top) hangi eleman vardır?':'Önde (front) hangi eleman vardır?','Yapıda kaç eleman kalmıştır?',`Son ${S?'pop':'dequeue'} işlemi hangi elemanı çıkarmıştır?`][k];
     return{q:`Boş bir ${S?'yığına (stack)':'kuyruğa (queue)'} sırasıyla şu işlemler uygulanıyor:<div class="raw">${ops.join(', ')}</div>${q}`,type:'num',a:[S?ds[ds.length-1]:ds[0],ds.length,last][k],sol:`Son durum (${S?'alttan tepeye':'önden arkaya'}): [${ds.join(', ')}]. ${S?'LIFO: son giren ilk çıkar.':'FIFO: ilk giren ilk çıkar.'}`}}},
   esinif:{label:'Faaliyet sınıflandırma',f(){
-    const [s,a]=pick([["Çalışanın internetten izin talep etmesi",0],["ERP sisteminde stok izleme",0],["Çalışanların çevrim içi eğitim alması",0],["Müşteri şikâyetinin CRM sistemine kaydedilmesi",0],["Faturaların PDF olarak saklanması",0],["Müşterinin sitede yalnızca ürün incelemesi (sipariş yok)",0],["Mağazada oluşturulan siparişin mobil bankacılıkla ödenmesi",0],["Ürünlerin yalnızca tanıtıldığı, sipariş verilemeyen şirket sitesi",0],
-      ["Tedarikçiden elektronik hammadde siparişi",1],["Bayinin üretici portalından ürün alması",1],["C2C pazarında iki tüketicinin kullanılmış ürün alışverişi",1],["Bir işletmenin kamu kurumuna elektronik ihale ile ürün satması (B2G)",1],
+    const [s,a]=pick([["Çalışanın internetten izin talep etmesi",0],["ERP sisteminde stok izleme",0],["Çalışanların çevrim içi eğitim alması",0],["Müşteri şikâyetinin CRM sistemine kaydedilmesi",0],["Faturaların PDF olarak saklanması",0],["Müşterinin sipariş vermeden sitede yalnızca ürün incelemesi",0],["Mağazada oluşturulan siparişin mobil bankacılıkla ödenmesi",0],["Ürünlerin yalnızca tanıtıldığı, sipariş verilemeyen şirket sitesi",0],
+      ["Tedarikçiden elektronik hammadde siparişi",1],["Bayinin üretici portalından ürün alması",1],["C2C pazarında iki tüketicinin kullanılmış ürün alışverişi",1],["Bir işletmenin kamu kurumuna elektronik ihale ile ürün satması",1],
       ["Tüketicinin internetten kitap satın alması",2],["Tüketicinin uygulamadan yemek siparişi",2],["Dijital yayın aboneliğinin tüketiciye satılması",2],["Tüketicinin internetten uçak bileti alması",2],["İnternetten sipariş verilip kapıda nakit ödenen market alışverişi",2]]);
-    const o=['Yalnızca e-işletmecilik (e-ticaret değil)','E-ticaret ama e-perakendecilik değil','E-perakendecilik (dolayısıyla e-ticaret ve e-işletmecilik)'];
+    const o=['Yalnızca e-işletmecilik','E-ticaret ama e-perakendecilik değil','E-perakendecilik'];
     return{q:`<b>${s}</b> nasıl sınıflandırılır?`,type:'mc',opts:o,a,sol:`Hızlı ölçüt: 1) dijital faaliyet → e-işletmecilik; 2) satış/satın alma siparişi elektronik kanalda oluşuyor mu? → e-ticaret; 3) satıcı işletme, alıcı nihai tüketici mi? → e-perakendecilik. Ödeme ve teslimat yöntemi sınıflandırmayı tek başına belirlemez.`}}},
   kpi:{label:'E-ticaret göstergeleri',f(){const k=R(0,5);
     if(k===4){const s=R(20,200)*10,a=R(1,20),i=Math.round(s*a/100);return{q:`Bir ayda <b>${N(s)}</b> sipariş satıldı, bunların <b>${N(i)}</b> tanesi iade edildi. <b>İade oranı</b> yüzde kaçtır?`,type:'num',a:i/s*100,sol:`İade oranı = iade edilen / satılan × 100 = ${N(i)} / ${N(s)} × 100 = %${fmt(i/s*100)}`}}
@@ -445,38 +459,93 @@ const norm=s=>String(s).toUpperCase().replace(/[^A-Z0-9+\-*/]/g,'');
 function parseNum(s){s=String(s).trim().replace(/[%\s]/g,'').replace('−','-');if(/^-?\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');return parseFloat(s.replace(',','.'))}
 function drawAvl(){
   const q=gq,box=$('#avlbox');if(!box)return;
-  const old={};if(q.anim)box.querySelectorAll('[data-v]').forEach(g=>{const c=g.querySelector('circle');old[g.dataset.v]=[+c.getAttribute('cx'),+c.getAttribute('cy')]});
-  const all=q.i>=q.seq.length,bad=q.bfOn?AVL.bad(q.tree).map(x=>x.n.v):[];
-  const msg=q.msg||(!q.tree?'Ağaç boş — ilk elemanı ekle.':!all?'Sıradaki elemanı ekleyebilir ya da bir düğümü döndürebilirsin.':'Tüm elemanlar eklendi. Ağacın doğru olduğunu düşünüyorsan kontrol et.');q.msg='';
-  box.innerHTML=`<div style="margin-bottom:8px">${q.seq.map((v,i)=>`<span class="seqc${i<q.i?' done':i===q.i?' next':''}">${v}</span>`).join('')}</div>
-  <div class="mute">${msg}</div>
-  ${q.tree?AVL.svg(q.tree,q.sel,bad,q.bfOn):'<div class="raw" style="text-align:center">∅</div>'}
-  <div class="row"><button class="btn" id="avIns" ${q.done||all?'disabled':''}>${all?'Hepsi eklendi':`Ekle: ${q.seq[q.i]}`}</button>
-  <button class="btn alt" id="avR" ${q.done||q.sel==null?'disabled':''}>↻ Sağa döndür</button>
-  <button class="btn alt" id="avL" ${q.done||q.sel==null?'disabled':''}>↺ Sola döndür</button>
-  <button class="btn alt" id="avU" ${q.done||!q.hist.length?'disabled':''}>Geri al</button>
-  <button class="btn" id="avC" ${q.done||!all?'disabled':''}>Kontrol et</button>
+  const old={};if(q.anim)box.querySelectorAll('#avtree [data-v]').forEach(g=>{const c=g.querySelector('circle');old[g.dataset.v]=[+c.getAttribute('cx'),+c.getAttribute('cy')]});
+  const fin=q.k>=q.steps.length,nv=(q.steps.slice(q.k).find(s=>s.k==='ins')||{}).v,bad=q.bfOn?AVL.bad(q.tree).map(x=>x.n.v):[],sn=q.sel!=null&&AVL.find(q.tree,q.sel);
+  const chip=v=>{const ix=q.steps.map((s,i)=>s.v===v?i:-1).filter(i=>i>=0);return ix.every(i=>i<q.k)?(ix.every(i=>q.res[i])?' ok':' no'):ix[0]<q.k?' done':v===nv?' next':''};
+  const msg=q.msg||(fin?'Tüm adımlar tamamlandı.':!q.tree?`Ağaç boş — <b>${nv}</b> kök olarak eklenecek.`:q.sel==null?`Adım ${q.k+1}: bir düğüme dokun. Sıradaki eleman <b>${nv??'—'}</b>; denge bozuksa önce döndür.`:`Seçili düğüm: <b>${q.sel}</b>. ${nv!=null?`${nv} elemanını sol / sağ çocuk olarak ekle ya da `:''}döndür.`);q.msg='';
+  box.innerHTML=`<div style="margin-bottom:8px">${q.seq.map(v=>`<span class="seqc${chip(v)}">${v}</span>`).join('')}</div>
+  ${q.fb||''}<div class="mute">${msg}</div>
+  <div id="avtree" style="overflow-x:auto">${q.tree?AVL.svg(q.tree,q.sel,bad,q.bfOn):'<div class="raw" style="text-align:center">∅</div>'}</div>
+  <div class="row">${q.tree?`<button class="btn" id="avIL" ${q.done||fin||nv==null||!sn||sn.n.l?'disabled':''}>↙ Sol çocuk: ${nv??'—'}</button>
+  <button class="btn" id="avIR" ${q.done||fin||nv==null||!sn||sn.n.r?'disabled':''}>Sağ çocuk: ${nv??'—'} ↘</button>`:`<button class="btn" id="avI0" ${q.done||fin?'disabled':''}>Kök olarak ekle: ${nv}</button>`}
+  <button class="btn alt" id="avR" ${q.done||fin||!sn?'disabled':''}>↻ Sağa döndür</button>
+  <button class="btn alt" id="avL" ${q.done||fin||!sn?'disabled':''}>↺ Sola döndür</button>
   <label class="mute" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="avB" ${q.bfOn?'checked':''}> Denge faktörlerini göster</label></div>
-  <p class="mute" style="margin:8px 0 0">Bir düğüme dokun, sonra sağa ya da sola döndür: döndürülen düğüm yukarı çıkar, ebeveyni aşağı iner. Döndürme sayısı önemli değil; yalnızca son ağaca bakılır.</p>
+  <p class="mute" style="margin:8px 0 0">Döndürmede seçtiğin düğüm yukarı çıkar, ebeveyni aşağı iner. Çift döndürmede iki döndürmeyi ayrı ayrı yaparsın; her biri ayrı adım olarak değerlendirilir.</p>
   <details class="mute" style="margin-top:6px"><summary>Kural hatırlatma</summary>BF = h(sol) − h(sağ). Eklenen düğüme en yakın |BF| = 2 olan düğüm (z) düzeltilir.<br>
   <b>LL</b> (z: +2, sol çocuk y: +1) → y'yi sağa döndür · <b>RR</b> (z: −2, sağ çocuk y: −1) → y'yi sola döndür<br>
-  <b>LR</b> (z: +2, y: −1) → y'nin sağ çocuğu x'i önce sola, sonra sağa döndür · <b>RL</b> (z: −2, y: +1) → y'nin sol çocuğu x'i önce sağa, sonra sola döndür</details>`;
-  if(q.anim){q.anim=false;const svg=box.querySelector('svg');svg&&svg.classList.add('anim');
-    box.querySelectorAll('[data-v]').forEach(g=>{const o=old[g.dataset.v];if(!o)return;const c=g.querySelector('circle'),dx=o[0]-c.getAttribute('cx'),dy=o[1]-c.getAttribute('cy');
+  <b>LR</b> (z: +2, y: −1) → y'nin sağ çocuğu x'i önce sola, sonra sağa döndür · <b>RL</b> (z: −2, y: +1) → y'nin sol çocuğu x'i önce sağa, sonra sola döndür</details>
+  ${q.k?`<div class="avlog">${q.steps.slice(0,q.k).map((s,i)=>`<div class="avs ${q.res[i]?'ok':'no'}"><div>${i+1}. ${q.res[i]?'✓':'✗'} ${AVL.cap(s)}</div>${T.svg(JSON.parse(s.json)).replace(/max-width:(\d+)px/,(m,w)=>`width:${Math.round(w*.55)}px`)}</div>`).join('<span class="avar">→</span>')}</div>
+  <div class="row" style="margin-top:12px;align-items:center"><button class="btn" id="avAI" ${q.aiBusy?'disabled':''}>Claude'a sor: neyi, nerede, neden yanlış yaptım?</button>
+  <details class="mute"${window.claude?' hidden':''}><summary>Claude API anahtarı (isteğe bağlı)</summary>Anahtar girersen cevap burada yazılır; girmezsen soru claude.ai'de hazır olarak açılır. Anahtar yalnızca bu tarayıcıda saklanır.
+  <div class="row" style="margin-top:6px"><input id="avKey" class="gin" type="password" autocomplete="off" placeholder="sk-ant-…"></div></details></div>
+  <div id="avai" class="sol"${q.ai?'':' hidden'}>${q.ai}</div>`:''}`;
+  if(q.anim){q.anim=false;const svg=box.querySelector('#avtree svg');svg&&svg.classList.add('anim');
+    box.querySelectorAll('#avtree [data-v]').forEach(g=>{const o=old[g.dataset.v];if(!o)return;const c=g.querySelector('circle'),dx=o[0]-c.getAttribute('cx'),dy=o[1]-c.getAttribute('cy');
       g.style.transform=`translate(${dx}px,${dy}px)`;g.getBoundingClientRect();g.style.transition='transform .5s ease';requestAnimationFrame(()=>g.style.transform='')})}
-  box.querySelectorAll('[data-v]').forEach(el=>el.onclick=()=>{if(q.done)return;q.sel=+el.dataset.v;drawAvl()});
-  const rot=d=>{const f=AVL.find(q.tree,q.sel);
-    if(!f.p||f.s!==(d==='R'?'l':'r')){q.msg=`<b>${q.sel}</b> ${d==='R'?'sağa':'sola'} döndürülemez.`;return drawAvl()}
-    const g=AVL.find(q.tree,f.p.v);q.hist.push([JSON.stringify(q.tree),q.i]);const nn=d==='R'?AVL.rotR(g.n):AVL.rotL(g.n);if(g.p)g.p[g.s]=nn;else q.tree=nn;q.anim=true;drawAvl()};
-  $('#avR').onclick=()=>rot('R');$('#avL').onclick=()=>rot('L');
-  $('#avIns').onclick=()=>{q.hist.push([JSON.stringify(q.tree),q.i]);q.tree=T.ins(q.tree,q.seq[q.i++]);q.sel=null;drawAvl()};
-  $('#avU').onclick=()=>{const [t,i]=q.hist.pop();q.tree=JSON.parse(t);q.i=i;q.sel=null;drawAvl()};
-  $('#avB').onchange=e=>{q.bfOn=e.target.checked;drawAvl()};
-  $('#avC').onclick=()=>{q.done=true;const ok=AVL.ser(q.tree)===q.ans;
-    const st=store.get('pz_gen',{}),s=st[q.g]||[0,0];s[1]++;if(ok)s[0]++;st[q.g]=s;store.set('pz_gen',st);
+  box.querySelectorAll('#avtree [data-v]').forEach(el=>el.onclick=()=>{if(q.done||fin)return;q.sel=q.sel===+el.dataset.v?null:+el.dataset.v;drawAvl()});
+  // her eylem bir adımdır: beklenen adımla hemen karşılaştırılır
+  const act=(kind,cap,did,f)=>{const s=q.steps[q.k],t=f(JSON.parse(JSON.stringify(q.tree))),ok=kind===s.k&&AVL.ser(t)===s.ser;q.res[q.k]=ok;q.att[q.k]={did,before:AVL.ser(q.tree),ser:AVL.ser(t)};q.sel=null;q.anim=true;
+    let m=AVL.say(s);
+    if(!ok)m=(kind!==s.k?(s.k==='rot'?`Önce dengeyi düzeltmen gerekiyordu: <b>${s.e.z}</b> düğümünde |BF| = 2. `:'Bu adımda döndürme gerekmiyordu; ağaç dengeliydi, sıradaki eleman eklenmeliydi. ')
+      :kind==='ins'?`<b>${s.v}</b> yanlış yere eklendi. `:'Yanlış döndürme. ')+'Doğrusu: '+m+' Ağaç doğru hâline getirildi.';
+    q.tree=JSON.parse(s.json);
+    q.fb=`<div class="avmsg ${ok?'ok':'no'}"><b style="color:var(${ok?'--ok':'--bad'})">Adım ${q.k+1} (${cap}): ${ok?'Doğru':'Yanlış'}</b> — ${m}</div>`;
+    if(++q.k<q.steps.length)return drawAvl();
+    q.done=true;const n=q.res.filter(Boolean).length,all=n===q.steps.length;
+    const st=store.get('pz_gen',{}),r=st[q.g]||[0,0];r[1]++;if(all)r[0]++;st[q.g]=r;store.set('pz_gen',st);
     const log=store.get('pz_log',{}),d=new Date().toISOString().slice(0,10);log[d]=(log[d]||0)+1;store.set('pz_log',log);
-    showSol(ok);if(!ok){const b=AVL.bad(q.tree).length;$('#gfb').insertAdjacentHTML('afterbegin',`<p class="mute" style="margin:12px 0 0">Senin ağacın ${b?'dengeli değil':'dengeli ama doğru AVL ağacından farklı (bir döndürme yanlış yerde ya da ekleme sırasıyla uyumsuz)'}.</p>`)}drawAvl()};
+    showSol(all);$('#gfb').insertAdjacentHTML('afterbegin',`<p style="margin:12px 0 0"><b>${n}/${q.steps.length} adım doğru.</b>${all?'':' Kırmızı (✗) adımları aşağıdaki çözümden tekrar incele.'}</p>`);drawAvl()};
+  const ins=side=>act('ins',`${nv} ekleme`,side?`${nv} değerini ${q.sel} düğümünün ${side==='l'?'sol':'sağ'} çocuğu olarak ekledim`:`${nv} değerini kök olarak ekledim`,t=>{const k={v:nv,l:null,r:null};if(!t)return k;AVL.find(t,q.sel).n[side]=k;return t});
+  const rot=d=>{const f=AVL.find(q.tree,q.sel);
+    if(!f.p||f.s!==(d==='R'?'l':'r')){q.msg=`<b>${q.sel}</b> ${d==='R'?'sağa':'sola'} döndürülemez: ${d==='R'?'sağa döndürülecek düğüm ebeveyninin sol':'sola döndürülecek düğüm ebeveyninin sağ'} çocuğu olmalı.`;return drawAvl()}
+    act('rot','döndürme',`${q.sel} düğümünü ${d==='R'?'sağa':'sola'} döndürdüm`,t=>AVL.turn(t,q.sel,d))};
+  const on=(id,f)=>{const b=$(id);if(b)b.onclick=f};
+  on('#avI0',()=>ins());on('#avIL',()=>ins('l'));on('#avIR',()=>ins('r'));on('#avR',()=>rot('R'));on('#avL',()=>rot('L'));
+  $('#avB').onchange=e=>{q.bfOn=e.target.checked;drawAvl()};
+  const key=$('#avKey');if(key){try{key.value=localStorage.getItem('claude_api_key')||''}catch(e){}
+    key.onchange=()=>{try{localStorage.setItem('claude_api_key',key.value.trim())}catch(e){}}}
+  on('#avAI',()=>askClaude(q));
 }
+const aiMd=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/^#{1,4} (.*)$/gm,'<b>$1</b>').replace(/^\s*[-*] /gm,'• ').replace(/\n/g,'<br>');
+// Claude'a gidecek soru: beklenen adımlar ile öğrencinin yaptıkları yan yana
+function avlPrompt(q){const txt=h=>h.replace(/<\/?b>/g,'');
+  return `Veri yapıları dersinde AVL ağacı alıştırması yapan bir öğrenciyim. Adımlarımı değerlendir.
+Ekleme sırası: ${q.seq.join(', ')}
+Bu alıştırmanın kuralları: BF = h(sol) − h(sağ). Her ekleme ve her tek döndürme ayrı bir adımdır (çift döndürme = 2 adım). "x düğümünü sağa döndürmek" = x yukarı çıkar, ebeveyni sağ-aşağı iner (sola döndürme bunun aynası). Dengesizlik, eklenen düğüme en yakın |BF| = 2 olan düğümde düzeltilir.
+Ağaçlar "(kök sol sağ)" biçiminde yazıldı, "-" boş alt ağaç demek.
+
+${q.steps.slice(0,q.k).map((s,i)=>{const a=q.att[i];return `Adım ${i+1} — ${q.res[i]?'DOĞRU':'YANLIŞ'}
+  Adımdan önceki ağaç: ${a?a.before:'?'}
+  Beklenen: ${txt(AVL.say(s))} → ${s.ser}
+  Benim yaptığım: ${a?`${a.did} → ${a.ser}`:'(çözüm gösterildi, adım yapılmadı)'}`}).join('\n')}
+
+Görev: Yanlış her adım için neyi yanlış yaptığımı, ağaçta nerede olduğunu (hangi düğüm, ilgili BF değerleri) ve neden yanlış olduğunu açıkla; doğru hamlenin ne olduğunu ve bir dahakine nasıl fark edeceğimi söyle. Doğru adımlar için ayrıntıya girme. Sonunda bana özel bir ipucu ver. Hiç yanlışım yoksa kısaca söyle ve dikkat etmem gereken bir nokta ekle. Türkçe, kısa ve net yaz.`}
+async function askClaude(q){
+  const p=avlPrompt(q),show=h=>{q.ai=h;const b=$('#avai');if(b){b.hidden=false;b.innerHTML=h}};let key='';
+  // claude.ai Artifact'ı olarak açıldıysa: anahtar yok, soru görüntüleyenin Claude hesabıyla gider
+  if(window.claude){const sample=await window.claude.use('sample');
+    if(!sample)return show(`Bu görünümde Claude'a sorulamıyor. <a href="https://claude.ai/new?q=${encodeURIComponent(p)}" target="_blank" rel="noopener">Soruyu claude.ai'de aç</a>.`);
+    q.aiBusy=true;$('#avAI').disabled=true;show('<span class="mute">Claude adımlarını inceliyor…</span>');
+    try{const r=await sample(p,{onText:({text})=>show(aiMd(text))});show(aiMd(r.text)+(r.truncated?'<p class="mute">(Cevap uzunluk sınırında kesildi.)</p>':''))}
+    catch(e){show(`<b style="color:var(--bad)">Claude'a ulaşılamadı:</b> ${e.code==='not_granted'?'Claude\'a sorma izni verilmedi.':e.code==='rate_limited'?'Kullanım sınırına takıldın, biraz sonra tekrar dene.':esc(String(e.message||e))}`)}
+    q.aiBusy=false;if(gq===q)drawAvl();return}
+  try{key=localStorage.getItem('claude_api_key')||''}catch(e){}
+  if(!key){try{await navigator.clipboard.writeText(p)}catch(e){}
+    window.open('https://claude.ai/new?q='+encodeURIComponent(p),'_blank','noopener');
+    return show('Soru claude.ai\'de yeni sekmede hazır açıldı (metin panoya da kopyalandı). Cevabın burada yazılmasını istersen API anahtarını gir.')}
+  q.aiBusy=true;$('#avAI').disabled=true;show('<span class="mute">Claude adımlarını inceliyor…</span>');
+  let Anthropic;
+  try{({default:Anthropic}=await import('https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.136.0/+esm'))}
+  catch(e){q.aiBusy=false;drawAvl();return show('<b style="color:var(--bad)">Claude kütüphanesi yüklenemedi</b> — internet bağlantını kontrol et.')}
+  try{const client=new Anthropic({apiKey:key,dangerouslyAllowBrowser:true});
+    const stream=client.beta.messages.stream({model:'claude-opus-5-5',max_tokens:16000,betas:['server-side-fallback-2026-07-01'],fallbacks:'default',messages:[{role:'user',content:p}]});
+    let t='';stream.on('text',d=>{t+=d;show(aiMd(t))});
+    const m=await stream.finalMessage();
+    if(m.stop_reason==='refusal')show(aiMd(t)+'<p class="mute">Claude bu isteği yanıtlamadı.</p>');
+    else if(m.stop_reason==='max_tokens')show(aiMd(t)+'<p class="mute">(Cevap uzunluk sınırında kesildi.)</p>')}
+  catch(e){show(`<b style="color:var(--bad)">Claude'a ulaşılamadı:</b> ${e instanceof Anthropic.AuthenticationError?'API anahtarı geçersiz.':e instanceof Anthropic.PermissionDeniedError?'Bu anahtarın yetkisi yok.':e instanceof Anthropic.RateLimitError?'Hız sınırına takıldın, biraz sonra tekrar dene.':e instanceof Anthropic.APIConnectionError?'Bağlantı kurulamadı.':esc(String(e.message||e))}`)}
+  q.aiBusy=false;if(gq===q)drawAvl()}
 function drawGen(){
   const q=gq,b=$('#gbox');
   if(q.type==='avl'){b.innerHTML=`<div class="card pr"><div class="tag">${GEN[q.g].label}</div><div class="gq">${q.q}</div><div id="avlbox"></div><div id="gfb"></div>
@@ -484,7 +553,7 @@ function drawGen(){
     drawAvl();$('#gshow').onclick=()=>{gq.done=true;showSol(null);drawAvl()};$('#gnext').onclick=nextGen;return}
   const inp=q.type==='mc'?`<div>${q.opts.map((o,i)=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>`
     :q.type==='multi'?`<div class="mf">${q.fields.map(([l],i)=>`<label>${esc(l)}<input class="gin" data-f="${i}" autocomplete="off" inputmode="decimal" placeholder="Sayı"></label>`).join('')}</div><div class="row" style="margin-top:10px"><button class="btn" id="gchk">Kontrol et</button></div>`
-    :`<div class="row"><input id="gin" class="gin" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" placeholder="${q.type==='num'?'Sayı (ör. 2,5)':'Cevabın (ör. A, B, C)'}"><button class="btn" id="gchk">Kontrol et</button></div>`;
+    :`<div class="row"><input id="gin" class="gin" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" placeholder="${q.type==='num'?'Sayı (ör. 2,5)':q.type==='seq'?'Sayılar (ör. 40, 25, 60)':'Cevabın (ör. A, B, C)'}"><button class="btn" id="gchk">Kontrol et</button></div>`;
   b.innerHTML=`<div class="card pr"><div class="tag">${GEN[q.g].label}</div><div class="gq">${q.q}</div>${inp}<div id="gfb"></div>
   <div class="row" style="margin-top:12px"><button class="btn alt" id="gshow">Çözümü göster</button><button class="btn alt" id="gnext">Yeni soru →</button></div></div>`;
   b.querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>checkGen(+x.dataset.i));
@@ -504,7 +573,7 @@ function checkGen(v){
   let ok;
   if(gq.type==='multi'){const r=gq.fields.map(([,a],i)=>numOk(v[i],a));ok=r.every(Boolean);gq.right=r.filter(Boolean).length;
     $('#gbox').querySelectorAll('[data-f]').forEach((x,i)=>{x.disabled=true;x.classList.add(r[i]?'right':'wrong')})}
-  else ok=gq.type==='mc'?v===gq.a:gq.type==='num'?numOk(v,gq.a):norm(v)===norm(gq.a);
+  else ok=gq.type==='mc'?v===gq.a:gq.type==='num'?numOk(v,gq.a):gq.type==='seq'?((u,A)=>(u.match(/[A-Z0-9]+/g)||[]).join(',')===A||u.replace(/[^A-Z0-9]/g,'')===A.replace(/,/g,''))(String(v).toUpperCase(),gq.a.toUpperCase()):norm(v)===norm(gq.a);
   const st=store.get('pz_gen',{}),s=st[gq.g]||[0,0];s[1]++;if(ok)s[0]++;st[gq.g]=s;store.set('pz_gen',st);
   const log=store.get('pz_log',{}),d=new Date().toISOString().slice(0,10);log[d]=(log[d]||0)+1;store.set('pz_log',log);
   if(gq.type==='mc')$('#gbox').querySelectorAll('[data-i]').forEach((x,i)=>{x.disabled=true;if(i===gq.a)x.classList.add('right');else if(i===v)x.classList.add('wrong')});
@@ -531,7 +600,7 @@ function renderProg(){
   ${weak.length?`<div class="card"><b>Zorlandığın kartlar</b><ul>${weak.map(c=>`<li>${esc(c.f)} <span class="mute">(${DERS[c.d].split(' · ')[0]})</span></li>`).join('')}</ul></div>`:''}
   ${(()=>{const g=store.get('pz_gen',{}),ks=GENS.filter(k=>g[k]);return ks.length?`<div class="card"><b>Alıştırma başarısı</b><ul>${ks.map(k=>`<li>${GEN[k].label}: ${g[k][0]}/${g[k][1]} doğru <span class="mute">(%${Math.round(g[k][0]/g[k][1]*100)})</span></li>`).join('')}</ul></div>`:''})()}
   <div class="card"><button class="btn alt" id="reset">Tüm ilerlemeyi sıfırla</button></div>`;
-  $('#reset').onclick=()=>{if(confirm('Kart, test, alıştırma ve plan ilerlemesi silinsin mi?')){['pz_cards','pz_log','pz_wrong','pz_best','pz_plan','pz_gen'].forEach(k=>{try{localStorage.removeItem(K(k))}catch(e){}});session=[];renderPlan();renderProg()}};
+  $('#reset').onclick=e=>{const b=e.target;if(!b.dataset.sure){b.dataset.sure=1;b.textContent='Emin misin? Kart, test, alıştırma ve plan ilerlemesi silinecek — tekrar bas';return}{['pz_cards','pz_log','pz_wrong','pz_best','pz_plan','pz_gen'].forEach(k=>{try{localStorage.removeItem(K(k))}catch(e){}});session=[];renderPlan();renderProg()}};
 }
 
 /* ---------- init ---------- */

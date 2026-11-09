@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deniz Baran Aykul — Resume</title>
+<!--
+  Son hal (yazar + eleştirmen ajan önerileri birleştirildi).
+  PDF: Chrome'da aç → Ctrl+P → Hedef "PDF olarak kaydet", Kenar boşlukları "Varsayılan", "Üstbilgi ve altbilgi" KAPALI.
+  Dosya adı: Deniz_Baran_Aykul_Resume.pdf
+-->
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "CMU Serif", "Latin Modern Roman", Georgia, "Times New Roman", serif;
+    font-size: 10.5pt; line-height: 1.22; color: #000;
+    max-width: 210mm; margin: 0 auto; padding: 12mm 13mm;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  @media print { body { padding: 0; max-width: none; } }
+  a { color: #000; text-decoration: underline; }
+
+  header { text-align: center; margin-bottom: 4pt; }
+  h1 { font-size: 23pt; font-variant: small-caps; letter-spacing: .5pt; font-weight: bold; }
+  .headline { font-size: 11pt; margin-top: 1pt; }
+  .contact { font-size: 9.5pt; margin-top: 3pt; }
+
+  h2 {
+    font-size: 12.5pt; font-variant: small-caps; font-weight: normal;
+    border-bottom: .6pt solid #000; margin: 7pt 0 3pt; padding-bottom: 1pt;
+  }
+  .entry { padding-left: .12in; margin-bottom: 3.5pt; break-inside: avoid; }
+  .row { display: flex; justify-content: space-between; gap: 8pt; }
+  .row .r { white-space: nowrap; font-size: 9.5pt; }
+  .sub { font-style: italic; font-size: 9.5pt; }
+  ul { margin: 1pt 0 0 .22in; }
+  li { font-size: 9.8pt; margin-bottom: 1pt; }
+  .skills { padding-left: .12in; font-size: 9.8pt; }
+  .skills div { margin-bottom: 1pt; }
+  .summary { padding-left: .12in; font-size: 9.8pt; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Deniz Baran Aykul</h1>
+  <div class="headline">Full Stack Developer — JavaScript · Firebase · Node.js · LLM APIs</div>
+  <div class="contact">
+    Izmir / Denizli, Turkey (Remote, 35–40 h/week) |
+    <a href="mailto:daykul75@gmail.com">daykul75@gmail.com</a> |
+    +90 545 135 20 04 |
+    <a href="https://github.com/Denizbaranaykul">github.com/Denizbaranaykul</a> |
+    <a href="https://www.linkedin.com/in/deniz-aykul-0195b919b/">linkedin.com/in/deniz-aykul-0195b919b</a>
+  </div>
+</header>
+
+<h2>Summary</h2>
+<div class="summary">
+  3rd-year Management Information Systems student who ships production web apps end to end: UI, auth, database,
+  serverless backend and deployment. Built and run the live platform of the software community I founded, including
+  a Gemini-powered AI assistant. Currently deepening Node.js backend and relational database skills.
+</div>
+
+<h2>Technical Skills</h2>
+<div class="skills">
+  <div><b>Languages:</b> JavaScript (ES6+), Dart, HTML5, CSS3, Python</div>
+  <div><b>Backend &amp; Data:</b> Firebase (Auth, Cloud Firestore, Remote Config, Cloud Functions, Cloud Messaging), Node.js, REST API integration</div>
+  <div><b>Frontend &amp; Mobile:</b> Flutter (Provider, Material 3), modular vanilla JS, responsive design, Chart.js</div>
+  <div><b>AI:</b> Google Gemini API, prompt design for domain-grounded assistants</div>
+  <div><b>Tools:</b> Git, GitHub, GitHub Pages, custom-domain DNS, pandas</div>
+</div>
+
+<h2>Projects</h2>
+
+<div class="entry">
+  <div class="row">
+    <span><b>PAU Software Community Platform</b> | <i>JavaScript, Firebase Auth, Firestore, Gemini API</i></span>
+    <span class="r"><a href="https://pauyazilimgelistirme.com.tr">Live</a> | <a href="https://github.com/Denizbaranaykul/Yaz-l-m_toplulugu">Code</a></span>
+  </div>
+  <ul>
+    <li>Built and maintain the community's live platform (blog, membership applications, training module, role-based admin panel).</li>
+    <li>Integrated a Gemini 2.5 Flash assistant grounded on a custom community-knowledge prompt to answer member questions about events and training.</li>
+    <!-- Cloud Function proxy'yi bitirince yukarıdaki maddeyi şununla değiştir:
+    <li>Built a Gemini chat assistant behind an authenticated Node.js Cloud Function with per-user rate limiting, multi-turn context and streaming responses.</li> -->
+    <li>Designed an assignment workflow (submit, grade 0–100, appeal) with batched Firestore writes feeding a live leaderboard.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row">
+    <span><b>PAU Software Community Mobile App</b> | <i>Flutter, Firebase, FCM, Gemini API</i></span>
+    <span class="r"><a href="https://github.com/Denizbaranaykul/yazilim_toplulugu_app">Code</a></span>
+  </div>
+  <ul>
+    <li>Built the community's Flutter app (events, forum, videos, profiles, admin dashboard) with FCM push notifications, a Gemini assistant and an in-app game with a Firestore leaderboard.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row">
+    <span><b>Spor Yemek — AI Nutrition &amp; Workout Tracker</b> | <i>Flutter, Firebase, Cloud Functions, Gemini API</i></span>
+    <span class="r"><a href="https://github.com/Denizbaranaykul/spor_yemek">Code</a></span>
+  </div>
+  <ul>
+    <li>Developed a Flutter app where users log meals in natural language and Gemini estimates calories and macros; includes workout logs and weekly charts.</li>
+    <li>Wrote a scheduled Node.js Cloud Function that finds due reminders with a Firestore collection-group query and sends them as FCM push notifications.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row">
+    <span><b>Finance Tracker</b> | <i>JavaScript, Firebase Auth, Firestore, Chart.js</i></span>
+    <span class="r"><a href="https://denizbaranaykul.github.io/finansal-takip">Live</a> | <a href="https://github.com/Denizbaranaykul/finansal-takip">Code</a></span>
+  </div>
+  <ul>
+    <li>Developed a budgeting app with per-user Firestore CRUD, Chart.js analytics, CSV import/export and a LocalStorage fallback that runs without a backend.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row">
+    <span><b>ZNG Elektrik — Corporate Website</b> (client project, in progress) | <i>Node.js</i></span>
+    <span class="r"><a href="https://github.com/Denizbaranaykul/zng">Code</a></span>
+  </div>
+  <ul>
+    <li>Wrote a zero-dependency Node.js static site generator that renders 60+ bilingual (TR/EN) pages from data modules, preserving legacy URL slugs for SEO.</li>
+  </ul>
+</div>
+
+<h2>Experience</h2>
+<div class="entry">
+  <div class="row">
+    <span><b>Terra Pizza</b> — Full Stack Developer (32 h/week)</span>
+    <span class="r">Jul 2025 – Sep 2025</span>
+  </div>
+</div>
+
+<h2>Leadership</h2>
+<div class="entry">
+  <div class="row">
+    <span><b>Founder; President &amp; Vice President</b> — Software Development Community, Pamukkale University</span>
+    <span class="r">2025 – Present</span>
+  </div>
+  <ul>
+    <li>Founded the community in 2025 and have served as both President and Vice President.</li>
+    <li>Organized 5 events and ran a graded training program on the community platform.</li>
+  </ul>
+</div>
+
+<h2>Education</h2>
+<div class="entry">
+  <div class="row">
+    <span><b>Pamukkale University</b> — B.Sc. Management Information Systems</span>
+    <span class="r">2024 – 2028 (expected)</span>
+  </div>
+  <div class="sub">Coursework: Data Structures, E-Commerce, Statistics, Strategic Management</div>
+</div>
+
+<h2>Additional</h2>
+<div class="skills">
+  <div><b>Languages:</b> Turkish (native), English (B1 / professional) &nbsp;·&nbsp; <b>Interests:</b> Basketball, boxing</div>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,35 @@
 # Ders 1 — Pazar Bölümlendirme ve Dijital İş Modelleri
 
+⚠️ **Tahmini bölüm — kayıt yok.** Dersin ilk yarısının ses kaydı yok. Bu kısım, kayıttaki ikinci yarının (bölümlendirme, iş modelleri) ve dersin genel akışının üstüne kurulmuş bir **tahmindir**. Hocanın bunları gerçekten bu şekilde anlattığı kesin değil; slayt ya da arkadaş notuyla karşılaştır.
+
+## (Tahmini) Pazarlama ve dijital pazarlama nedir?
+- **Pazarlama:** müşteri ihtiyacını bulmak, bu ihtiyacı karşılayan değeri (ürün/hizmet) yaratmak ve onu doğru kişiye kârlı biçimde ulaştırmak. Odak satmak değil, **ihtiyacı karşılamak**.
+- **4P (pazarlama karması):** ürün, fiyat, dağıtım (yer), tutundurma (iletişim/reklam). İkinci yarıda "4P'yi hedef kitleye ulaştırırız" diye doğrudan kullanıldığı için ilk yarıda tanıtılmış olması çok muhtemel.
+- **Dijital pazarlama:** pazarlama faaliyetlerinin internet, mobil, sosyal medya, arama motoru ve e-posta gibi dijital kanallarla yapılması. Amaç aynı (ihtiyaç → değer → müşteri); değişen **kanal, hız ve ölçülebilirlik**.
+
+## (Tahmini) Geleneksel ve dijital pazarlama farkı
+| | Geleneksel (TV, gazete, billboard) | Dijital |
+|---|---|---|
+| İletişim | Tek yönlü (firma → tüketici) | Çift yönlü, etkileşimli (yorum, paylaşım) |
+| Hedefleme | Kitlesel, herkese aynı mesaj | Kişiye/bölüme özel (çerez, veri) |
+| Ölçüm | Zor (kaç kişi gördü, kim aldı?) | Anlık ve ölçülebilir (tıklama, dönüşüm) |
+| Maliyet | Sabit ve yüksek | Bütçeye göre esnek; küçük firma da girebilir |
+| Zaman/yer | Yayın saatine bağlı | 7/24, her yerde (mobil) |
+- Dersin sonundaki "mobil: her yerde her saat ulaşırız, TV/gazete gibi beklemek yok" ve Ders 4'teki "billboard sabit ücret vs PPC tıklama başı" karşılaştırmaları bu tablonun parçaları.
+
+## (Tahmini) Dijital pazarlamanın kanalları
+- Web sitesi, **arama motoru (SEO + ücretli arama)**, **görsel/programatik reklam**, sosyal medya, e-posta, mobil uygulama, içerik pazarlaması. Dönemin geri kalan dersleri (SEO, PPC, display) bu listenin sırayla işlenmesi gibi duruyor.
+
+## (Tahmini) Hedef pazarlama süreci: STP
+- **S — Segmentation (bölümlendirme):** pazarı ortak özellikli gruplara ayır. → İkinci yarının ana konusu.
+- **T — Targeting (hedefleme):** hangi bölüme/bölümlere gireceğine karar ver.
+- **P — Positioning (konumlandırma):** seçtiğin bölümün zihninde markanı rakiplere göre nereye yerleştireceğin.
+- Mantık: önce kime satacağını seç, sonra 4P'yi o kişiye göre kur.
+
+---
+
+## Kayıttaki kısım (ikinci yarı)
+
 ## Neden bölümlendirme?
 - 4P (ürün, fiyat, dağıtım, tutundurma) herkese değil, **belirli bir hedef kitleye** ulaştırılır. Hedef kitle yanlış kesilirse tüm çaba boşa gider.
 - Örnek (ayakkabı): 80 milyon → erkek/kadın → yaş (çocuk 7-11) → ilgi (futbol/krampon) → fiyat segmenti ⇒ ~50 bin kişilik hedef kitle.
@@ -127,6 +157,42 @@ Teknoloji hızla ilerliyor: şirket yeni teknolojiye **hemen mi geçmeli, beklem
 
 
 # Ders 4 — Ücretli Arama (PPC / Arama Motoru Reklamcılığı)
+
+⚠️ **Tahmini bölüm — kayıt yok.** Dersin ilk yarısının ses kaydı yok. Bu kısım, kayıttaki ikinci yarının ("Mantık" bölümünden itibaren) ve Ders 3 (SEO) ile olan bağlantının üstüne kurulmuş bir **tahmindir**. Hoca terimleri farklı adlandırmış olabilir; slaytla karşılaştır.
+
+## (Tahmini) Arama motoru pazarlaması (SEM) = SEO + ücretli arama
+- **SEM (Search Engine Marketing):** arama motorundan gelen trafiği artırmaya yönelik her şey. İki kolu var:
+  - **SEO (organik):** sayfanı iyileştirip sıralamada ücretsiz yükselirsin. Yavaş (aylar), kalıcı, tıklama başına para yok. → Ders 3.
+  - **Ücretli arama (PPC):** kelimeye reklam verip anında en üste çıkarsın. Hızlı, bütçe bitince durur.
+- İkisi birbirinin alternatifi değil **tamamlayıcısıdır**: SEO oturana kadar PPC ile trafik alınır; marka çok güçlüyse PPC'ye gerek kalmayabilir (kayıttaki Adidas örneği).
+
+## (Tahmini) Arama sonuç sayfası (SERP) yapısı
+- En üstte **sponsorlu (ücretli) sonuçlar**, altında **organik sonuçlar**; yerel aramalarda **harita/işletme kutusu**, ürün aramalarında **alışveriş (ürün görselli) reklamları**, sayfa sonunda yine sponsorlu sonuçlar.
+- Kullanıcılar çoğunlukla ilk birkaç sonuca tıklar; bu yüzden en üstteki yer değerlidir ve satılır.
+
+## (Tahmini) Kısa tarihçe
+- Google başta reklamsızdı; gelir modeli olarak **AdWords (2000)** geldi, bugünkü adı **Google Ads**. (Ders 1 Google vakası ile bağlantılı.) Tıklama başı ödeme ve açık artırma modeli o zamandan beri temel mantık.
+
+## (Tahmini) Temel metrikler — alıştırmadaki hesaplar
+| Terim | Anlamı | Formül |
+|---|---|---|
+| **Gösterim (impression)** | Reklamın ekranda görünme sayısı | — (PPC'de ücretsiz) |
+| **Tıklama** | Reklama tıklanma sayısı | — |
+| **TO / CTR** (tıklama oranı) | Görenlerin yüzde kaçı tıkladı | tıklama ÷ gösterim × 100 |
+| **TBM / CPC** (tıklama başı maliyet) | Bir tıklamaya ödenen | harcama ÷ tıklama |
+| **Dönüşüm** | Tıklayanın istenen işi yapması (satın alma, form, üyelik) | — |
+| **Dönüşüm oranı** | Tıklayanların yüzde kaçı dönüştü | dönüşüm ÷ tıklama × 100 |
+| **BGBM / CPM** | Bin gösterim başı maliyet (display'de yaygın) | harcama ÷ gösterim × 1000 |
+| **ROAS** | Reklama harcanan 1 TL'nin getirdiği gelir | gelir ÷ reklam harcaması |
+- **Hızlı kontrol:** tıklama sayısı = bütçe ÷ TBM. Kayıttaki "3.000 TL ÷ 3 TL = 1.000 tıklama" örneği bu formül.
+
+## (Tahmini) Kampanya yapısı ve reklam metni
+- **Hesap → Kampanya → Reklam grubu → Anahtar kelimeler + reklamlar.** Bütçe, coğrafya ve gün/saat ayarları kampanya düzeyinde; aynı temadaki kelimeler aynı reklam grubunda tutulur (kalite puanı için uyum).
+- **Reklam metni:** başlık (kelimeyi içermeli), görünen URL, açıklama satırları, harekete geçirici çağrı ("Hemen al", "%20 indirim"). Kelime ↔ metin ↔ landing page uyumu kayıttaki **kalite puanının** temelidir.
+
+---
+
+## Kayıttaki kısım (ikinci yarı)
 
 ## Mantık
 - Google'ın para kazanma yöntemi: reklam veren bir **anahtar kelimeye** reklam verir, arama sonuçlarının tepesinde **"Sponsorlu"** olarak çıkar ("reklam" kelimesi itici olduğu için yumuşatılmış). İngilizcesi **pay per click (PPC)**, Türkçesi **ücretli arama**.
