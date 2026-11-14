@@ -27,7 +27,8 @@ for d in sorted(root.iterdir()):
         w = csv.writer(f, delimiter=";")
         for c in cards:
             w.writerow([c["f"], c["b"], f"{course['title'].split(' ')[0]} {course.get('unit', 'Ders')}{c['d']} " + c["t"].replace(" ", "_")])
-    hub.append((d.name, course, len(cards), len(quiz)))
+    hid = set(course.get("hide", []))
+    hub.append((d.name, {**course, "ders": {k: v for k, v in course["ders"].items() if int(k) not in hid}}, sum(c["d"] not in hid for c in cards), sum(q["d"] not in hid for q in quiz)))
     print(d.name, len(cards), "kart", len(quiz), "soru")
 
 items = "".join(f'<a class="c" href="{n}/index.html"><b>{H.escape(c["title"])}</b><span>{len(c["ders"])} {c.get("unit", "ders").lower()} · {k} kart · {q} soru{" · alıştırma üretici" if c.get("gen") else ""}</span></a>' for n, c, k, q in hub)
